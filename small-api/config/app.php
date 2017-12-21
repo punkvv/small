@@ -44,9 +44,9 @@ return [
     // 默认语言
     'default_lang'           => 'zh-cn',
     // 应用类库后缀
-    'class_suffix'           => true,
+    'class_suffix'           => false,
     // 控制器类后缀
-    'controller_suffix'      => false,
+    'controller_suffix'      => true,
 
     // 默认模块名
     'default_module'         => 'index',
