@@ -6,10 +6,12 @@
 
 namespace app\index\controller;
 
-class IndexController
+use app\common\Controller;
+
+class IndexController extends Controller
 {
     public function miss()
     {
-        return json("Author: PunkVv <punkv@qq.com>");
+        return "听老婆的话会发达--PunkVv <punkv@qq.com>";
     }
 }

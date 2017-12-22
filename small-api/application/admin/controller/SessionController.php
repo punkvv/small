@@ -6,6 +6,8 @@
 
 namespace app\admin\controller;
 
+use app\common\Controller;
+
 class SessionController extends Controller
 {
     public function save()

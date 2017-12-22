@@ -20,7 +20,7 @@ return [
     // 注册的根命名空间
     'root_namespace'         => [],
     // 默认输出类型
-    'default_return_type'    => 'html',
+    'default_return_type'    => 'json',
     // 默认AJAX 数据返回格式,可选json xml ...
     'default_ajax_return'    => 'json',
     // 默认JSONP格式返回的处理方法
@@ -32,7 +32,7 @@ return [
     // 是否开启多语言
     'lang_switch_on'         => false,
     // 默认全局过滤方法 用逗号分隔多个
-    'default_filter'         => '',
+    'default_filter'         => 'htmlspecialchars',
     // 默认语言
     'default_lang'           => 'zh-cn',
     // 应用类库后缀
