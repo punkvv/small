@@ -15,6 +15,5 @@ class CheckAuth
 {
     public function run($params)
     {
-
     }
 }

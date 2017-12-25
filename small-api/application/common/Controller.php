@@ -18,9 +18,16 @@ class Controller extends ThinkController
     protected $request;
 
     /**
-     * @var 请求参数
+     * 请求参数
+     * @var array
      */
     protected $param;
+
+    /**
+     * token
+     * @var string
+     */
+    protected static $token;
 
     /**
      * 初始化
@@ -29,6 +36,17 @@ class Controller extends ThinkController
     {
         $this->request = request();
         $this->param = $this->request->param();
+    }
+
+
+    public static function getToken()
+    {
+        if (!static::$token) {
+            $header = request()->header();
+            static::$token = $header['x-token'];
+        }
+
+        return static::$token;
     }
 }
 
