@@ -36,14 +36,19 @@ class Controller extends ThinkController
     {
         $this->request = request();
         $this->param = $this->request->param();
+        static::setToken();
     }
 
+    private static function setToken()
+    {
+        $header = request()->header();
+        static::$token = empty($header['x-token']) ? '' : $header['x-token'];
+    }
 
     public static function getToken()
     {
-        if (!static::$token) {
-            $header = request()->header();
-            static::$token = $header['x-token'];
+        if (!isset(static::$token)) {
+            static::setToken();
         }
 
         return static::$token;
