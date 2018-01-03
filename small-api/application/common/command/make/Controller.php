@@ -15,7 +15,7 @@ class Controller extends Make
     protected function configure()
     {
         parent::configure();
-        $this->setName('make:v-controller')
+        $this->setName('make:vcontroller')
             ->setDescription('Create a new resource controller class');
     }
 
