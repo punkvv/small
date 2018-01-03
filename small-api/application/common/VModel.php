@@ -6,9 +6,9 @@
 
 namespace app\common;
 
-use think\Model as ThinkModel;
+use think\Model;
 
-class Model extends ThinkModel
+class VModel extends Model
 {
 
 }

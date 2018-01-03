@@ -13,7 +13,7 @@ function get_admin_id()
 
 function get_admin()
 {
-    $data = \think\facade\Cache::get('admin'.\app\common\Controller::getToken());
+    $data = \think\facade\Cache::get('admin'.\app\common\VController::getToken());
 
     return $data;
 }

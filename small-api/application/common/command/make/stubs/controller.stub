@@ -1,0 +1,48 @@
+<?php
+
+/*
+ * Author: PunkVv <punkv@qq.com>
+ */
+
+namespace {%namespace%};
+
+use app\common\Controller;
+
+class {%className%} extends Controller
+{
+    /**
+     * 显示资源列表
+     */
+    public function index($params)
+    {
+    }
+
+    /**
+     * 保存新建的资源
+     */
+    public function save()
+    {
+    }
+
+    /**
+     * 显示指定的资源
+     */
+    public function read($id)
+    {
+    }
+
+    /**
+     * 保存更新的资源
+     *
+     */
+    public function update()
+    {
+    }
+
+    /**
+     * 删除指定资源
+     */
+    public function delete()
+    {
+    }
+}

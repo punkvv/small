@@ -5,13 +5,19 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
+use app\common\VRoute;
 use think\facade\Route;
 
-// 后台路由
-Route::group('admin', function () {
-    Route::post('sessions', 'admin/session/save'); // 登录
-    Route::get('sessions/:token', 'admin/session/read'); // 获取登录用户信息
-    Route::delete('sessions/:token', 'admin/session/delete'); // 注销
-});
+/**
+ * 后台路由
+ */
+
+VRoute::admin('sessions', 'session');
+
+/**
+ * 前台路由
+ */
+VRoute::home('sessions', 'session');
+
 
 Route::miss('index/miss');

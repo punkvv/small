@@ -6,7 +6,7 @@
 
 namespace app\admin\behavior;
 
-use app\common\Controller;
+use app\common\VController;
 
 /**
  * 权限检查
@@ -17,6 +17,5 @@ class CheckAuth
 {
     public function run($params)
     {
-        $token = Controller::getToken();
     }
 }

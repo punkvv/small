@@ -8,7 +8,7 @@ namespace app\common;
 
 use think\Validate;
 
-class Service
+class VService
 {
     /**
      * @var array

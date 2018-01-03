@@ -4,4 +4,6 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-return [];
+return [
+    'app\common\command\make\Controller'
+];
