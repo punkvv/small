@@ -1,0 +1,16 @@
+.login {
+  width: 100%;
+  height: 100%;
+  background-image: url('//p1jzcnyju.bkt.clouddn.com/1482393477851.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  .login-box {
+    position: absolute;
+    right: 20rem;
+    top: 50%;
+    -webkit-transform: translateY(-60%);
+    transform: translateY(-60%);
+    width: 20rem;
+  }
+}

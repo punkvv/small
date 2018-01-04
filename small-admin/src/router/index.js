@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import {getToken} from '../utils/token'
+import {getToken} from '../libs/token'
 import NProgress from 'nprogress'
 import {constantRouter} from './router'
 
