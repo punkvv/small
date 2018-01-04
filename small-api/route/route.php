@@ -12,12 +12,13 @@ use think\facade\Route;
  * 后台路由
  */
 
-VRoute::admin('sessions', 'session');
+// session 管理
+VRoute::admin('sessions', 'session')->except(['index', 'update']);
 
 /**
  * 前台路由
  */
-VRoute::home('sessions', 'session');
+VRoute::v1('sessions', 'session');
 
 
 Route::miss('index/miss');

@@ -16,9 +16,42 @@ class VRoute
         return static::resource('admin', $rule, $route, $option, $pattern);
     }
 
-    public static function home(string $rule, string $route, array $option = [], array $pattern = [])
+    public function adminRule(
+        string $rule,
+        string $route,
+        string $method = '*',
+        array $option = [],
+        array $pattern = []
+    ) {
+        return static::rule('admin', $rule, $route, $method, $option, $pattern);
+    }
+
+    public static function v1(string $rule, string $route, array $option = [], array $pattern = [])
     {
-        return static::resource('home', $rule, $route, $option, $pattern);
+        return static::resource('v1', $rule, $route, $option, $pattern);
+    }
+
+    public function v1Rule(
+        string $rule,
+        string $route,
+        string $method = '*',
+        array $option = [],
+        array $pattern = []
+    ) {
+        return static::rule('v1', $rule, $route, $method, $option, $pattern);
+    }
+
+    public static function rule(
+        string $model,
+        string $rule,
+        string $route,
+        string $method = '*',
+        array $option = [],
+        array $pattern = []
+    ) {
+        $model = $model.'/';
+
+        return Route::rule($model.$rule, $model.$route, $method, $option, $pattern)->allowCrossDomain();
     }
 
 
@@ -41,6 +74,9 @@ class VRoute
     ) {
         $model = $model.'/';
 
-        return Route::resource($model.$rule, $model.$route, $option, $pattern)->except(['create', 'edit']);
+        return Route::resource($model.$rule, $model.$route, $option, $pattern)->except([
+            'create',
+            'edit',
+        ])->allowCrossDomain();
     }
 }
