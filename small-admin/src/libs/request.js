@@ -14,7 +14,20 @@ service.interceptors.request.use(config => {
   }
   return config
 }, error => {
-  // Do something with request error
-  console.log(error) // for debug
+  console.log('request:' + error)
   Promise.reject(error)
 })
+
+// respone interceptor
+service.interceptors.response.use(
+  response => {
+    const data = response.data
+    return data
+  },
+  error => {
+    console.log('response:' + error)
+    return Promise.reject(error)
+  }
+)
+
+export default service

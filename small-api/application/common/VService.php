@@ -11,53 +11,65 @@ use think\Validate;
 class VService
 {
     /**
-     * @var array
-     */
-    protected $param;
-
-    /**
+     * 返回描述信息
      * @var string
      */
-    protected $error;
+    protected $message;
 
     /**
+     * 全局 code
      * @var number
      */
     protected $code;
 
     /**
+     * 返回数据
      * @var mixed
      */
     protected $data;
+
+    /**
+     * 描述状态
+     * @var number
+     */
+    protected $status;
 
     /**
      * Service constructor.
      */
     public function __construct()
     {
+        $this->code = HttpCode::$success;
+        $this->status = 1;
     }
 
     /**
      * 数据验证
      * @param array $param
      * @param Validate|null $validate
-     * @return $this
+     * @param string $scene 验证场景
+     * @return bool
      */
-    public function validate(array $param = [], Validate $validate = null)
+    protected function validate(array $param = [], Validate $validate = null, $scene = '')
     {
-        $this->param = $param;
-        if (is_null($validate) || !$validate->check($this->param)) {
-            $this->error = $validate->getError();
+        if ($scene) {
+            $validate->scene($scene);
+        }
+        $isCheck = $validate->check($param);
+        if (!$isCheck) {
+            $this->message = $validate->getError();
+            $this->status = 0;
         }
 
-        return $this;
+        return $isCheck;
     }
 
-    protected function returnData(): array
+    protected function result(): array
     {
         return [
             'code' => $this->code,
-            'error' => $this->error,
+            'message' => $this->message,
+            'status' => $this->status,
             'data' => $this->data,
         ];
     }

@@ -10,17 +10,18 @@
       </div>
       <el-form :model="form" :rules="rules" ref="form">
         <el-form-item prop="username">
-          <el-input v-model="form.username" placeholder="请输入用户名" auto-complete="off">
+          <el-input v-model.tirm="form.username" placeholder="请输入用户名" auto-complete="off" clearable>
             <svg-icon slot="prefix" icon-class="user"></svg-icon>
           </el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input v-model="form.password" type="password" placeholder="请输入密码" auto-complete="off">
+          <el-input v-model.tirm="form.password" type="password" placeholder="请输入密码" auto-complete="off" clearable>
             <svg-icon slot="prefix" icon-class="wodemima"></svg-icon>
           </el-input>
         </el-form-item>
         <el-form-item>
-          <el-button @click="handleSubmit" type="primary" size="medium" class="v-w-100">登录</el-button>
+          <el-button @click="handleSubmit" :loading="loading" type="primary" size="medium" class="v-w-100">登录
+          </el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -37,15 +38,20 @@
           password: ''
         },
         rules: {
-          username: [{required: true, message: '不能为空', trigger: 'blur'}],
-          password: [{required: true, message: '不能为空', trigger: 'blur'}]
-        }
+          username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
+          password: [{required: true, message: '请输入密码', trigger: 'blur'}]
+        },
+        loading: false
       }
     },
     methods: {
       handleSubmit() {
         this.$refs.form.validate((valid) => {
           if (valid) {
+            this.loading = true
+            this.$store.dispatch('login', this.form).then((data) => {
+              this.loading = false
+            })
           }
         })
       }

@@ -6,9 +6,7 @@
 
 namespace app\index\controller;
 
-use app\common\VController;
-
-class IndexController extends VController
+class IndexController
 {
     public function miss()
     {
