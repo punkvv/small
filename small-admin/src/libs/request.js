@@ -1,4 +1,5 @@
 import axios from 'axios'
+import {Message} from 'element-ui'
 import {getToken} from '@/libs/token'
 import store from '@/store'
 
@@ -14,7 +15,6 @@ service.interceptors.request.use(config => {
   }
   return config
 }, error => {
-  console.log('request:' + error)
   Promise.reject(error)
 })
 
@@ -25,7 +25,13 @@ service.interceptors.response.use(
     return data
   },
   error => {
-    console.log('response:' + error)
+    const response = error.response
+    const data = response.data
+    Message({
+      message: data.message,
+      type: 'error',
+      duration: 5 * 1000
+    })
     return Promise.reject(error)
   }
 )

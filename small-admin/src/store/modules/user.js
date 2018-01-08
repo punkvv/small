@@ -1,4 +1,4 @@
-import {login} from '@/api/login'
+import {loginByPassword, getUserInfo} from '@/api/login'
 import {getToken, setToken} from '@/libs/token'
 
 const user = {
@@ -8,18 +8,29 @@ const user = {
     avatar: '',
     roles: []
   },
-  mutations: {},
+  mutations: {
+    SET_TOKEN: (state, token) => {
+      state.token = token
+    }
+  },
   actions: {
     // 登录
-    login({commit}, userInfo) {
+    loginByPassword({commit}, userInfo) {
       return new Promise((resolve, reject) => {
-        login(userInfo.username, userInfo.password).then(data => {
-          if (data.status === 1) {
-            const token = data.token
-            commit('SET_TOKEN', token)
-            setToken(token)
-          }
-          resolve(data)
+        loginByPassword(userInfo.username, userInfo.password).then(data => {
+          const token = data.token
+          commit('SET_TOKEN', token)
+          setToken(token)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    getUserInfo({commit, state}) {
+      return new Promise((resolve, reject) => {
+        getUserInfo(state.token).then(response => {
+          console.log(response)
         }).catch(error => {
           reject(error)
         })

@@ -17,7 +17,13 @@ class VService
     protected $message;
 
     /**
-     * 全局 code
+     * 返回标识
+     * @var string
+     */
+    protected $name;
+
+    /**
+     * http code
      * @var number
      */
     protected $code;
@@ -39,8 +45,7 @@ class VService
      */
     public function __construct()
     {
-        $this->code = HttpCode::$success;
-        $this->status = 1;
+        $this->code = HttpCode::$ok;
     }
 
     /**
@@ -58,19 +63,27 @@ class VService
         $isCheck = $validate->check($param);
         if (!$isCheck) {
             $this->message = $validate->getError();
-            $this->status = 0;
+            $this->name = HttpCode::$FIELD_TYPE_MISMATCH;
+            $this->code = HttpCode::$invalidRequest;
         }
 
         return $isCheck;
     }
 
-    protected function result(): array
+    protected function result()
     {
-        return [
-            'code' => $this->code,
-            'message' => $this->message,
-            'status' => $this->status,
-            'data' => $this->data,
-        ];
+        if (isset($this->message)) {
+            $this->data['message'] = $this->message;
+        }
+        if (isset($this->name)) {
+            $this->data['name'] = $this->name;
+        }
+        if (isset($this->status)) {
+            $this->data['status'] = $this->status;
+        }
+        $this->data['code'] = $this->code;
+
+        return $this->data;
     }
+
 }

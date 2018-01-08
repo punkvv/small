@@ -11,21 +11,12 @@ use app\common\VController;
 
 class UserController extends VController
 {
-    public function login()
-    {
-        $service = new AdminUserService();
-        $data = $service->login($this->param);
-
-        return $data;
-    }
-
-    public function logout()
-    {
-
-    }
-
     public function info()
     {
+        $token = $this->param['token'];
+        $service = new AdminUserService();
+        $data = $service->getUserInfo($token);
 
+        return $data;
     }
 }

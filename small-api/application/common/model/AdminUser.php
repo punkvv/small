@@ -17,7 +17,7 @@ class AdminUser extends VModel
      */
     public static function getInfoByName($username)
     {
-        return static::field('username,password,status')
+        return static::field('id,username,password,status')
             ->where('username', $username)
             ->find();
     }

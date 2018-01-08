@@ -6,6 +6,8 @@
 
 namespace app\common\behavior;
 
+use think\Response;
+
 /**
  * 处理响应数据
  * Class HandleResponse
@@ -13,8 +15,17 @@ namespace app\common\behavior;
  */
 class HandleResponse
 {
-    public function run($params)
+    /**
+     * @param $response Response
+     */
+    public function run($response)
     {
-
+        $data = $response->getData();
+        if (isset($data['code'])) {
+            $code = $data['code'];
+            unset($data['code']);
+            $response->data($data);
+            $response->code($code);
+        }
     }
 }

@@ -49,7 +49,10 @@
         this.$refs.form.validate((valid) => {
           if (valid) {
             this.loading = true
-            this.$store.dispatch('login', this.form).then((data) => {
+            this.$store.dispatch('loginByPassword', this.form).then((data) => {
+              this.loading = false
+              this.$router.push({path: '/'})
+            }).catch((data) => {
               this.loading = false
             })
           }
