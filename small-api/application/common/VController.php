@@ -7,15 +7,11 @@
 namespace app\common;
 
 use think\Controller;
-use think\Request;
+use think\exception\HttpResponseException;
+use think\facade\Response;
 
 class VController extends Controller
 {
-
-    /**
-     * @var Request
-     */
-    protected $request;
 
     /**
      * 请求参数
@@ -24,34 +20,27 @@ class VController extends Controller
     protected $param;
 
     /**
-     * token
-     * @var string
-     */
-    protected static $token;
-
-    /**
      * 初始化
      */
     protected function initialize()
     {
-        $this->request = request();
         $this->param = $this->request->param();
-        // static::setToken();
     }
 
-    private static function setToken()
+    /**
+     * 返回 restful
+     * @param $data
+     * @param string $type
+     * @param array $header
+     */
+    public function restful($data, $type = 'json', $header = [])
     {
-        $header = request()->header();
-        static::$token = empty($header['v-token']) ? '' : $header['v-token'];
+        $response = Response::create($data, $type)->header($header);
+
+        throw new HttpResponseException($response);
     }
 
-    public static function getToken()
-    {
-        if (!isset(static::$token)) {
-            static::setToken();
-        }
 
-        return static::$token;
-    }
+
 }
 

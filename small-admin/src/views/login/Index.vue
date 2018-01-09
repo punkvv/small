@@ -16,7 +16,7 @@
         </el-form-item>
         <el-form-item prop="password">
           <el-input v-model.tirm="form.password" type="password" placeholder="请输入密码" auto-complete="off" clearable>
-            <svg-icon slot="prefix" icon-class="wodemima"></svg-icon>
+            <svg-icon slot="prefix" icon-class="password"></svg-icon>
           </el-input>
         </el-form-item>
         <el-form-item>

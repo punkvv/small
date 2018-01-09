@@ -6,10 +6,16 @@
 
 namespace app\index\controller;
 
+use app\common\HttpCode;
+
 class IndexController
 {
     public function miss()
     {
-        return "听老婆的话会发达--PunkVv <punkv@qq.com>";
+        $data['message'] = 'Not Found';
+        $data['name'] = 'HTTP_NOT_FOUND';
+        $data['code'] = HttpCode::$notFound;
+
+        return $data;
     }
 }

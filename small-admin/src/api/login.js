@@ -14,7 +14,7 @@ export const logout = () => request({
 })
 
 // 获取登录用户信息
-export const getUserInfo = (token) => request({
-  url: 'admin/user/info/' + token,
+export const getUserInfo = (id) => request({
+  url: 'admin/users/' + id,
   method: 'get'
 })

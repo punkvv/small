@@ -9,8 +9,7 @@ import App from './app'
 import {router} from './router'
 import store from './store'
 
-import SvgIcon from '@/components/svg-icon' // svg 组件
-Vue.component('svg-icon', SvgIcon)
+import './icons' // icon
 
 Vue.config.productionTip = false
 

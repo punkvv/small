@@ -8,7 +8,7 @@ namespace app\common\service;
 
 use app\common\HttpCode;
 use app\common\model\AdminUser;
-use app\common\token\Token;
+use app\common\Token;
 use app\common\util\Encrypt;
 use app\common\validate\AdminUserValidate;
 use app\common\VService;
@@ -30,11 +30,11 @@ class LoginService extends VService
 
             if (!$info || !Encrypt::validate($password, $info->password)) {
                 $this->message = '用户名或者密码错误';
-                $this->name = HttpCode::$USER_AUTH_FAIL;
+                $this->name = 'USER_AUTH_FAIL';
                 $this->code = HttpCode::$invalidRequest;
             } elseif ($info->status !== 1) {
                 $this->message = '用户已被禁用';
-                $this->name = HttpCode::$USER_AUTH_FAIL;
+                $this->name = 'USER_AUTH_FAIL';
                 $this->code = HttpCode::$invalidRequest;
             } else {
                 // 登录成功生成 token
@@ -43,8 +43,9 @@ class LoginService extends VService
                     'id' => $userId,
                     'name' => $username,
                 ];
-                $token = Token::create($value, 12 * 60 * 60);
+                $token = Token::create('admin'.$userId, $value, 2 * 60 * 60);
                 $this->data['token'] = $token;
+                $this->data['id'] = $userId;
             }
         }
 
