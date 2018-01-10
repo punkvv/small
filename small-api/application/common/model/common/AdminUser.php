@@ -4,7 +4,7 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-namespace app\common\model;
+namespace app\common\model\common;
 
 use app\common\VModel;
 
@@ -20,6 +20,6 @@ class AdminUser extends VModel
 
     public static function getInfoById($userId)
     {
-        return static::field('username')->where('id', $userId)->find();
+        return static::field('id,username')->where('id', $userId)->find();
     }
 }

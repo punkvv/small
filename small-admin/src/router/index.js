@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import {getToken} from '../libs/token'
+import {getToken} from '../libs/cookie'
 import NProgress from 'nprogress'
 import {constantRouter} from './router'
 import store from '../store'
@@ -19,15 +19,13 @@ const whiteList = ['/login'] // 不重定向白名单
 router.beforeEach((to, from, next) => {
   NProgress.start() // 加载页面进度条
   if (getToken()) {
-    console.log(to.path)
     if (to.path === '/login') {
       next({path: '/'})
       NProgress.done()
     } else {
-      if (store.getters.roles.length === 0) {
+      if (store.getters.router.length === 0) {
         store.dispatch('getUserInfo').then(data => { // 拉取 userInfo
-          const roles = data.roles
-          console.log(roles)
+          console.log(data)
         }).catch(() => {
         })
       }

@@ -24,12 +24,12 @@ use think\facade\Route;
 Route::group('admin', function () {
     // 登录相关
     Route::group('login', function () {
-        Route::rule('login', 'admin/login/login', 'post'); // 登录
-        Route::rule('logout', 'admin/login/logout', 'post'); // 退出登录
+        Route::rule('login', 'admin/common.login/login', 'post'); // 登录
+        Route::rule('logout', 'admin/common.login/logout', 'post'); // 退出登录
     });
     // 用户相关
     Route::group('users', function () {
-        Route::rule(':id', 'admin/user/info', 'get'); // 获取登录用户信息
+        Route::rule(':id', 'admin/common.user/info', 'get'); // 获取登录用户信息
     });
 })->allowCrossDomain()->header('Access-Control-Allow-Headers',
     'Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, X-Requested-With, V-Token');

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import {Message} from 'element-ui'
-import {getToken} from '@/libs/token'
+import {getToken} from '@/libs/cookie'
 import store from '@/store'
 
 const service = axios.create({

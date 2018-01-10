@@ -3,7 +3,7 @@
 </style>
 
 <template>
-  <div class="login">
+  <div class="login" @keydown.enter="handleSubmit">
     <el-card class="login-box">
       <div slot="header" class="clearfix">
         <span>登录系统</span>

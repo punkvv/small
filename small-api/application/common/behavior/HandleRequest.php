@@ -6,7 +6,7 @@
 
 namespace app\common\behavior;
 
-use app\common\Token;
+use app\common\VSession;
 
 /**
  * 处理请求数据
@@ -24,6 +24,6 @@ class HandleRequest
         $result = request();
         $header = $result->header();
         $token = empty($header['v-token']) ? '' : $header['v-token'];
-        Token::setToken($token);
+        VSession::setToken($token);
     }
 }

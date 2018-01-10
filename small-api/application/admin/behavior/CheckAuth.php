@@ -7,7 +7,7 @@
 namespace app\admin\behavior;
 
 use app\common\HttpCode;
-use app\common\Token;
+use app\common\VSession;
 
 /**
  * 权限检查
@@ -28,7 +28,7 @@ class CheckAuth
         $request = request();
         $rule = $request->routeInfo()['rule'];
         if (!in_array($rule, $this->whiteList)) {
-            $token = Token::getToken();
+            $token = VSession::getToken();
             $controller = $params[0];
             if (!$token) {
                 // 检查 token
