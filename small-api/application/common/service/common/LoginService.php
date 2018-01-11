@@ -8,8 +8,8 @@ namespace app\common\service\common;
 
 use app\common\HttpCode;
 use app\common\model\common\AdminUser;
-use app\common\VSession;
 use app\common\util\Encrypt;
+use app\common\util\token\Token;
 use app\common\validate\AdminUserValidate;
 use app\common\VService;
 
@@ -41,11 +41,9 @@ class LoginService extends VService
                 $userId = $info->id;
                 $value = [
                     'id' => $userId,
-                    'name' => $username,
                 ];
-                $token = VSession::createToken('admin'.$userId, $value, 2 * 60 * 60);
+                $token = Token::create($value, 2 * 60 * 60);
                 $this->data['token'] = $token;
-                $this->data['id'] = $userId;
             }
         }
 

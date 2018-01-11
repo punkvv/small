@@ -28,27 +28,20 @@ class CheckAuth
         $request = request();
         $rule = $request->routeInfo()['rule'];
         if (!in_array($rule, $this->whiteList)) {
-            $token = VSession::getToken();
             $controller = $params[0];
-            if (!$token) {
-                // 检查 token
+            // 检查 token
+            $controller->checkToken();
+            // TODO 检查 API 权限
+            if (!$this->checkApi($rule)) {
+                $data['message'] = '没有权限';
+                $data['name'] = 'NO_AUTHORITY';
                 $data['code'] = HttpCode::$unauthorized;
-                $data['name'] = 'TOKEN_FAIL';
-                $data['message'] = 'token 无效或者过期';
                 $controller->restful($data);
-            } else {
-                // TODO 检查 API 权限
-                if (!$this->check($rule)) {
-                    $data['message'] = '没有权限';
-                    $data['name'] = 'NO_AUTHORITY';
-                    $data['code'] = HttpCode::$unauthorized;
-                    $controller->restful($data);
-                }
             }
         }
     }
 
-    private function check($rule)
+    private function checkApi($rule)
     {
         return true;
     }

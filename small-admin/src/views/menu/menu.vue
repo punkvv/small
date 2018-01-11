@@ -1,14 +1,13 @@
 <style lang="scss">
-  @import './layout.scss';
 </style>
 
-
 <template>
-  <div class="app-wrapper"></div>
+  <div class="menu"></div>
 </template>
 
 <script>
   export default {
+    name: 'menu',
     components: {},
     data() {
       return {}

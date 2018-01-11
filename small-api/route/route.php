@@ -29,10 +29,9 @@ Route::group('admin', function () {
     });
     // 用户相关
     Route::group('users', function () {
-        Route::rule(':id', 'admin/common.user/info', 'get'); // 获取登录用户信息
+        Route::rule('/info', 'admin/common.user/info', 'get'); // 获取登录用户信息
     });
-})->allowCrossDomain()->header('Access-Control-Allow-Headers',
-    'Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, X-Requested-With, V-Token');
+})->allowCrossDomain();
 
 /**
  * 前台路由

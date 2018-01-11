@@ -11,7 +11,7 @@ const service = axios.create({
 // request interceptor
 service.interceptors.request.use(config => {
   if (store.getters.token) {
-    config.headers['V-Token'] = getToken()
+    config.headers['Authorization'] = 'Bearer ' + getToken()
   }
   return config
 }, error => {
@@ -25,14 +25,20 @@ service.interceptors.response.use(
     return data
   },
   error => {
-    const response = error.response
-    const data = response.data
+    const data = error.response.data
+    const name = data.name
     Message({
       message: data.message,
       type: 'error',
       showClose: true,
       duration: 5 * 1000
     })
+    if (name === 'TOKEN_FAIL') {
+      // token 无效或者过期
+      store.dispatch('logOut').then(() => {
+        location.reload() // 为了重新实例化vue-router对象 避免bug
+      })
+    }
     return Promise.reject(error)
   }
 )

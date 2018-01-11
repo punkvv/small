@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 
 const TokenKey = 'SID'
-const UserIdKey = 'USERID'
+const SidebarStatus = 'SIDEBAR_STATUS'
 
 export const getToken = () => {
   return Cookies.get(TokenKey)
@@ -15,10 +15,10 @@ export const removeToken = () => {
   return Cookies.remove(TokenKey)
 }
 
-export const setUserId = (userId) => {
-  return Cookies.set(UserIdKey, userId)
+export const getSidebarStatus = () => {
+  return Cookies.get(SidebarStatus)
 }
 
-export const getUserId = () => {
-  return Cookies.get(UserIdKey)
+export const setSidebarStatus = (status) => {
+  return Cookies.set(SidebarStatus, status)
 }

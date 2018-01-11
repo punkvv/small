@@ -15,15 +15,8 @@ use app\common\VSession;
  */
 class HandleRequest
 {
-    /**
-     * 设置 Token
-     * @param $params
-     */
+
     public function run($params)
     {
-        $result = request();
-        $header = $result->header();
-        $token = empty($header['v-token']) ? '' : $header['v-token'];
-        VSession::setToken($token);
     }
 }

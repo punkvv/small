@@ -25,9 +25,14 @@ router.beforeEach((to, from, next) => {
     } else {
       if (store.getters.router.length === 0) {
         store.dispatch('getUserInfo').then(data => { // 拉取 userInfo
-          console.log(data)
+          store.dispatch('generateRoutes', data).then(() => { // 生成可访问的路由表
+            router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+            next({...to, replace: true}) // hack方法 确保addRoutes已完成
+          })
         }).catch(() => {
         })
+      } else {
+        next()
       }
     }
     next()
@@ -36,6 +41,7 @@ router.beforeEach((to, from, next) => {
       next()
     } else {
       next('/login')
+      NProgress.done()
     }
   }
 })

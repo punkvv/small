@@ -6,7 +6,7 @@
   <div class="login" @keydown.enter="handleSubmit">
     <el-card class="login-box">
       <div slot="header" class="clearfix">
-        <span>登录系统</span>
+        <span>欢迎登录</span>
       </div>
       <el-form :model="form" :rules="rules" ref="form">
         <el-form-item prop="username">
@@ -20,7 +20,7 @@
           </el-input>
         </el-form-item>
         <el-form-item>
-          <el-button @click="handleSubmit" :loading="loading" type="primary" size="medium" class="v-w-100">登录
+          <el-button @click="handleSubmit" :loading="loading" type="primary" size="medium" class="login-btn">登录
           </el-button>
         </el-form-item>
       </el-form>
@@ -30,7 +30,7 @@
 
 <script>
   export default {
-    components: {},
+    name: 'login',
     data() {
       return {
         form: {

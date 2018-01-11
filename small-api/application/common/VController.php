@@ -6,6 +6,7 @@
 
 namespace app\common;
 
+use app\common\util\token\Token;
 use think\Controller;
 use think\exception\HttpResponseException;
 use think\facade\Response;
@@ -20,11 +21,24 @@ class VController extends Controller
     protected $param;
 
     /**
+     * token
+     * @var
+     */
+    protected $token;
+
+    /**
+     * token 存储的值
+     * @var
+     */
+    protected $info;
+
+    /**
      * 初始化
      */
     protected function initialize()
     {
         $this->param = $this->request->param();
+        $this->setToken();
     }
 
     /**
@@ -40,7 +54,39 @@ class VController extends Controller
         throw new HttpResponseException($response);
     }
 
+    public function setToken()
+    {
+        $header = $this->request->header();
+        $token = empty($header['authorization']) ? '' : substr($header['authorization'], 7);
+        $this->token = $token;
+    }
 
+    protected function userId()
+    {
+        return $this->getTokenInfo()['id'];
+    }
+
+    public function getTokenInfo()
+    {
+        if (!$this->info) {
+            $this->checkToken();
+        }
+
+        return $this->info;
+    }
+
+    public function checkToken()
+    {
+        $info = Token::get($this->token);
+        if (!$info) {
+            $data['code'] = HttpCode::$unauthorized;
+            $data['name'] = 'TOKEN_FAIL';
+            $data['message'] = '登录已过期';
+            $this->restful($data);
+        } else {
+            $this->info = $info;
+        }
+    }
 
 }
 

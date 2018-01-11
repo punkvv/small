@@ -1,18 +1,14 @@
 import {loginByPassword, getUserInfo} from '@/api/login'
-import {getToken, setToken, setUserId, getUserId} from '@/libs/cookie'
+import {getToken, setToken, removeToken} from '@/libs/cookie'
 
 const user = {
   state: {
     token: getToken(),
-    id: getUserId(),
     name: '',
     avatar: '',
     router: []
   },
   mutations: {
-    SET_ID: (state, id) => {
-      state.id = id
-    },
     SET_TOKEN: (state, token) => {
       state.token = token
     },
@@ -29,11 +25,8 @@ const user = {
       return new Promise((resolve, reject) => {
         loginByPassword(userInfo.username, userInfo.password).then(data => {
           const token = data.token
-          const userId = data.id
-          commit('SET_ID', userId)
           commit('SET_TOKEN', token)
           setToken(token)
-          setUserId(userId)
           resolve()
         }).catch(error => {
           reject(error)
@@ -42,13 +35,21 @@ const user = {
     },
     getUserInfo({commit, state}) {
       return new Promise((resolve, reject) => {
-        getUserInfo(state.id).then(data => {
+        getUserInfo().then(data => {
           commit('SET_NAME', data.name)
           commit('SET_ROUTER', data.router)
           resolve(data)
         }).catch(error => {
           reject(error)
         })
+      })
+    },
+    // 登出
+    logOut({commit}) {
+      return new Promise(resolve => {
+        commit('SET_TOKEN', '')
+        removeToken()
+        resolve()
       })
     }
   }
