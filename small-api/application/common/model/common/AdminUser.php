@@ -20,6 +20,6 @@ class AdminUser extends VModel
 
     public static function getInfoById($userId)
     {
-        return static::field('id,username')->where('id', $userId)->find();
+        return static::field('id,username,avatar')->where('id', $userId)->find();
     }
 }

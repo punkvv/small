@@ -2,12 +2,12 @@
 </style>
 
 <template>
-  <div class="menu"></div>
+  <div class="role"></div>
 </template>
 
 <script>
   export default {
-    name: 'menu',
+    name: 'role',
     components: {},
     data() {
       return {}

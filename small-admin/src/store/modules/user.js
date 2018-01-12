@@ -15,6 +15,9 @@ const user = {
     SET_NAME: (state, name) => {
       state.name = name
     },
+    SET_AVATAR: (state, avatar) => {
+      state.avatar = avatar
+    },
     SET_ROUTER: (state, router) => {
       state.router = router
     }
@@ -36,7 +39,9 @@ const user = {
     getUserInfo({commit, state}) {
       return new Promise((resolve, reject) => {
         getUserInfo().then(data => {
-          commit('SET_NAME', data.name)
+          const userInfo = data.user_info
+          commit('SET_NAME', userInfo.username)
+          commit('SET_AVATAR', userInfo.avatar)
           commit('SET_ROUTER', data.router)
           resolve(data)
         }).catch(error => {

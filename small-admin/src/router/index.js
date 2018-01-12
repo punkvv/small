@@ -23,7 +23,7 @@ router.beforeEach((to, from, next) => {
       next({path: '/'})
       NProgress.done()
     } else {
-      if (store.getters.router.length === 0) {
+      if (store.getters.username === '') {
         store.dispatch('getUserInfo').then(data => { // 拉取 userInfo
           store.dispatch('generateRoutes', data).then(() => { // 生成可访问的路由表
             router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
@@ -35,7 +35,6 @@ router.beforeEach((to, from, next) => {
         next()
       }
     }
-    next()
   } else {
     if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
       next()

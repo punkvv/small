@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import SvgIcon from '@/components/svg-icon' // svg 组件
+import {SvgIcon} from '@/components'
 Vue.component('svg-icon', SvgIcon)
 
 const requireAll = requireContext => requireContext.keys().map(requireContext)
