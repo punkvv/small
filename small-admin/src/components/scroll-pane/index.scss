@@ -1,0 +1,9 @@
+.scroll-pane {
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  .scroll-wrapper {
+    position: absolute;
+  }
+}

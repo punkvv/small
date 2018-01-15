@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: 'theme-picker',
+    name: 'themePicker',
     components: {},
     data() {
       return {}

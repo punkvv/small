@@ -14,7 +14,7 @@
   const delta = 15
 
   export default {
-    name: 'scroll-bar',
+    name: 'scrollBar',
     data() {
       return {
         top: 0

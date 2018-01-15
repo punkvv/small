@@ -7,16 +7,19 @@
     <sidebar class="sidebar-container"></sidebar>
     <div class="main-container">
       <navbar></navbar>
+      <tags-view></tags-view>
+      <app-main></app-main>
     </div>
+
   </div>
 </template>
 
 <script>
-  import {Sidebar, Navbar} from './components'
+  import {Sidebar, Navbar, TagsView, AppMain} from './components'
 
   export default {
     name: 'layout',
-    components: {Sidebar, Navbar},
+    components: {Sidebar, Navbar, TagsView, AppMain},
     computed: {
       sidebar() {
         return this.$store.getters.sidebar

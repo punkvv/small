@@ -4,10 +4,10 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-namespace app\common\service\common;
+namespace app\common\service\permission;
 
-use app\common\model\common\AdminMenu;
-use app\common\model\common\AdminUser;
+use app\common\model\permission\AdminMenu;
+use app\common\model\permission\AdminUser;
 use app\common\VService;
 
 class AdminUserService extends VService

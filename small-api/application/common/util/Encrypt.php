@@ -13,7 +13,7 @@ class Encrypt
      * @param string $str
      * @return bool|string
      */
-    public static function generate(string $str)
+    public static function generate(string $str): string
     {
         $hash = password_hash($str, PASSWORD_BCRYPT);
 
@@ -26,7 +26,7 @@ class Encrypt
      * @param string $hash
      * @return bool
      */
-    public static function validate(string $str, string $hash)
+    public static function validate(string $str, string $hash): bool
     {
         return password_verify($str, $hash);
     }

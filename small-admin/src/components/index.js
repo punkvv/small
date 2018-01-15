@@ -6,3 +6,5 @@ export {default as Hamburger} from './hamburger'              // 菜单栏打开
 export {default as LangSelect} from './lang-select'           // 多语言切换
 export {default as ScreenFull} from './screenfull'            // 全屏
 export {default as ThemePicker} from './theme-picker'         // 主题色选择
+export {default as ScrollPane} from './scroll-pane'           // 横向滚动面板
+export {default as BackToTop} from './back-to-top'            // 返回顶部

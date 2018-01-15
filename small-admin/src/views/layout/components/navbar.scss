@@ -2,6 +2,20 @@
   height: 50px;
   line-height: 50px;
   border-radius: 0px !important;
+  box-shadow: 0 2px 1px 1px rgba(100, 100, 100, 0.1);
+  z-index: 11;
+  .logout {
+    display: inline-block;
+    margin: 0 8px;
+    svg {
+      display: inline-block;
+      cursor: pointer;
+      fill: #5a5e66;
+      width: 20px;
+      height: 20px;
+      vertical-align: 10px;
+    }
+  }
   .hamburger-container {
     line-height: 58px;
     height: 50px;
@@ -44,7 +58,7 @@
         .user-avatar {
           width: 40px;
           height: 40px;
-          border-radius: 10px;
+          border-radius: 25px;
         }
         .el-icon-caret-bottom {
           position: absolute;

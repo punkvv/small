@@ -11,22 +11,22 @@ use Firebase\JWT\JWT;
 class Token
 {
 
-    public static function getBasePath()
+    public static function getBasePath(): string
     {
         return dirname(__FILE__).DIRECTORY_SEPARATOR;
     }
 
-    public static function getPrivateKeyPath()
+    public static function getPrivateKeyPath(): string
     {
         return self::getBasePath().'rsa_private_key.pem';
     }
 
-    public static function getPublicKeyPath()
+    public static function getPublicKeyPath(): string
     {
         return self::getBasePath().'rsa_public_key.pem';
     }
 
-    public static function create(array $token, int $exp)
+    public static function create(array $token, int $exp): string
     {
         $token['exp'] = time() + $exp;
         $privateKey = file_get_contents(self::getPrivateKeyPath());
@@ -35,7 +35,7 @@ class Token
         return $jwt;
     }
 
-    public static function get($jwt)
+    public static function get(string $jwt)
     {
         try {
             $publicKey = file_get_contents(self::getPublicKeyPath());

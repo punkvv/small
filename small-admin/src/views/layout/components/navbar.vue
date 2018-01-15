@@ -15,22 +15,19 @@
         <screen-full class="screenfull right-menu-item"></screen-full>
       </el-tooltip>
 
-      <el-dropdown class="avatar-container right-menu-item" trigger="click">
-        <div class="avatar-wrapper">
-          <span class="main-user-name">{{username}}</span>
-          <i class="el-icon-caret-bottom"></i>
+      <el-tooltip effect="dark" content="退出登录" placement="bottom">
+        <div class="logout" @click="logout">
+          <svg-icon icon-class="logout"></svg-icon>
         </div>
+      </el-tooltip>
+
+      <el-dropdown class="avatar-container right-menu-item">
         <div class="avatar-wrapper">
           <img class="user-avatar" :src="userAvatar">
         </div>
         <el-dropdown-menu slot="dropdown">
-          <a target='_blank' href="https://github.com/punkvv/small">
-            <el-dropdown-item>
-              项目地址
-            </el-dropdown-item>
-          </a>
-          <el-dropdown-item divided>
-            <span @click="logout" style="display:block;">退出登录</span>
+          <el-dropdown-item>
+            <span>欢迎：{{username}}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -41,10 +38,10 @@
 <script>
   import defaultAvatar from '@/assets/default-avatar.gif'
   import {mapGetters} from 'vuex'
-  import {Breadcrumb, Hamburger, ErrorLog, ScreenFull, ThemePicker} from '@/components'
+  import {Breadcrumb, Hamburger, ErrorLog, ScreenFull} from '@/components'
 
   export default {
-    components: {Breadcrumb, Hamburger, ErrorLog, ScreenFull, ThemePicker},
+    components: {Breadcrumb, Hamburger, ErrorLog, ScreenFull},
     data() {
       return {
         userAvatar: ''

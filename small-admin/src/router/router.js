@@ -15,12 +15,13 @@ const _import = file => () => import('@/views/' + file + '.vue')
  * }
  */
 export const constantRouter = [
-  {path: '/login', name: 'login', component: _import('login/login'), hidden: true},
+  {path: '/login', name: 'login', component: _import('login/login'), hidden: true, meta: {title: '登录', icon: 'home'}},
+  {path: '/404', component: _import('error-page/404'), hidden: true, meta: {title: '404-页面不存在'}},
   {
     path: '',
     component: Layout,
     redirect: 'home',
-    hidden: true,
+    hidden: false,
     children: [
       {path: 'home', name: 'home', component: _import('home/home'), meta: {title: '首页', icon: 'home'}}
     ]
@@ -39,5 +40,6 @@ export const asyncRouter = [
       {path: 'role', name: 'role', component: _import('permission/role'), meta: {title: '角色', icon: 'role'}},
       {path: 'user', name: 'user', component: _import('permission/user'), meta: {title: '用户', icon: 'user'}}
     ]
-  }
+  },
+  {path: '*', redirect: '/404', hidden: true}
 ]

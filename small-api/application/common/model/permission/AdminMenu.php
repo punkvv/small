@@ -4,15 +4,18 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-namespace app\common\model\common;
+namespace app\common\model\permission;
 
 use app\common\VModel;
 
 class AdminMenu extends VModel
 {
 
-    public static function getAll()
+    public static function getAll($param)
     {
+        if (!empty($param['name'])) {
+        }
+
         return static::field('id,name,menu_name,parent_id,router')
             ->where('is_del', 1)
             ->order('sort', 'desc')

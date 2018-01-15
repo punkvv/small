@@ -4,10 +4,10 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-namespace app\common\service\common;
+namespace app\common\service\permission;
 
 use app\common\HttpCode;
-use app\common\model\common\AdminUser;
+use app\common\model\permission\facade\AdminUser;
 use app\common\util\Encrypt;
 use app\common\util\token\Token;
 use app\common\validate\AdminUserValidate;
