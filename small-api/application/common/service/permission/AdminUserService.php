@@ -6,8 +6,8 @@
 
 namespace app\common\service\permission;
 
-use app\common\model\permission\AdminMenu;
-use app\common\model\permission\AdminUser;
+use app\common\model\permission\facade\AdminMenu;
+use app\common\model\permission\facade\AdminUser;
 use app\common\VService;
 
 class AdminUserService extends VService

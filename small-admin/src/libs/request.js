@@ -35,9 +35,11 @@ service.interceptors.response.use(
     })
     if (name === 'TOKEN_FAIL') {
       // token 无效或者过期
-      store.dispatch('logOut').then(() => {
-        location.reload() // 为了重新实例化vue-router对象 避免bug
-      })
+      setTimeout(() => {
+        store.dispatch('logOut').then(() => {
+          location.reload() // 为了重新实例化vue-router对象 避免bug
+        })
+      }, 1000)
     }
     return Promise.reject(error)
   }

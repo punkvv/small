@@ -11,15 +11,33 @@ use app\common\VModel;
 class AdminUser extends VModel
 {
 
-    public static function getInfoByName($username)
+    /**
+     * @param $username
+     * @return array|null|\PDOStatement|string|\think\Model
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getInfoByName($username)
     {
-        return static::field('id,username,password,status')
+        $data = $this->field('id,username,password,status')
             ->where('username', $username)
             ->find();
+
+        return $data;
     }
 
-    public static function getInfoById($userId)
+    /**
+     * @param $userId
+     * @return array|null|\PDOStatement|string|\think\Model
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function getInfoById($userId)
     {
-        return static::field('id,username,avatar')->where('id', $userId)->find();
+        $data = $this->field('id,username,avatar')->where('id', $userId)->find();
+
+        return $data;
     }
 }

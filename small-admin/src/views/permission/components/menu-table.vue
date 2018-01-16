@@ -39,9 +39,7 @@
       filters: {
         type: Object,
         default: () => {
-          return {
-            name: ''
-          }
+          return {}
         }
       }
     },

@@ -6,14 +6,18 @@
 
 namespace app\common\service\permission;
 
-use app\common\model\permission\AdminMenu;
+use app\common\model\permission\facade\AdminMenu;
+use app\common\util\Tree;
 use app\common\VService;
 
 class MenuService extends VService
 {
-    public function getList($param)
+    public function getList()
     {
-        $this->data = AdminMenu::getAll($param);
+        $items = AdminMenu::getAll();
+
+        // 组合成树结构
+        $this->data = Tree::listToTree($items->toArray(), 'id', 'parent_id');
 
         return $this->result();
     }

@@ -10,8 +10,6 @@ use think\facade\Route;
 /**
  * 尽量遵循 restful 设计规范，并以以下顺序注册
  *  'index'  => ['get', '', 'index'],
- *  'create' => ['get', '/create', 'create'],
- *  'edit'   => ['get', '/:id/edit', 'edit'],
  *  'read'   => ['get', '/:id', 'read'],
  *  'save'   => ['post', '', 'save'],
  *  'update' => ['put', '/:id', 'update'],
@@ -42,6 +40,13 @@ Route::group('admin', function () {
  */
 Route::group('v1', function () {
 
+})->allowCrossDomain();
+
+/**
+ * 公共路由
+ */
+Route::group('index', function () {
+    Route::rule('error_logs', 'index/errorLog/save', 'post'); // 记录错误日志
 })->allowCrossDomain();
 
 Route::miss('index/miss');

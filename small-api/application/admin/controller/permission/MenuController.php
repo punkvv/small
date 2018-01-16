@@ -14,7 +14,7 @@ class MenuController extends VController
     public function index()
     {
         $service = new MenuService();
-        $data = $service->getList($this->param);
+        $data = $service->getList();
 
         return $data;
     }
