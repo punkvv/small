@@ -11,6 +11,22 @@ use app\common\VController;
 
 class ErrorLogController extends VController
 {
+    public function index()
+    {
+        $service = new ErrorLogService();
+        $data = $service->getList($this->param);
+
+        return $data;
+    }
+
+    public function dynamicCount()
+    {
+        $service = new ErrorLogService();
+        $data = $service->getDynamicCount();
+
+        return $data;
+    }
+
     public function save()
     {
         $service = new ErrorLogService();

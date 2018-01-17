@@ -24,7 +24,7 @@ class HandleResponse
         if (isset($data['code'])) {
             $code = $data['code'];
             unset($data['code']);
-            $response->data($data);
+            $response->data(isset($data['data']) ? $data['data'] : $data);
             $response->code($code);
         }
     }

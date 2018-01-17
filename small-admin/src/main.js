@@ -11,10 +11,12 @@ import store from './store'
 
 import './icons' // icon
 import './libs/errorLog'// error log
+import './filters'// global filters
+
+Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 
-Vue.use(ElementUI)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

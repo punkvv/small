@@ -4,6 +4,7 @@ import {getToken, setToken, removeToken} from '@/libs/cookie'
 const user = {
   state: {
     token: getToken(),
+    id: '',
     name: '',
     avatar: '',
     router: []
@@ -11,6 +12,9 @@ const user = {
   mutations: {
     SET_TOKEN: (state, token) => {
       state.token = token
+    },
+    SET_ID: (state, id) => {
+      state.id = id
     },
     SET_NAME: (state, name) => {
       state.name = name
@@ -40,6 +44,7 @@ const user = {
       return new Promise((resolve, reject) => {
         getUserInfo().then(data => {
           const userInfo = data.user_info
+          commit('SET_ID', userInfo.id)
           commit('SET_NAME', userInfo.username)
           commit('SET_AVATAR', userInfo.avatar)
           commit('SET_ROUTER', data.router)

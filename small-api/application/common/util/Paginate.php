@@ -6,20 +6,22 @@
 
 namespace app\common\util;
 
-use think\Collection;
-
 class Paginate
 {
-    /** @var Collection 数据集 */
     protected $items;
 
-    /** @var integer|null 数据总数 */
     protected $total;
 
-    public function __construct(array $items, int $total)
+    protected $page;
+
+    protected $limit;
+
+    public function __construct($items, int $total, int $page, int $limit)
     {
         $this->items = $items;
         $this->total = $total;
+        $this->page = $page;
+        $this->limit = $limit;
     }
 
     public function toArray()
@@ -27,13 +29,25 @@ class Paginate
 
         return [
             'total' => intval($this->total()),
-            'items' => $this->items->toArray(),
+            'page' => intval($this->page()),
+            'per_page' => intval($this->limit()),
+            'items' => $this->items,
         ];
     }
 
     public function total()
     {
         return $this->total;
+    }
+
+    public function page()
+    {
+        return $this->page;
+    }
+
+    public function limit()
+    {
+        return $this->limit;
     }
 
 }

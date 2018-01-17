@@ -15,8 +15,17 @@ const _import = file => () => import('@/views/' + file + '.vue')
  * }
  */
 export const constantRouter = [
-  {path: '/login', name: 'login', component: _import('login/login'), hidden: true, meta: {title: '登录', icon: 'home'}},
-  {path: '/404', component: _import('error-page/404'), hidden: true, meta: {title: '404-页面不存在'}},
+  {path: '/login', name: 'login', component: _import('home/login'), hidden: true, meta: {title: '登录'}},
+  {path: '/404', name: '404', component: _import('home/404'), hidden: true, meta: {title: '404-页面不存在'}},
+  {
+    path: '/error-log',
+    redirect: 'errorLog',
+    hidden: true,
+    component: Layout,
+    children: [
+      {path: '/error-log', name: 'errorLog', component: _import('home/error-log'), meta: {title: '错误日志'}}
+    ]
+  },
   {
     path: '',
     component: Layout,

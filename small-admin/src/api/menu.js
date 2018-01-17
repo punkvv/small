@@ -1,8 +1,11 @@
 import request from '@/libs/request'
 
-// 菜单列表
-export const menuList = (query) => request({
+/**
+ * 菜单列表
+ * @param params
+ */
+export const menuList = (params) => request({
   url: 'admin/menus',
   method: 'get',
-  params: query
+  params: params
 })

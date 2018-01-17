@@ -18,9 +18,4 @@ class LoginController extends VController
 
         return $data;
     }
-
-    public function logout()
-    {
-
-    }
 }

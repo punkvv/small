@@ -14,10 +14,11 @@ class VModel extends Model
     protected function nativePaginate(
         string $select,
         string $sqlExceptSelect,
-        int $pageNumber = 1,
-        int $pageSize = 20,
+        array $gen,
         array $bind = []
     ) {
+        $pageNumber = $gen['page'];
+        $pageSize = $gen['per_page'];
         if ($pageNumber < 1 || $pageSize < 1) {
             return false;
         }
@@ -33,7 +34,7 @@ class VModel extends Model
         }
 
         if ($totalRow == 0) {
-            $paginate = new Paginate([], 0);
+            $paginate = new Paginate([], 0, $pageNumber, $pageSize);
 
             return $paginate->toArray();
         }
@@ -43,7 +44,7 @@ class VModel extends Model
             $totalPage++;
         }
         if ($pageNumber > $totalPage) {
-            $paginate = new Paginate([], $totalRow);
+            $paginate = new Paginate([], $totalRow, $pageNumber, $pageSize);
 
             return $paginate->toArray();
         }
@@ -51,9 +52,20 @@ class VModel extends Model
         $findSql = $select.' '.$sqlExceptSelect;
         $sql = $this->mysqlForPaginate($pageNumber, $pageSize, $findSql);
         $items = $this->query($sql, $bind);
-        $paginate = new Paginate($items, $totalRow);
+        $paginate = new Paginate($items, $totalRow, $pageNumber, $pageSize);
 
         return $paginate->toArray();
+    }
+
+    protected function genPage(array $param)
+    {
+        $pageNumber = empty($param['page']) ? 1 : $param['page'];
+        $pageSize = empty($param['per_page']) ? 100000000 : $param['per_page'];
+
+        return [
+            'page' => $pageNumber,
+            'per_page' => $pageSize,
+        ];
     }
 
     protected function like(string $str): string

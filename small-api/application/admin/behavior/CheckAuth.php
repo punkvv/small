@@ -16,23 +16,18 @@ use app\common\VSession;
  */
 class CheckAuth
 {
-    // 免权限检查 API
-    private $whiteList = [
-        'admin/login/login',
-        'admin/login/logout',
-    ];
-
-
     public function run($params)
     {
         $request = request();
-        $rule = $request->routeInfo()['rule'];
-        if (!in_array($rule, $this->whiteList)) {
+        $param = $request->param();
+        if (!isset($param['v_check']) || $param['v_check']) {
+            $rule = $request->routeInfo()['rule'];
+            $methods = $request->method();
             $controller = $params[0];
             // 检查 token
             $controller->checkToken();
             // TODO 检查 API 权限
-            if (!$this->checkApi($rule)) {
+            if (!$this->checkApi($rule, $methods)) {
                 $data['message'] = '没有权限';
                 $data['name'] = 'NO_AUTHORITY';
                 $data['code'] = HttpCode::$unauthorized;
@@ -41,7 +36,7 @@ class CheckAuth
         }
     }
 
-    private function checkApi($rule)
+    private function checkApi($rule, $methods)
     {
         return true;
     }
