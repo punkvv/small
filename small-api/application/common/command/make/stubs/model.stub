@@ -1,0 +1,10 @@
+<?php
+
+namespace {%namespace%};
+
+use app\common\VModel;
+
+class {%className%} extends VModel
+{
+    //
+}

@@ -30,7 +30,7 @@ export const constantRouter = [
     path: '',
     component: Layout,
     redirect: 'home',
-    hidden: false,
+    hidden: true,
     children: [
       {path: 'home', name: 'home', component: _import('home/home'), meta: {title: '首页', icon: 'home'}}
     ]

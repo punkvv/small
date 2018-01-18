@@ -72,24 +72,18 @@ class VService
 
     protected function result()
     {
-        $data = [];
         if (isset($this->message)) {
-            $data['message'] = $this->message;
+            $this->data['message'] = $this->message;
         }
         if (isset($this->name)) {
-            $data['name'] = $this->name;
+            $this->data['name'] = $this->name;
         }
         if (isset($this->status)) {
-            $data['status'] = $this->status;
+            $this->data['status'] = $this->status;
         }
-        $data['code'] = $this->code;
-        if (is_array($this->data)) {
-            $data = array_merge($data, $this->data);
-        } else {
-            $data['data'] = $this->data;
-        }
+        $this->data['code'] = $this->code;
 
-        return $data;
+        return $this->data;
     }
 
 }

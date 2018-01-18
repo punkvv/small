@@ -8,21 +8,20 @@ namespace app\common\command\make;
 
 use think\console\command\Make;
 
-class Controller extends Make
+class Model extends Make
 {
-    protected $type = "Controller";
+
+    protected $type = "Model";
 
     protected function configure()
     {
         parent::configure();
-        $this->setName('make:v-controller')
-            ->setDescription('Create a new resource controller class');
+        $this->setName('make:v-model')
+            ->setDescription('Create a new model class');
     }
-
 
     protected function getStub()
     {
-        return __DIR__.'/stubs/controller.stub';
+        return __DIR__.'/stubs/model.stub';
     }
-
 }

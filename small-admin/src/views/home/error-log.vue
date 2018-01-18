@@ -7,8 +7,9 @@
 <template>
   <div class="error-log-page">
     <div class="operate-container">
-      <el-button @click="" class="operate-item" type="primary" icon="el-icon-circle-check">全部处理完成</el-button>
-      <el-button @click="" class="operate-item" type="danger" icon="el-icon-delete">全部删除</el-button>
+      <el-button @click="changeStatusAll" class="operate-item" type="primary" icon="el-icon-circle-check">全部处理完成
+      </el-button>
+      <el-button @click="deleteAll" class="operate-item" type="danger" icon="el-icon-delete">全部删除</el-button>
     </div>
 
     <div class="search-container">
@@ -75,8 +76,10 @@
           </el-table-column>
           <el-table-column align="center" label="操作" width="80">
             <template slot-scope="scope">
-              <el-button type="success" size="mini" v-if="scope.row.status===1">打开</el-button>
-              <el-button type="primary" size="mini" v-else>处理</el-button>
+              <el-button @click="changeStatus(scope.row, 2)" type="success" size="mini" v-if="scope.row.status===1">
+                打开
+              </el-button>
+              <el-button @click="changeStatus(scope.row, 1)" type="primary" size="mini" v-else>处理</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -96,7 +99,7 @@
 </template>
 
 <script>
-  import {errorLogList} from '@/api/base'
+  import {errorLogList, changeStatus, changeStatusAll, deleteAll} from '@/api/errorLog'
 
   export default {
     name: 'errorLogPage',
@@ -137,6 +140,18 @@
       },
       handleCurrentChange(val) {
         this.filters.page = val
+        this.getList()
+      },
+      changeStatus(item, type) {
+        changeStatus(item.id, type)
+        item.status = Math.abs(item.status - 1)
+      },
+      async changeStatusAll() {
+        await changeStatusAll()
+        this.getList()
+      },
+      async deleteAll() {
+        await deleteAll()
         this.getList()
       }
     }

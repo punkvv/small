@@ -40,7 +40,7 @@ class LoginService extends VService
                 // 登录成功生成 token
                 $userId = $info->id;
                 $value = [
-                    'id' => $userId,
+                    'admin_id' => $userId,
                 ];
                 $token = Token::create($value, 2 * 60 * 60);
                 $this->data['token'] = $token;

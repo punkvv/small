@@ -61,9 +61,35 @@ class VController extends Controller
         $this->token = $token;
     }
 
-    protected function userId()
+    public function adminId()
     {
-        return $this->getTokenInfo()['id'];
+        $info = $this->getTokenInfo();
+        if (!isset($info['admin_id'])) {
+            $data['code'] = HttpCode::$unauthorized;
+            $data['name'] = 'TOKEN_FAIL';
+            $data['message'] = 'Token 异常';
+            $this->restful($data);
+        }
+
+        return $info['admin_id'];
+    }
+
+    public function userId($userId)
+    {
+        $info = $this->getTokenInfo();
+        if (!isset($info['user_id'])) {
+            $data['code'] = HttpCode::$unauthorized;
+            $data['name'] = 'TOKEN_FAIL';
+            $data['message'] = 'Token 异常';
+            $this->restful($data);
+        } elseif ($info['user_id'] != $userId) {
+            $data['code'] = HttpCode::$unauthorized;
+            $data['name'] = 'UNAUTHORIZED';
+            $data['message'] = '未登录';
+            $this->restful($data);
+        }
+
+        return $userId;
     }
 
     public function getTokenInfo()

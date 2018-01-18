@@ -33,4 +33,11 @@ class ErrorLog extends VModel
 
         return $data;
     }
+
+    public function getDataById($id)
+    {
+        $data = $this->field('id,create_time,router,message,type,status')->where('id', $id)->find();
+
+        return $data;
+    }
 }

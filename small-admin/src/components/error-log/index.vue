@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import {errorLogDynamicCount} from '@/api/base'
+  import {errorLogDynamicCount} from '@/api/errorLog'
 
   export default {
     name: 'errorLog',
@@ -40,10 +40,11 @@
     methods: {
       async getData() {
         const data = await errorLogDynamicCount()
-        this.errorCount = data
-        this.content = `有${data}条未处理错误`
+        this.errorCount = data.count
+        this.content = `有${this.errorCount}条未处理错误`
       },
       toErrorPage() {
+        this.errorCount = 0
         this.$router.push({name: 'errorLog'})
       }
     },

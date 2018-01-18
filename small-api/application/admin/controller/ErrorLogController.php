@@ -4,7 +4,7 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-namespace app\index\controller;
+namespace app\admin\controller;
 
 use app\common\service\base\ErrorLogService;
 use app\common\VController;
@@ -23,6 +23,30 @@ class ErrorLogController extends VController
     {
         $service = new ErrorLogService();
         $data = $service->getDynamicCount();
+
+        return $data;
+    }
+
+    public function changeStatus()
+    {
+        $service = new ErrorLogService();
+        $data = $service->changeStatus($this->param['id'], $this->param['type']);
+
+        return $data;
+    }
+
+    public function changeStatusAll()
+    {
+        $service = new ErrorLogService();
+        $data = $service->changeStatusAll();
+
+        return $data;
+    }
+
+    public function deleteAll()
+    {
+        $service = new ErrorLogService();
+        $data = $service->deleteAll();
 
         return $data;
     }
