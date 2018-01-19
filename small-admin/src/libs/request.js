@@ -27,20 +27,22 @@ service.interceptors.response.use(
   error => {
     const data = error.response.data
     const name = data.name
-    Message({
-      message: data.message,
-      type: 'error',
-      showClose: true,
-      duration: 5 * 1000
-    })
+    let message = data.message
     if (name === 'TOKEN_FAIL') {
+      message = '登录已过期'
       // token 无效或者过期
       setTimeout(() => {
         store.dispatch('logOut').then(() => {
           location.reload() // 为了重新实例化vue-router对象 避免bug
         })
-      }, 1000)
+      }, 2000)
     }
+    Message({
+      message: message,
+      type: 'error',
+      showClose: true,
+      duration: 5 * 1000
+    })
     return Promise.reject(error)
   }
 )

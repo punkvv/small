@@ -7,6 +7,9 @@
 namespace app\common;
 
 use app\common\util\token\Token;
+use Firebase\JWT\BeforeValidException;
+use Firebase\JWT\ExpiredException;
+use Firebase\JWT\SignatureInvalidException;
 use think\Controller;
 use think\exception\HttpResponseException;
 use think\facade\Response;
@@ -103,11 +106,28 @@ class VController extends Controller
 
     public function checkToken()
     {
-        $info = Token::get($this->token);
-        if (!$info) {
+        $message = '';
+        $info = [];
+        if (empty($this->token)) {
+            $message = 'Token 不能为空';
+        } else {
+            try {
+                $info = Token::get($this->token);
+            } catch (SignatureInvalidException $e) {
+                $message = 'Token 验证失败';
+            } catch (BeforeValidException $e) {
+                $message = 'Token 已过期';
+            } catch (ExpiredException $e) {
+                $message = 'Token 已过期';
+            } catch (\UnexpectedValueException $e) {
+                $message = 'Token 无效';
+            }
+        }
+
+        if (!empty($message)) {
             $data['code'] = HttpCode::$unauthorized;
             $data['name'] = 'TOKEN_FAIL';
-            $data['message'] = '登录已过期';
+            $data['message'] = $message;
             $this->restful($data);
         } else {
             $this->info = $info;

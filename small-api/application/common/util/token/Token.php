@@ -37,13 +37,10 @@ class Token
 
     public static function get(string $jwt)
     {
-        try {
-            $publicKey = file_get_contents(self::getPublicKeyPath());
-            $decoded = JWT::decode($jwt, $publicKey, ['RS256']);
+        $publicKey = file_get_contents(self::getPublicKeyPath());
+        $decoded = JWT::decode($jwt, $publicKey, ['RS256']);
 
-            return (array)$decoded;
-        } catch (\Exception $exception) {
-            return false;
-        }
+        return (array)$decoded;
+
     }
 }
