@@ -63,4 +63,59 @@ util.strtotime = (time = new Date()) => {
   return moment(time).format('X')
 }
 
+function deepCloneKey(source, key) {
+  let val = null
+  if (source.hasOwnProperty(key)) {
+    if (source[key] && typeof source[key] === 'object') {
+      val = source[key].constructor === Array ? [] : {}
+      val = util.deepClone(source[key])
+    } else {
+      val = source[key]
+    }
+  }
+  return val
+}
+
+/**
+ * 复制对象属性
+ * @param target
+ * @param source
+ * @param attr
+ */
+util.copyAttr = (target, source, attrs = []) => {
+  if (attrs.length > 0) {
+    attrs.forEach(key => {
+      target[key] = deepCloneKey(source, key)
+    })
+  } else {
+    for (const key in target) {
+      target[key] = deepCloneKey(source, key)
+    }
+  }
+  return target
+}
+
+/**
+ * 深拷贝
+ * @param source
+ * @returns {*}
+ */
+util.deepClone = (source) => {
+  if (!source && typeof source !== 'object') {
+    throw new Error('error arguments', 'shallowClone')
+  }
+  const targetObj = source.constructor === Array ? [] : {}
+  for (const keys in source) {
+    if (source.hasOwnProperty(keys)) {
+      if (source[keys] && typeof source[keys] === 'object') {
+        targetObj[keys] = source[keys].constructor === Array ? [] : {}
+        targetObj[keys] = util.deepClone(source[keys])
+      } else {
+        targetObj[keys] = source[keys]
+      }
+    }
+  }
+  return targetObj
+}
+
 export default util

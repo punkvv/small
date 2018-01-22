@@ -11,12 +11,6 @@ use app\common\VModel;
 class AdminMenu extends VModel
 {
 
-    /**
-     * @return array|\PDOStatement|string|\think\Collection
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
     public function getAll()
     {
         $query = $this->field('id,name,menu_name,parent_id,router')
@@ -27,12 +21,6 @@ class AdminMenu extends VModel
         return $items;
     }
 
-    /**
-     * @param $adminId
-     * @return mixed
-     * @throws \think\db\exception\BindParamException
-     * @throws \think\exception\PDOException
-     */
     public function getListByAdminId($adminId)
     {
         $sql = 'SELECT a.id,a.name,a.menu_name,a.parent_id,a.router 
@@ -44,4 +32,5 @@ class AdminMenu extends VModel
 
         return $items;
     }
+
 }

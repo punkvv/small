@@ -63,7 +63,7 @@ class VService
         $isCheck = $validate->check($param);
         if (!$isCheck) {
             $this->message = $validate->getError();
-            $this->name = 'FIELD_TYPE_MISMATCH';
+            $this->name = 'FIELD_VALIDATION_ERROR';
             $this->code = HttpCode::$unprocesableEntity;
         }
 

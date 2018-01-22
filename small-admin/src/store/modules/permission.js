@@ -1,5 +1,22 @@
 import {constantRouter, asyncRouter} from '@/router/router'
 
+function hasPermission(router, route) {
+  return router.indexOf(route.name) >= 0
+}
+
+function filterAsyncRouter(asyncRouter, router) {
+  const accessedRouters = asyncRouter.filter(route => {
+    if (hasPermission(router, route)) {
+      if (route.children && route.children.length) {
+        route.children = filterAsyncRouter(route.children, router)
+      }
+      return true
+    }
+    return false
+  })
+  return accessedRouters
+}
+
 const permission = {
   state: {
     routers: constantRouter,
@@ -14,13 +31,13 @@ const permission = {
   actions: {
     generateRoutes({commit}, data) {
       return new Promise(resolve => {
-        // const router = data.router
+        const router = data.router
         let accessedRouters
         const userId = data.user_info.id
         if (userId === 1) {
           accessedRouters = asyncRouter
         } else {
-          accessedRouters = []
+          accessedRouters = filterAsyncRouter(asyncRouter, router)
         }
         commit('SET_ROUTERS', accessedRouters)
         resolve()

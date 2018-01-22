@@ -23,6 +23,6 @@ class VRoute
             $paramStr .= $key.'='.$value.'&';
         }
         $paramStr = substr($paramStr, 0, -1);
-        Route::rule($rule, $route.$paramStr, $method = '*', $option = [], $pattern = []);
+        Route::rule($rule, $route.$paramStr, $method, $option, $pattern);
     }
 }

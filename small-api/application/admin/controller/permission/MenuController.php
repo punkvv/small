@@ -18,4 +18,20 @@ class MenuController extends VController
 
         return $data;
     }
+
+    public function create()
+    {
+        $service = new MenuService();
+        $data = $service->createData($this->param);
+
+        return $data;
+    }
+
+    public function countFiled()
+    {
+        $service = new MenuService();
+        $data = $service->countFiled($this->param['filed'], $this->param['value']);
+
+        return $data;
+    }
 }
