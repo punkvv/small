@@ -46,7 +46,7 @@
                 <el-table-column align="center" label="操作" width="154">
                   <template slot-scope="scope">
                     <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
-                    <el-button type="danger" size="mini">删除</el-button>
+                    <el-button type="danger" size="mini" @click="handleDelete(scope.row.id)">删除</el-button>
                   </template>
                 </el-table-column>
               </el-table>
@@ -69,7 +69,7 @@
           <el-table-column align="center" label="操作" width="154">
             <template slot-scope="scope">
               <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
-              <el-button type="danger" size="mini">删除</el-button>
+              <el-button type="danger" size="mini" @click="handleDelete(scope.row.id)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -83,7 +83,7 @@
         :visible.sync="editorVisible">
         <el-form :model="editor" :rules="editorRules" ref="editor" label-width="120px">
           <el-form-item label="上级菜单" prop="parent_id">
-            <el-select v-model="editor.parent_id" clearable placeholder="请选择">
+            <el-select v-model="editor.parent_id" clearable placeholder="不选则为顶级菜单">
               <el-option
                 v-for="item in list"
                 :key="item.id"
@@ -113,7 +113,7 @@
 </template>
 
 <script>
-  import {menuList, createMenu, countFiled} from '@/api/menu'
+  import {menuList, createMenu, updateMenu, countFiled, deleteMenu} from '@/api/menu'
   import Util from '@/libs/util'
 
   export default {
@@ -127,8 +127,21 @@
         if (value.length > 10) {
           return callback(new Error('长度不能超过10个字符'))
         }
-
-        countFiled('menu_name', value).then((data) => {
+        countFiled('menu_name', value, this.editor.id).then((data) => {
+          if (data.count >= 1) {
+            callback(new Error('不能重复'))
+          }
+          callback()
+        })
+      }
+      const checkName = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('不能为空'))
+        }
+        if (value.length > 10) {
+          return callback(new Error('长度不能超过10个字符'))
+        }
+        countFiled('name', value, this.editor.id).then((data) => {
           if (data.count >= 1) {
             callback(new Error('不能重复'))
           }
@@ -155,8 +168,7 @@
             {validator: checkMenuName, required: true, trigger: 'blur'}
           ],
           name: [
-            {required: true, message: '不能为空', trigger: 'blur'},
-            {max: 10, message: '长度不能超过10个字符', trigger: 'blur'}
+            {validator: checkName, required: true, trigger: 'blur'}
           ]
         },
         editorLoading: false,
@@ -194,6 +206,25 @@
         this.editorVisible = true
         this.editorStatus = 2
         this.editor = Util.copyAttr(this.editor, item)
+        this.$nextTick(() => {
+          this.$refs['editor'].clearValidate()
+        })
+      },
+      handleDelete(id) {
+        this.$confirm('是否确定删除?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteMenu(id).then(() => {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+            this.getList()
+          })
+        }).catch(() => {
+        })
       },
       createData() {
         this.$refs['editor'].validate((valid) => {
@@ -202,31 +233,28 @@
             createMenu(this.editor).then((data) => {
               this.editorLoading = false
               this.editorVisible = false
-              this.$notify({
-                title: '成功',
-                message: '创建成功',
-                type: 'success'
-              })
-              this.joinList(data)
+              this.$message({type: 'success', message: '保存成功!'})
+              this.getList()
+            }).catch(() => {
+              this.editorLoading = false
             })
           }
         })
       },
       updateData() {
-      },
-      joinList(data) {
-        const parentId = data.parent_id
-        if (parentId === null) { // 如果为顶级菜单
-          data = Object.assign(data, {child: []})
-          this.list.push(data)
-        } else { // 如果为二级菜单
-          for (let i = 0, len = this.list.length; i < len; i++) {
-            if (this.list[i].id === parentId) {
-              this.list[i].child.push(data)
-              break
-            }
+        this.$refs['editor'].validate((valid) => {
+          if (valid) {
+            this.editorLoading = true
+            updateMenu(this.editor).then((data) => {
+              this.editorLoading = false
+              this.editorVisible = false
+              this.$message({type: 'success', message: '保存成功!'})
+              this.getList()
+            }).catch(() => {
+              this.editorLoading = false
+            })
           }
-        }
+        })
       }
     }
   }

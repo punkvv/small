@@ -13,10 +13,8 @@ class AdminMenu extends VModel
 
     public function getAll()
     {
-        $query = $this->field('id,name,menu_name,parent_id,router')
-            ->where('is_del', 1)->order('sort', 'desc');
-
-        $items = $query->select();
+        $items = $this->field('id,name,menu_name,parent_id,router')
+            ->order('sort', 'desc')->select();
 
         return $items;
     }

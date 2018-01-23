@@ -20,8 +20,33 @@ export const createMenu = (data) => request({
   data: data
 })
 
-export const countFiled = (filed, value) => request({
+/**
+ * 更新菜单
+ * @param data
+ */
+export const updateMenu = (data) => request({
+  url: 'admin/menus/' + data.id,
+  method: 'put',
+  data: data
+})
+
+/**
+ * 删除菜单
+ * @param id
+ */
+export const deleteMenu = (id) => request({
+  url: 'admin/menus/' + id,
+  method: 'delete'
+})
+
+/**
+ * 某个字段值相同数量
+ * @param filed
+ * @param value
+ * @param id 排除的值
+ */
+export const countFiled = (filed, value, id = null) => request({
   url: 'admin/menus/count_filed',
   method: 'post',
-  data: {filed: filed, value: value}
+  data: {filed: filed, value: value, id: id}
 })

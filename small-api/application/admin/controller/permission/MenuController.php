@@ -27,10 +27,26 @@ class MenuController extends VController
         return $data;
     }
 
+    public function update()
+    {
+        $service = new MenuService();
+        $data = $service->updateData($this->param);
+
+        return $data;
+    }
+
+    public function delete()
+    {
+        $service = new MenuService();
+        $data = $service->deleteData($this->param['id']);
+
+        return $data;
+    }
+
     public function countFiled()
     {
         $service = new MenuService();
-        $data = $service->countFiled($this->param['filed'], $this->param['value']);
+        $data = $service->countFiled($this->param);
 
         return $data;
     }

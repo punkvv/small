@@ -87,17 +87,27 @@ Route::group('admin', function () {
         VRoute::rule(
             '',
             'admin/permission.menu/index',
-            ['v_name' => '菜单列表'],
+            ['v_name' => '菜单列表', 'v_log' => false],
             'get');
         VRoute::rule(
             '',
             'admin/permission.menu/create',
-            ['v_name' => '新增菜单列表'],
+            ['v_name' => '创建菜单'],
             'post');
+        VRoute::rule(
+            '/:id',
+            'admin/permission.menu/update',
+            ['v_name' => '更新菜单'],
+            'put');
+        VRoute::rule(
+            '/:id',
+            'admin/permission.menu/delete',
+            ['v_name' => '删除菜单'],
+            'delete');
         VRoute::rule(
             'count_filed',
             'admin/permission.menu/countFiled',
-            ['v_name' => '获取菜单里的某个字段值的重复数', 'v_log' => false],
+            ['v_name' => '获取菜单某个字段值的数量', 'v_log' => false],
             'post');
     });
 })->allowCrossDomain();

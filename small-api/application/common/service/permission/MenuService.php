@@ -27,24 +27,53 @@ class MenuService extends VService
     {
         $validate = new MenuValidate();
         if ($this->validate($param, $validate, 'create')) {
-            $data = [
+            $data = AdminMenu::create([
                 'name' => $param['name'],
                 'menu_name' => $param['menu_name'],
-                'parent_id' => empty($param['parent_id']) ? null : intval($param['parent_id']),
+                'parent_id' => $param['parent_id'],
                 'router' => $param['router'],
-            ];
-            AdminMenu::save($data);
-            $data['id'] = AdminMenu::getLastInsID();
-
+            ]);
             $this->data = $data;
         }
 
         return $this->result();
     }
 
-    public function countFiled($filed, $val)
+    public function updateData($param)
     {
-        $this->data['count'] = AdminMenu::where($filed, $val)->count();
+        $validate = new MenuValidate();
+        if ($this->validate($param, $validate, 'update')) {
+            $data = AdminMenu::update([
+                'id' => $param['id'],
+                'name' => $param['name'],
+                'menu_name' => $param['menu_name'],
+                'parent_id' => $param['parent_id'],
+                'router' => $param['router'],
+            ]);
+            $this->data = $data;
+        }
+
+        return $this->result();
+    }
+
+    public function deleteData($id)
+    {
+        $data = AdminMenu::get($id);
+        $data->delete();
+
+        return $this->result();
+    }
+
+    public function countFiled($param)
+    {
+        $filed = $param['filed'];
+        $val = $param['value'];
+        $id = $param['id'];
+        $query = AdminMenu::where($filed, $val);
+        if ($id) {
+            $query->where('id', '<>', $id);
+        }
+        $this->data['count'] = $query->count();
 
         return $this->result();
     }
