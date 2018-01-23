@@ -6,7 +6,7 @@
 
 namespace app\common;
 
-use app\common\model\base\facade\ErrorLog;
+use app\common\model\facade\ErrorLog;
 use Exception;
 use think\exception\Handle;
 use think\facade\Config;

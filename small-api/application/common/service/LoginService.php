@@ -4,7 +4,7 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-namespace app\common\service\permission;
+namespace app\common\service;
 
 use app\common\HttpCode;
 use app\common\model\permission\facade\AdminUser;

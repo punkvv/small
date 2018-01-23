@@ -4,10 +4,10 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-namespace app\common\service\base;
+namespace app\common\service;
 
 use app\common\HttpCode;
-use app\common\model\base\facade\ErrorLog;
+use app\common\model\facade\ErrorLog;
 use app\common\VService;
 
 class ErrorLogService extends VService

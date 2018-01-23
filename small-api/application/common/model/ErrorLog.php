@@ -4,7 +4,7 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-namespace app\common\model\base;
+namespace app\common\model;
 
 use app\common\VModel;
 

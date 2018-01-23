@@ -4,18 +4,18 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-namespace app\common\model\base\facade;
+namespace app\common\model\facade;
 
 use think\Facade;
 
 /**
- * @see \app\common\model\base\ApiLog
- * @mixin \app\common\model\base\ApiLog
+ * @see \app\common\model\ApiLog
+ * @mixin \app\common\model\ApiLog
  */
 class ApiLog extends Facade
 {
     protected static function getFacadeClass()
     {
-        return '\app\common\model\base\ApiLog';
+        return '\app\common\model\ApiLog';
     }
 }

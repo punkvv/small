@@ -6,7 +6,7 @@
 
 namespace app\admin\controller;
 
-use app\common\service\base\ErrorLogService;
+use app\common\service\ErrorLogService;
 use app\common\VController;
 
 class ErrorLogController extends VController

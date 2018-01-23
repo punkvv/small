@@ -4,9 +4,9 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-namespace app\admin\controller\permission;
+namespace app\admin\controller;
 
-use app\common\service\permission\LoginService;
+use app\common\service\LoginService;
 use app\common\VController;
 
 class LoginController extends VController

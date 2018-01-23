@@ -113,7 +113,7 @@
 </template>
 
 <script>
-  import {menuList, createMenu, updateMenu, countFiled, deleteMenu} from '@/api/menu'
+  import {menuList, createMenu, updateMenu, countFiled, deleteMenu} from '@/api/permission/menu'
   import Util from '@/libs/util'
 
   export default {

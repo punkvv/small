@@ -7,7 +7,7 @@
 namespace app\admin\behavior;
 
 use app\common\HttpCode;
-use app\common\model\base\facade\ApiLog;
+use app\common\model\facade\ApiLog;
 
 /**
  * 权限检查

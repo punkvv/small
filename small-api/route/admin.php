@@ -68,7 +68,7 @@ Route::group('admin', function () {
     Route::group('login', function () {
         VRoute::rule(
             'login',
-            'admin/permission.login/login',
+            'admin/login/login',
             ['v_name' => '登录', 'v_check' => false],
             'post');
     });
@@ -108,6 +108,35 @@ Route::group('admin', function () {
             'count_filed',
             'admin/permission.menu/countFiled',
             ['v_name' => '获取菜单某个字段值的数量', 'v_log' => false],
+            'post');
+    });
+
+    // 角色相关
+    Route::group('roles', function () {
+        VRoute::rule(
+            '',
+            'admin/permission.role/index',
+            ['v_name' => '角色列表', 'v_log' => false],
+            'get');
+        VRoute::rule(
+            '',
+            'admin/permission.role/create',
+            ['v_name' => '创建角色'],
+            'post');
+        VRoute::rule(
+            '/:id',
+            'admin/permission.role/update',
+            ['v_name' => '更新角色'],
+            'put');
+        VRoute::rule(
+            '/:id',
+            'admin/permission.role/delete',
+            ['v_name' => '删除角色'],
+            'delete');
+        VRoute::rule(
+            '/:id',
+            'admin/permission.role/set_permission',
+            ['v_name' => '设置角色权限'],
             'post');
     });
 })->allowCrossDomain();
