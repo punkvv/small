@@ -14,15 +14,17 @@ class VModel extends Model
     protected function nativePaginate(
         string $select,
         string $sqlExceptSelect,
-        array $gen,
+        array $gen = ['page' => 1, 'per_page' => 100000000],
         array $bind = []
     ) {
         $pageNumber = $gen['page'];
         $pageSize = $gen['per_page'];
         if ($pageNumber < 1 || $pageSize < 1) {
-            return false;
+            $paginate = new Paginate([], 0, $pageNumber, $pageSize);
+
+            return $paginate->toArray();
         }
-        $totalRowSql = 'SELECT COUNT(*) '.static::replaceOrderBy($sqlExceptSelect);
+        $totalRowSql = 'SELECT COUNT(*) '.$this->replaceOrderBy($sqlExceptSelect);
         $result = $this->query($totalRowSql, $bind);
         $size = count($result);
         $isGroupBySql = $size > 1;
@@ -57,14 +59,14 @@ class VModel extends Model
         return $paginate->toArray();
     }
 
-    protected function genPage(array $param)
+    protected function getPage(array $param)
     {
         $pageNumber = empty($param['page']) ? 1 : $param['page'];
         $pageSize = empty($param['per_page']) ? 100000000 : $param['per_page'];
 
         return [
-            'page' => $pageNumber,
-            'per_page' => $pageSize,
+            'page' => intval($pageNumber),
+            'per_page' => intval($pageSize),
         ];
     }
 
@@ -100,5 +102,20 @@ class VModel extends Model
             $sqlExceptSelect);
 
         return $str;
+    }
+
+    protected function falseDelete($id)
+    {
+        $this->changeFiledByPk($id, 'is_del', 0);
+    }
+
+    protected function changeStatus($id, $status)
+    {
+        $this->changeFiledByPk($id, 'status', $status);
+    }
+
+    private function changeFiledByPk($id, $filed, $value)
+    {
+        $this->where($this->getPk(), $id)->setField($filed, $value);
     }
 }

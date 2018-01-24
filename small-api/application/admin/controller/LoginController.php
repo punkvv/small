@@ -11,10 +11,10 @@ use app\common\VController;
 
 class LoginController extends VController
 {
-    public function login()
+    public function loginByPassword()
     {
         $service = new LoginService();
-        $data = $service->login($this->param);
+        $data = $service->loginByPassword($this->param);
 
         return $data;
     }

@@ -11,69 +11,20 @@
 <template>
   <div class="menus">
     <div class="operate-container">
-      <el-button @click="handleCreate" class="operate-item" type="primary" icon="el-icon-edit">新增</el-button>
+      <el-button @click="handleCreate" class="operate-item" type="primary" icon="el-icon-edit">新增
+      </el-button>
     </div>
 
     <div class="table-container">
       <el-card class="box-card">
-        <el-table
-          v-loading="loading"
-          :data="list"
-          :default-expand-all="true"
-          border
-          style="width: 100%">
-          <el-table-column
-            type="expand">
-            <template slot-scope="props" v-if="props.row.child.length>0">
-              <el-table
-                :data="props.row.child"
-                :show-header="false"
-                border
-                style="width: 100%">
-                <el-table-column
-                  prop="menu_name"
-                  width="180">
-                </el-table-column>
-                <el-table-column
-                  prop="name"
-                  label="路由名称"
-                  width="180">
-                </el-table-column>
-                <el-table-column
-                  prop="router"
-                  label="可访问路由">
-                </el-table-column>
-                <el-table-column align="center" label="操作" width="154">
-                  <template slot-scope="scope">
-                    <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
-                    <el-button type="danger" size="mini" @click="handleDelete(scope.row.id)">删除</el-button>
-                  </template>
-                </el-table-column>
-              </el-table>
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="menu_name"
-            label="菜单名称"
-            width="180">
-          </el-table-column>
-          <el-table-column
-            prop="name"
-            label="路由名称"
-            width="180">
-          </el-table-column>
-          <el-table-column
-            prop="router"
-            label="可访问路由">
-          </el-table-column>
-          <el-table-column align="center" label="操作" width="154">
+        <tree-table :data="list" :columns="columns" :expandAll="true" v-loading="loading" border>
+          <el-table-column label="操作" width="154">
             <template slot-scope="scope">
               <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
               <el-button type="danger" size="mini" @click="handleDelete(scope.row.id)">删除</el-button>
             </template>
           </el-table-column>
-        </el-table>
-
+        </tree-table>
       </el-card>
     </div>
 
@@ -103,9 +54,9 @@
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="editorVisible = false">取 消</el-button>
-          <el-button type="primary" :loading="editorLoading" @click="createData" v-if="editorStatus==1">提 交</el-button>
-          <el-button type="primary" :loading="editorLoading" @click="updateData" v-else>提 交</el-button>
+          <el-button @click="editorVisible = false">取消</el-button>
+          <el-button type="primary" :loading="editorLoading" @click="createData" v-if="editorStatus==1">提交</el-button>
+          <el-button type="primary" :loading="editorLoading" @click="updateData" v-else>提交</el-button>
        </span>
       </el-dialog>
     </div>
@@ -113,41 +64,13 @@
 </template>
 
 <script>
-  import {menuList, createMenu, updateMenu, countFiled, deleteMenu} from '@/api/permission/menu'
-  import Util from '@/libs/util'
+  import {TreeTable} from '@/components'
+  import {menuList, createMenu, updateMenu, deleteMenu} from '@/api/permission/menu'
 
   export default {
     name: 'menus',
-    components: {},
+    components: {TreeTable},
     data() {
-      const checkMenuName = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('不能为空'))
-        }
-        if (value.length > 10) {
-          return callback(new Error('长度不能超过10个字符'))
-        }
-        countFiled('menu_name', value, this.editor.id).then((data) => {
-          if (data.count >= 1) {
-            callback(new Error('不能重复'))
-          }
-          callback()
-        })
-      }
-      const checkName = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('不能为空'))
-        }
-        if (value.length > 10) {
-          return callback(new Error('长度不能超过10个字符'))
-        }
-        countFiled('name', value, this.editor.id).then((data) => {
-          if (data.count >= 1) {
-            callback(new Error('不能重复'))
-          }
-          callback()
-        })
-      }
       return {
         loading: false,
         editorTitle: {
@@ -165,13 +88,31 @@
         },
         editorRules: {
           menu_name: [
-            {validator: checkMenuName, required: true, trigger: 'blur'}
+            {required: true, message: '不能为空', trigger: 'blur'},
+            {max: 20, message: '长度不能超过 20 个字符', trigger: 'blur'}
           ],
           name: [
-            {validator: checkName, required: true, trigger: 'blur'}
+            {required: true, message: '不能为空', trigger: 'blur'},
+            {max: 20, message: '长度不能超过 20 个字符', trigger: 'blur'}
           ]
         },
         editorLoading: false,
+        columns: [
+          {
+            text: '菜单名称',
+            value: 'menu_name',
+            width: 180
+          },
+          {
+            text: '路由名称',
+            value: 'name',
+            width: 180
+          },
+          {
+            text: '可访问路由',
+            value: 'router'
+          }
+        ],
         list: []
       }
     },
@@ -205,7 +146,7 @@
       handleUpdate(item) {
         this.editorVisible = true
         this.editorStatus = 2
-        this.editor = Util.copyAttr(this.editor, item)
+        this.editor = Object.assign({}, item)
         this.$nextTick(() => {
           this.$refs['editor'].clearValidate()
         })

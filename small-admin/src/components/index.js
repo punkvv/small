@@ -8,3 +8,4 @@ export {default as ScreenFull} from './screenfull'            // 全屏
 export {default as ThemePicker} from './theme-picker'         // 主题色选择
 export {default as ScrollPane} from './scroll-pane'           // 横向滚动面板
 export {default as BackToTop} from './back-to-top'            // 返回顶部
+export {default as TreeTable} from './tree-table'             // 树形表格

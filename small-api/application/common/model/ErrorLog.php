@@ -12,10 +12,26 @@ class ErrorLog extends VModel
 {
     public function getList($param)
     {
-        $gen = $this->genPage($param);
+        $where = '';
+        $bind = [];
+        if (!empty($param['type'])) {
+            $where .= ' AND type=:type';
+            $bind['type'] = $param['type'];
+        }
+        if (!empty($param['status'])) {
+            $where .= ' AND status=:status';
+            $bind['status'] = $param['status'];
+        }
+        if (!empty($param['create_time']) && count($param['create_time']) == 2) {
+            $where .= ' AND create_time BETWEEN :begin AND :end';
+            $bind['begin'] = strtotime($param['create_time'][0]);
+            $bind['end'] = strtotime($param['create_time'][1]);
+        }
+
+        $page = $this->getPage($param);
         $select = 'SELECT id,create_time,router,message,type,status';
-        $from = 'FROM t_error_log WHERE is_del=1 ORDER BY id DESC';
-        $data = $this->nativePaginate($select, $from, $gen);
+        $from = 'FROM t_error_log WHERE is_del=1'.$where.' ORDER BY id DESC';
+        $data = $this->nativePaginate($select, $from, $page, $bind);
 
         return $data;
     }

@@ -67,9 +67,9 @@ Route::group('admin', function () {
     // 登录相关
     Route::group('login', function () {
         VRoute::rule(
-            'login',
-            'admin/login/login',
-            ['v_name' => '登录', 'v_check' => false],
+            'login_by_password',
+            'admin/login/loginByPassword',
+            ['v_name' => '用户密码登录', 'v_check' => false],
             'post');
     });
 
@@ -104,11 +104,6 @@ Route::group('admin', function () {
             'admin/permission.menu/delete',
             ['v_name' => '删除菜单'],
             'delete');
-        VRoute::rule(
-            'count_filed',
-            'admin/permission.menu/countFiled',
-            ['v_name' => '获取菜单某个字段值的数量', 'v_log' => false],
-            'post');
     });
 
     // 角色相关
@@ -134,8 +129,13 @@ Route::group('admin', function () {
             ['v_name' => '删除角色'],
             'delete');
         VRoute::rule(
-            '/:id',
-            'admin/permission.role/set_permission',
+            '/:id/menus',
+            'admin/permission.role/indexMenu',
+            ['v_name' => '获取角色权限', 'v_log' => false],
+            'get');
+        VRoute::rule(
+            '/:id/menus',
+            'admin/permission.role/createMenu',
             ['v_name' => '设置角色权限'],
             'post');
     });

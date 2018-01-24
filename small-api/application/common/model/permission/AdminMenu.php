@@ -10,8 +10,15 @@ use app\common\VModel;
 
 class AdminMenu extends VModel
 {
+    protected static function init()
+    {
+        // 删除后置操作
+        self::afterDelete(function ($data) {
+            AdminRoleMenu::where('menu_id', $data->id)->delete();
+        });
+    }
 
-    public function getAll()
+    public function getList()
     {
         $items = $this->field('id,name,menu_name,parent_id,router')
             ->order('sort', 'desc')->select();
@@ -31,4 +38,14 @@ class AdminMenu extends VModel
         return $items;
     }
 
+    public function getListByRole($roleId)
+    {
+        $sql = 'SELECT a.menu_id,b.menu_name 
+                FROM t_admin_role_menu AS a INNER JOIN t_admin_menu AS b ON a.menu_id=b.id
+                WHERE a.role_id=:role_id';
+
+        $items = $this->query($sql, ['role_id' => $roleId]);
+
+        return $items;
+    }
 }

@@ -6,7 +6,7 @@ import request from '@/libs/request'
  * @param password
  */
 export const loginByPassword = (username, password) => request({
-  url: 'admin/login/login',
+  url: 'admin/login/login_by_password',
   method: 'post',
   data: {username: username, password: password}
 })

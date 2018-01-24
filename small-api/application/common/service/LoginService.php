@@ -10,7 +10,6 @@ use app\common\HttpCode;
 use app\common\model\permission\facade\AdminUser;
 use app\common\util\Encrypt;
 use app\common\util\token\Token;
-use app\common\validate\AdminUserValidate;
 use app\common\VService;
 
 class LoginService extends VService
@@ -20,10 +19,9 @@ class LoginService extends VService
      * @param $param
      * @return mixed
      */
-    public function login($param)
+    public function loginByPassword($param)
     {
-        $validate = new AdminUserValidate();
-        if ($this->validate($param, $validate, 'login')) {
+        if ($this->validate($param, 'adminUser', 'login')) {
             $username = $param['username'];
             $password = $param['password'];
             $info = AdminUser::getInfoByName($username);

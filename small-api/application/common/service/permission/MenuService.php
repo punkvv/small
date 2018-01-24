@@ -8,14 +8,13 @@ namespace app\common\service\permission;
 
 use app\common\model\permission\facade\AdminMenu;
 use app\common\util\Tree;
-use app\common\validate\MenuValidate;
 use app\common\VService;
 
 class MenuService extends VService
 {
     public function getList()
     {
-        $items = AdminMenu::getAll();
+        $items = AdminMenu::getList();
 
         // 组合成树结构
         $this->data = Tree::listToTree($items->toArray(), 'id', 'parent_id');
@@ -25,12 +24,11 @@ class MenuService extends VService
 
     public function createData($param)
     {
-        $validate = new MenuValidate();
-        if ($this->validate($param, $validate, 'create')) {
+        if ($this->validate($param, 'menu', 'create')) {
             $data = AdminMenu::create([
                 'name' => $param['name'],
                 'menu_name' => $param['menu_name'],
-                'parent_id' => $param['parent_id'],
+                'parent_id' => empty($param['parent_id']) ? null : $param['parent_id'],
                 'router' => $param['router'],
             ]);
             $this->data = $data;
@@ -41,13 +39,12 @@ class MenuService extends VService
 
     public function updateData($param)
     {
-        $validate = new MenuValidate();
-        if ($this->validate($param, $validate, 'update')) {
+        if ($this->validate($param, 'menu', 'update')) {
             $data = AdminMenu::update([
                 'id' => $param['id'],
                 'name' => $param['name'],
                 'menu_name' => $param['menu_name'],
-                'parent_id' => $param['parent_id'],
+                'parent_id' => empty($param['parent_id']) ? null : $param['parent_id'],
                 'router' => $param['router'],
             ]);
             $this->data = $data;
@@ -58,8 +55,7 @@ class MenuService extends VService
 
     public function deleteData($id)
     {
-        $data = AdminMenu::get($id);
-        $data->delete();
+        AdminMenu::get($id)->delete();
 
         return $this->result();
     }

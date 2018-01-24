@@ -31,22 +31,10 @@ export const updateRole = (data) => request({
 })
 
 /**
- * 删除菜单
+ * 删除角色
  * @param id
  */
 export const deleteRole = (id) => request({
   url: 'admin/roles/' + id,
   method: 'delete'
-})
-
-/**
- * 某个字段值相同数量
- * @param filed
- * @param value
- * @param id 排除的值
- */
-export const countFiled = (filed, value, id = null) => request({
-  url: 'admin/roles/count_filed',
-  method: 'post',
-  data: {filed: filed, value: value, id: id}
 })

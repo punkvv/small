@@ -51,12 +51,14 @@ class VService
     /**
      * 数据验证
      * @param array $param
-     * @param Validate|null $validate
+     * @param string $className
      * @param string $scene 验证场景
      * @return bool
      */
-    protected function validate(array $param = [], Validate $validate = null, $scene = '')
+    protected function validate(array $param, $className, $scene)
     {
+        $class = '\\app\\common\\validate\\'.ucwords($className).'Validate';
+        $validate = new $class;
         if ($scene) {
             $validate->scene($scene);
         }

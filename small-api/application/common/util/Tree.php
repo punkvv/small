@@ -74,7 +74,7 @@ class Tree
         $list,
         $pk = 'id',
         $pid = 'pid',
-        $child = 'child',
+        $child = 'children',
         $root = 0,
         $strict = true,
         $filter = []

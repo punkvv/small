@@ -21,7 +21,7 @@ class ErrorLogService extends VService
 
     public function getDynamicCount()
     {
-        $this->data['count'] = ErrorLog::where('is_del', 1)->where('status', 0)->count();
+        $this->data['count'] = ErrorLog::where('is_del', 1)->where('status', 2)->count();
 
         return $this->result();
     }

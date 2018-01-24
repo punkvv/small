@@ -42,12 +42,4 @@ class MenuController extends VController
 
         return $data;
     }
-
-    public function countFiled()
-    {
-        $service = new MenuService();
-        $data = $service->countFiled($this->param);
-
-        return $data;
-    }
 }
