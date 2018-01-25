@@ -14,7 +14,10 @@ class AdminMenu extends VModel
     {
         // 删除后置操作
         self::afterDelete(function ($data) {
+            // 把中间表数据清空
             AdminRoleMenu::where('menu_id', $data->id)->delete();
+            // 把子类清空
+            AdminMenu::where('parent_id', $data->id)->delete();
         });
     }
 
@@ -28,24 +31,22 @@ class AdminMenu extends VModel
 
     public function getListByAdminId($adminId)
     {
-        $sql = 'SELECT a.id,a.name,a.menu_name,a.parent_id,a.router 
-                FROM t_admin_menu AS a INNER JOIN t_admin_role_menu AS b ON a.id=b.menu_id
-                INNER JOIN t_admin_user_role AS c ON b.role_id=c.role_id
-                WHERE c.admin_id=:admin_id';
+        $list = $this->view('AdminMenu', 'id,name,menu_name,parent_id,router')
+            ->view('AdminRoleMenu', '', 'AdminMenu.id=AdminRoleMenu.menu_id')
+            ->view('AdminUserRole', '', 'AdminRoleMenu.role_id=AdminUserRole.role_id')
+            ->where('AdminUserRole.admin_id', $adminId)
+            ->select();
 
-        $items = $this->query($sql, ['admin_id' => $adminId]);
-
-        return $items;
+        return $list;
     }
 
     public function getListByRole($roleId)
     {
-        $sql = 'SELECT a.menu_id,b.menu_name 
-                FROM t_admin_role_menu AS a INNER JOIN t_admin_menu AS b ON a.menu_id=b.id
-                WHERE a.role_id=:role_id';
+        $list = $this->view('AdminRoleMenu', 'menu_id')
+            ->view('AdminMenu', 'menu_name', 'AdminRoleMenu.menu_id=AdminMenu.id')
+            ->where('AdminRoleMenu.role_id', $roleId)
+            ->select();
 
-        $items = $this->query($sql, ['role_id' => $roleId]);
-
-        return $items;
+        return $list;
     }
 }

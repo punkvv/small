@@ -38,3 +38,22 @@ export const deleteRole = (id) => request({
   url: 'admin/roles/' + id,
   method: 'delete'
 })
+
+/**
+ * 获取角色权限
+ * @param id
+ */
+export const menuListByRole = (id) => request({
+  url: 'admin/roles/' + id + '/menus',
+  method: 'get'
+})
+
+/**
+ * 设置角色权限
+ * @param data
+ */
+export const createMenuByRole = (data) => request({
+  url: 'admin/roles/' + data.id + '/menus',
+  method: 'post',
+  data: data
+})

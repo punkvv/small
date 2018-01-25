@@ -118,4 +118,19 @@ util.deepClone = (source) => {
   return targetObj
 }
 
+/**
+ * 递归查找子级的所有父级 id
+ * @param item
+ * @param list
+ * @returns {Array}
+ */
+util.searchParent = (item, list = []) => {
+  if (item.parent === undefined) {
+    list.reverse()
+    return list
+  }
+  list.push(item.parent.id)
+  return util.searchParent(item.parent, list)
+}
+
 export default util

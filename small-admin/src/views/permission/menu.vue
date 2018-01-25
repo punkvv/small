@@ -13,6 +13,7 @@
     <div class="operate-container">
       <el-button @click="handleCreate" class="operate-item" type="primary" icon="el-icon-edit">新增
       </el-button>
+      <el-tag type="success">支持无限级</el-tag>
     </div>
 
     <div class="table-container">
@@ -33,16 +34,19 @@
         :title="editorTitle[editorStatus]"
         :visible.sync="editorVisible">
         <el-form :model="editor" :rules="editorRules" ref="editor" label-width="120px">
-          <el-form-item label="上级菜单" prop="parent_id">
-            <el-select v-model="editor.parent_id" clearable placeholder="不选则为顶级菜单">
-              <el-option
-                v-for="item in list"
-                :key="item.id"
-                :label="item.menu_name"
-                :value="item.id">
-              </el-option>
-            </el-select>
+
+          <el-form-item label="上级菜单">
+            <el-cascader
+              :options="list"
+              :props="props"
+              v-model="menuParent"
+              clearable
+              change-on-select
+              style="width: 100%"
+              placeholder="不选则为顶级菜单">
+            </el-cascader>
           </el-form-item>
+
           <el-form-item label="菜单名称" prop="menu_name">
             <el-input placeholder="请输入内容" v-model.tirm="editor.menu_name" clearable></el-input>
           </el-form-item>
@@ -66,6 +70,7 @@
 <script>
   import {TreeTable} from '@/components'
   import {menuList, createMenu, updateMenu, deleteMenu} from '@/api/permission/menu'
+  import Util from '@/libs/util'
 
   export default {
     name: 'menus',
@@ -86,6 +91,7 @@
           name: '',
           router: ''
         },
+        menuParent: [],
         editorRules: {
           menu_name: [
             {required: true, message: '不能为空', trigger: 'blur'},
@@ -113,6 +119,7 @@
             value: 'router'
           }
         ],
+        props: {value: 'id', label: 'menu_name', children: 'children'},
         list: []
       }
     },
@@ -139,6 +146,7 @@
         this.resetEditor()
         this.editorVisible = true
         this.editorStatus = 1
+        this.menuParent = []
         this.$nextTick(() => {
           this.$refs['editor'].clearValidate()
         })
@@ -147,6 +155,8 @@
         this.editorVisible = true
         this.editorStatus = 2
         this.editor = Object.assign({}, item)
+        const parentList = Util.searchParent(item)
+        this.menuParent = parentList
         this.$nextTick(() => {
           this.$refs['editor'].clearValidate()
         })
@@ -171,6 +181,7 @@
         this.$refs['editor'].validate((valid) => {
           if (valid) {
             this.editorLoading = true
+            this.editor.parent_id = this.menuParent.length === 0 ? null : this.menuParent[this.menuParent.length - 1]
             createMenu(this.editor).then((data) => {
               this.editorLoading = false
               this.editorVisible = false
@@ -186,6 +197,7 @@
         this.$refs['editor'].validate((valid) => {
           if (valid) {
             this.editorLoading = true
+            this.editor.parent_id = this.menuParent.length === 0 ? null : this.menuParent[this.menuParent.length - 1]
             updateMenu(this.editor).then((data) => {
               this.editorLoading = false
               this.editorVisible = false

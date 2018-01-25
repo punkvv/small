@@ -20,17 +20,12 @@ class AdminRole extends VModel
 
     public function getList($param)
     {
-        $where = '';
-        $bind = [];
-        if (!empty($param['role_name'])) {
-            $where .= ' AND role_name LIKE :role_name';
-            $bind['role_name'] = $this->like($param['role_name']);
-        }
 
-        $page = $this->getPage($param);
-        $select = 'SELECT id,role_name,remark';
-        $from = 'FROM t_admin_role WHERE 1=1'.$where.' ORDER BY id DESC';
-        $data = $this->nativePaginate($select, $from, $page, $bind);
+        $query = $this->field('id,role_name,remark');
+        if (!empty($param['role_name'])) {
+            $query->whereLike('role_name', "%{$param['role_name']}%");
+        }
+        $data = $this->queryPaginate($query, $param);
 
         return $data;
     }

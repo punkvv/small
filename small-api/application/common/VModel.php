@@ -7,6 +7,8 @@
 namespace app\common;
 
 use app\common\util\Paginate;
+use think\db\Query;
+use think\facade\Config;
 use think\Model;
 
 class VModel extends Model
@@ -14,11 +16,13 @@ class VModel extends Model
     protected function nativePaginate(
         string $select,
         string $sqlExceptSelect,
-        array $gen = ['page' => 1, 'per_page' => 100000000],
+        array $gen = [],
         array $bind = []
     ) {
-        $pageNumber = $gen['page'];
-        $pageSize = $gen['per_page'];
+        $page = $this->getPage($gen);
+        unset($gen);
+        $pageNumber = $page['page'];
+        $pageSize = $page['per_page'];
         if ($pageNumber < 1 || $pageSize < 1) {
             $paginate = new Paginate([], 0, $pageNumber, $pageSize);
 
@@ -52,17 +56,28 @@ class VModel extends Model
         }
 
         $findSql = $select.' '.$sqlExceptSelect;
-        $sql = $this->mysqlForPaginate($pageNumber, $pageSize, $findSql);
+        $sql = $this->forPaginate($pageNumber, $pageSize, $findSql);
         $items = $this->query($sql, $bind);
         $paginate = new Paginate($items, $totalRow, $pageNumber, $pageSize);
 
         return $paginate->toArray();
     }
 
+    protected function queryPaginate(Query $query, array $gen = [])
+    {
+        $sql = $query->fetchSql(true)->select();
+        $i = strpos($sql, 'FROM');
+        $select = substr($sql, 0, $i);
+        $from = substr($sql, $i);
+
+        return $this->nativePaginate($select, $from, $gen);
+    }
+
     protected function getPage(array $param)
     {
         $pageNumber = empty($param['page']) ? 1 : $param['page'];
         $pageSize = empty($param['per_page']) ? 100000000 : $param['per_page'];
+        unset($param);
 
         return [
             'page' => intval($pageNumber),
@@ -70,30 +85,26 @@ class VModel extends Model
         ];
     }
 
-    protected function like(string $str): string
+    private function forPaginate(int $pageNumber, int $pageSize, string $findSql): string
     {
-        return '%'.$str.'%';
-    }
-
-    private function mysqlForPaginate(int $pageNumber, int $pageSize, string $findSql): string
-    {
-        $offset = $pageSize * ($pageNumber - 1);
-
-        return $findSql.' LIMIT '.intval($offset).', '.intval($pageSize);
-    }
-
-    private function srvForPaginate(int $pageNumber, int $pageSize, string $findSql): string
-    {
-        $end = $pageNumber * $pageSize;
-        if ($end <= 0) {
-            $end = $pageSize;
-        }
-        $begin = ($pageNumber - 1) * $pageSize;
-        if ($begin < 0) {
-            $begin = 0;
+        $type = Config::get('database.type');
+        $str = '';
+        if ($type === 'mysql') {
+            $offset = $pageSize * ($pageNumber - 1);
+            $str = $findSql.' LIMIT '.intval($offset).', '.intval($pageSize);
+        } elseif ($type === 'sqlsrv') {
+            $end = $pageNumber * $pageSize;
+            if ($end <= 0) {
+                $end = $pageSize;
+            }
+            $begin = ($pageNumber - 1) * $pageSize;
+            if ($begin < 0) {
+                $begin = 0;
+            }
+            $str = 'SELECT * FROM ( SELECT row_number() over (order by tempcolumn) temprownumber, * FROM ( SELECT TOP '.$end.' tempcolumn=0,'.$findSql.')vip)mvp where temprownumber>'.$begin;
         }
 
-        return 'SELECT * FROM ( SELECT row_number() over (order by tempcolumn) temprownumber, * FROM ( SELECT TOP '.$end.' tempcolumn=0,'.$findSql.')vip)mvp where temprownumber>'.$begin;
+        return $str;
     }
 
     private function replaceOrderBy(string $sqlExceptSelect): string

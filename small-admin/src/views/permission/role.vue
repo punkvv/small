@@ -53,7 +53,7 @@
           <el-table-column label="操作" width="220">
             <template slot-scope="scope">
               <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
-              <el-button type="success" size="mini" @click="handleMenu(scope.row)">权限</el-button>
+              <el-button type="success" size="mini" @click="handleMenu(scope.row.id)">权限</el-button>
               <el-button type="danger" size="mini" @click="handleDelete(scope.row.id)">删除</el-button>
             </template>
           </el-table-column>
@@ -89,12 +89,36 @@
           <el-button type="primary" :loading="editorLoading" @click="updateData" v-else>提交</el-button>
        </span>
       </el-dialog>
+
+      <el-dialog
+        title="权限设置"
+        :visible.sync="menuVisible">
+        <el-tree 
+          ref="tree"
+                 :data="menuList"
+                 show-checkbox
+                 node-key="id"
+                 :props="menuProps"
+                 :default-expand-all="true">
+        </el-tree>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="menuVisible=false">取消</el-button>
+          <el-button type="primary" @click="updateMenu" :loading="menuLoading">提交</el-button>
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
-  import {roleList, createRole, updateRole, deleteRole} from '@/api/permission/role'
+  import {
+    roleList,
+    createRole,
+    updateRole,
+    deleteRole,
+    menuListByRole
+  } from '@/api/permission/role'
+  import {menuList} from '@/api/permission/menu'
 
   export default {
     name: 'role',
@@ -129,11 +153,19 @@
           ]
         },
         editorLoading: false,
-        list: []
+        list: [],
+        menuVisible: false,
+        menuProps: {
+          children: 'children',
+          label: 'menu_name'
+        },
+        menuLoading: false,
+        menuList: []
       }
     },
     created() {
       this.getList()
+      this.getMenuList()
     },
     methods: {
       async getList() {
@@ -142,6 +174,10 @@
         this.list = data.items
         this.total = data.total
         this.loading = false
+      },
+      async getMenuList() {
+        const data = await menuList()
+        this.menuList = data
       },
       resetFilters() {
         this.$refs['filters'].resetFields()
@@ -178,7 +214,20 @@
           this.$refs['editor'].clearValidate()
         })
       },
-      handleMenu(item) {
+      async handleMenu(id) {
+        const data = await menuListByRole(id)
+        if (data.length !== 0) {
+          let defaultChecked = []
+          data.forEach(item => {
+            defaultChecked.push(item.menu_id)
+          })
+          setTimeout(() => {
+            this.$refs.tree.setCheckedKeys(defaultChecked)
+          }, 100)
+        }
+        this.menuVisible = true
+      },
+      updateMenu() {
       },
       handleDelete(id) {
         this.$confirm('是否确定删除?', '提示', {

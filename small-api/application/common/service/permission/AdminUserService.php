@@ -24,9 +24,7 @@ class AdminUserService extends VService
                 $router = array_merge($router, array_filter(explode(',', $menu['name'].','.$menu['router'])));
             }
             $router = array_unique($router);
-
         }
-
         $this->data['user_info'] = $info;
         $this->data['router'] = $router;
 

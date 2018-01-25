@@ -204,8 +204,20 @@
         this.getList()
       },
       async deleteAll() {
-        await deleteAll()
-        this.getList()
+        this.$confirm('是否确定删除?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          deleteAll().then(() => {
+            this.$message({
+              type: 'success',
+              message: '删除成功!'
+            })
+            this.getList()
+          })
+        }).catch(() => {
+        })
       }
     }
   }

@@ -28,9 +28,11 @@ class CheckAuth
             $controller->checkToken();
             // TODO 检查 API 权限
             if (!$this->checkApi($rule, $methods)) {
-                $data['message'] = '没有权限';
-                $data['name'] = 'NO_AUTHORITY';
-                $data['code'] = HttpCode::$unauthorized;
+                $data = [
+                    'message' => '没有权限',
+                    'name' => 'NO_AUTHORITY',
+                    'code' => HttpCode::$unauthorized,
+                ];
                 $controller->restful($data);
             } elseif (!isset($param['v_log']) || $param['v_log']) {
                 // 记录 API 日志
