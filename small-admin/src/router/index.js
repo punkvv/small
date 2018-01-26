@@ -9,7 +9,7 @@ import store from '../store'
 Vue.use(Router)
 
 export const router = new Router({
-  mode: 'history',
+  // mode: 'history',
   scrollBehavior: () => ({y: 0}),
   routes: constantRouter
 })

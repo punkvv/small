@@ -21,7 +21,8 @@ class AdminUserService extends VService
             $menus = AdminMenu::getListByAdminId($adminId);
             $router = [];
             foreach ($menus as $menu) {
-                $router = array_merge($router, array_filter(explode(',', $menu['name'].','.$menu['router'])));
+                $router = array_merge($router, array_filter(explode(',',
+                    $menu['name'].','.$menu['parent_name'].','.$menu['router'])));
             }
             $router = array_unique($router);
         }

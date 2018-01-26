@@ -7,6 +7,7 @@
 namespace app\common\model\permission;
 
 use app\common\VModel;
+use think\Db;
 
 class AdminMenu extends VModel
 {
@@ -31,9 +32,9 @@ class AdminMenu extends VModel
 
     public function getListByAdminId($adminId)
     {
-        $list = $this->view('AdminMenu', 'id,name,menu_name,parent_id,router')
-            ->view('AdminRoleMenu', '', 'AdminMenu.id=AdminRoleMenu.menu_id')
-            ->view('AdminUserRole', '', 'AdminRoleMenu.role_id=AdminUserRole.role_id')
+        $list = Db::view('AdminMenu', 'id,name,menu_name,parent_id,parent_name,router')
+            ->view('AdminRoleMenu', 'menu_id', 'AdminMenu.id=AdminRoleMenu.menu_id')
+            ->view('AdminUserRole', 'role_id', 'AdminRoleMenu.role_id=AdminUserRole.role_id')
             ->where('AdminUserRole.admin_id', $adminId)
             ->select();
 
@@ -42,7 +43,7 @@ class AdminMenu extends VModel
 
     public function getListByRole($roleId)
     {
-        $list = $this->view('AdminRoleMenu', 'menu_id')
+        $list = Db::view('AdminRoleMenu', 'menu_id')
             ->view('AdminMenu', 'menu_name', 'AdminRoleMenu.menu_id=AdminMenu.id')
             ->where('AdminRoleMenu.role_id', $roleId)
             ->select();

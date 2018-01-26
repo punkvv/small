@@ -14,7 +14,7 @@ export const loginByPassword = (username, password) => request({
 /**
  * 获取登录用户信息
  */
-export const getUserInfo = () => request({
-  url: 'admin/users/info',
+export const getUserInfo = (token) => request({
+  url: 'admin/users/' + token,
   method: 'get'
 })

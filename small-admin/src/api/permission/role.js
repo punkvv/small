@@ -52,8 +52,8 @@ export const menuListByRole = (id) => request({
  * 设置角色权限
  * @param data
  */
-export const createMenuByRole = (data) => request({
-  url: 'admin/roles/' + data.id + '/menus',
+export const createMenuByRole = (id, data) => request({
+  url: 'admin/roles/' + id + '/menus',
   method: 'post',
-  data: data
+  data: {items: data}
 })

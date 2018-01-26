@@ -42,6 +42,7 @@ class LoginService extends VService
                 ];
                 $token = Token::create($value, 12 * 60 * 60);
                 $this->data['token'] = $token;
+                $this->data['id'] = $userId;
             }
         }
 

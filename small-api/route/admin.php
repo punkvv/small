@@ -27,41 +27,52 @@ use think\facade\Route;
  * v_name:   路由名称
  * v_check:  是否进行权限检测（默认 true）  只对后台路由有效
  * v_log:    是否记录操作日志（默认 true） v_check = true 时才有效
+ *
+ * 显示传递登录用户id 采用变量名 :user_id
  */
 
 Route::group('admin', function () {
-    // 日志相关
+    // 错误日志相关
     Route::group('error_logs', function () {
         VRoute::rule(
             '',
-            'admin/errorLog/index',
+            'admin/ErrorLog/index',
             ['v_name' => '错误日志列表', 'v_log' => false],
             'get');
         VRoute::rule(
             'dynamic_count',
-            'admin/errorLog/dynamicCount',
+            'admin/ErrorLog/dynamicCount',
             ['v_name' => '获取未处理错误日志数量', 'v_log' => false],
             'get');
         VRoute::rule(
             '',
-            'admin/errorLog/save',
+            'admin/ErrorLog/save',
             ['v_name' => '记录错误日志', 'v_check' => false],
             'post');
         VRoute::rule(
-            'change_status',
-            'admin/errorLog/changeStatus',
+            ':id/change_status',
+            'admin/ErrorLog/changeStatus',
             ['v_name' => '错误日志打开或处理'],
             'post');
         VRoute::rule(
-            'change_status_all',
-            'admin/errorLog/changeStatusAll',
+            'change_status',
+            'admin/ErrorLog/changeStatusAll',
             ['v_name' => '错误日志全部处理'],
             'post');
         VRoute::rule(
             'delete_all',
-            'admin/errorLog/deleteAll',
+            'admin/ErrorLog/delete',
             ['v_name' => '错误日志全部删除'],
             'post');
+    });
+
+    // 操作日志相关
+    Route::group('api_logs', function () {
+        VRoute::rule(
+            '',
+            'admin/ApiLog/index',
+            ['v_name' => '操作日志列表', 'v_log' => false],
+            'get');
     });
 
     // 登录相关
@@ -73,13 +84,57 @@ Route::group('admin', function () {
             'post');
     });
 
-    // 用户相关
+    // 个人相关
     Route::group('users', function () {
         VRoute::rule(
-            'info',
-            'admin/permission.user/info',
-            ['v_name' => '获取登录用户信息', 'v_log' => false],
+            ':user_id',
+            'admin/user/info',
+            ['v_name' => '获取登录信息', 'v_log' => false],
             'get');
+    });
+
+    // 用户相关
+    Route::group('admin_users', function () {
+        VRoute::rule(
+            '',
+            'admin/permission.AdminUser/index',
+            ['v_name' => '用户列表', 'v_log' => false],
+            'get');
+        VRoute::rule(
+            '',
+            'admin/permission.AdminUser/create',
+            ['v_name' => '创建用户'],
+            'post');
+        VRoute::rule(
+            ':id',
+            'admin/permission.AdminUser/update',
+            ['v_name' => '更新用户'],
+            'put');
+        VRoute::rule(
+            ':id',
+            'admin/permission.AdminUser/delete',
+            ['v_name' => '删除用户'],
+            'delete');
+        VRoute::rule(
+            ':id/change_status',
+            'admin/permission.AdminUser/changeStatus',
+            ['v_name' => '用户禁用启用'],
+            'post');
+        VRoute::rule(
+            ':id/change_password',
+            'admin/permission.AdminUser/changePassword',
+            ['v_name' => '修改用户密码'],
+            'post');
+        VRoute::rule(
+            ':id/roles',
+            'admin/permission.AdminUser/roles',
+            ['v_name' => '获取用户角色', 'v_log' => false],
+            'get');
+        VRoute::rule(
+            ':id/roles',
+            'admin/permission.AdminUser/createRole',
+            ['v_name' => '设置用户角色'],
+            'post');
     });
 
     // 菜单相关
@@ -130,7 +185,7 @@ Route::group('admin', function () {
             'delete');
         VRoute::rule(
             ':id/menus',
-            'admin/permission.role/indexMenu',
+            'admin/permission.role/menus',
             ['v_name' => '获取角色权限', 'v_log' => false],
             'get');
         VRoute::rule(

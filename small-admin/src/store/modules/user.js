@@ -1,10 +1,10 @@
 import {loginByPassword, getUserInfo} from '@/api/login'
-import {getToken, setToken, removeToken} from '@/libs/cookie'
+import {getToken, setToken, removeToken, getUserId, setUserId} from '@/libs/cookie'
 
 const user = {
   state: {
     token: getToken(),
-    id: '',
+    id: getUserId(),
     name: '',
     avatar: '',
     router: []
@@ -32,8 +32,11 @@ const user = {
       return new Promise((resolve, reject) => {
         loginByPassword(userInfo.username, userInfo.password).then(data => {
           const token = data.token
+          const id = data.id
           commit('SET_TOKEN', token)
+          commit('SET_ID', id)
           setToken(token)
+          setUserId(id)
           resolve()
         }).catch(error => {
           reject(error)
@@ -42,7 +45,7 @@ const user = {
     },
     getUserInfo({commit, state}) {
       return new Promise((resolve, reject) => {
-        getUserInfo().then(data => {
+        getUserInfo(state.id).then(data => {
           const userInfo = data.user_info
           commit('SET_ID', userInfo.id)
           commit('SET_NAME', userInfo.username)

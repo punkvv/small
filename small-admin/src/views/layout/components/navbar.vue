@@ -11,9 +11,7 @@
     <div class="right-menu">
       <error-log class="errLog-container right-menu-item"></error-log>
 
-      <el-tooltip effect="dark" content="全屏" placement="bottom">
-        <screen-full class="screenfull right-menu-item"></screen-full>
-      </el-tooltip>
+      <screen-full class="screenfull right-menu-item"></screen-full>
 
       <el-tooltip effect="dark" content="退出登录" placement="bottom">
         <div class="logout" @click="logout">

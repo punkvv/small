@@ -6,8 +6,6 @@
 
 namespace app\common;
 
-use think\Validate;
-
 class VService
 {
     /**
@@ -66,7 +64,7 @@ class VService
         if (!$isCheck) {
             $this->message = $validate->getError();
             $this->name = 'FIELD_VALIDATION_ERROR';
-            $this->code = HttpCode::$unprocesableEntity;
+            $this->code = HttpCode::$notAcceptable;
         }
 
         return $isCheck;

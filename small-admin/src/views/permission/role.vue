@@ -93,13 +93,13 @@
       <el-dialog
         title="权限设置"
         :visible.sync="menuVisible">
-        <el-tree 
+        <el-tree
           ref="tree"
-                 :data="menuList"
-                 show-checkbox
-                 node-key="id"
-                 :props="menuProps"
-                 :default-expand-all="true">
+          :data="menuList"
+          show-checkbox
+          node-key="id"
+          :props="menuProps"
+          :default-expand-all="true">
         </el-tree>
         <div slot="footer" class="dialog-footer">
           <el-button @click="menuVisible=false">取消</el-button>
@@ -116,7 +116,8 @@
     createRole,
     updateRole,
     deleteRole,
-    menuListByRole
+    menuListByRole,
+    createMenuByRole
   } from '@/api/permission/role'
   import {menuList} from '@/api/permission/menu'
 
@@ -215,19 +216,24 @@
         })
       },
       async handleMenu(id) {
+        this.menuVisible = true
+        this.editor.id = id
         const data = await menuListByRole(id)
+        let defaultChecked = []
         if (data.length !== 0) {
-          let defaultChecked = []
           data.forEach(item => {
             defaultChecked.push(item.menu_id)
           })
-          setTimeout(() => {
-            this.$refs.tree.setCheckedKeys(defaultChecked)
-          }, 100)
         }
-        this.menuVisible = true
+        this.$nextTick(() => {
+          this.$refs.tree.setCheckedKeys(defaultChecked)
+        })
       },
-      updateMenu() {
+      async updateMenu() {
+        const data = this.$refs.tree.getCheckedKeys(true)
+        await createMenuByRole(this.editor.id, data)
+        this.menuVisible = false
+        this.$message({type: 'success', message: '保存成功!'})
       },
       handleDelete(id) {
         this.$confirm('是否确定删除?', '提示', {

@@ -43,7 +43,7 @@ class RoleController extends VController
         return $data;
     }
 
-    public function indexMenu()
+    public function menus()
     {
         $service = new RoleService();
         $data = $service->getMenuList($this->param['id']);

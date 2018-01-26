@@ -29,6 +29,7 @@ class MenuService extends VService
                 'name' => $param['name'],
                 'menu_name' => $param['menu_name'],
                 'parent_id' => empty($param['parent_id']) ? null : $param['parent_id'],
+                'parent_name' => $param['parent_name'],
                 'router' => $param['router'],
             ]);
             $this->data = $data;
@@ -45,6 +46,7 @@ class MenuService extends VService
                 'name' => $param['name'],
                 'menu_name' => $param['menu_name'],
                 'parent_id' => empty($param['parent_id']) ? null : $param['parent_id'],
+                'parent_name' => $param['parent_name'],
                 'router' => $param['router'],
             ]);
             $this->data = $data;

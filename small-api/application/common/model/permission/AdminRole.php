@@ -15,6 +15,7 @@ class AdminRole extends VModel
         // 删除后置操作
         self::afterDelete(function ($data) {
             AdminUserRole::where('role_id', $data->id)->delete();
+            AdminRoleMenu::where('role_id', $data->id)->delete();
         });
     }
 
@@ -25,6 +26,7 @@ class AdminRole extends VModel
         if (!empty($param['role_name'])) {
             $query->whereLike('role_name', "%{$param['role_name']}%");
         }
+        $query->order('id', 'desc');
         $data = $this->queryPaginate($query, $param);
 
         return $data;

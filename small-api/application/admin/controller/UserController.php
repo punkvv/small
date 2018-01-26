@@ -4,7 +4,7 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-namespace app\admin\controller\permission;
+namespace app\admin\controller;
 
 use app\common\service\permission\AdminUserService;
 use app\common\VController;

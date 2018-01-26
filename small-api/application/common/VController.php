@@ -7,9 +7,6 @@
 namespace app\common;
 
 use app\common\util\token\Token;
-use Firebase\JWT\BeforeValidException;
-use Firebase\JWT\ExpiredException;
-use Firebase\JWT\SignatureInvalidException;
 use think\Controller;
 use think\exception\HttpResponseException;
 use think\facade\Response;
@@ -66,15 +63,16 @@ class VController extends Controller
 
     public function adminId()
     {
+        $adminId = $this->param['user_id'];
         $info = $this->getTokenInfo();
-        if (!isset($info['admin_id'])) {
+        if (!isset($info['admin_id']) || $adminId != $info['admin_id']) {
             $data['code'] = HttpCode::$unauthorized;
-            $data['name'] = 'TOKEN_FAIL';
-            $data['message'] = 'Token 异常';
+            $data['name'] = 'AUTH_FAILED';
+            $data['message'] = 'Not Authored';
             $this->restful($data);
         }
 
-        return $info['admin_id'];
+        return $adminId;
     }
 
     public function userId($userId)
@@ -113,17 +111,10 @@ class VController extends Controller
         } else {
             try {
                 $info = Token::get($this->token);
-            } catch (SignatureInvalidException $e) {
-                $message = 'Token 验证失败';
-            } catch (BeforeValidException $e) {
-                $message = 'Token 已过期';
-            } catch (ExpiredException $e) {
-                $message = 'Token 已过期';
-            } catch (\UnexpectedValueException $e) {
+            } catch (\Exception $e) {
                 $message = 'Token 无效';
             }
         }
-
         if (!empty($message)) {
             $data['code'] = HttpCode::$unauthorized;
             $data['name'] = 'TOKEN_FAIL';

@@ -35,16 +35,16 @@ export const errorLogDynamicCount = () => request({
  * @param type
  */
 export const changeStatus = (id, type) => request({
-  url: 'admin/error_logs/change_status',
+  url: 'admin/error_logs/' + id + '/change_status',
   method: 'post',
-  data: {id: id, type: type}
+  data: {type: type}
 })
 
 /**
  * 处理全部
  */
 export const changeStatusAll = () => request({
-  url: 'admin/error_logs/change_status_all',
+  url: 'admin/error_logs/change_status',
   method: 'post'
 })
 
@@ -52,6 +52,6 @@ export const changeStatusAll = () => request({
  * 删除全部
  */
 export const deleteAll = () => request({
-  url: 'admin/error_logs/delete_all',
+  url: 'admin/error_logs/delete',
   method: 'post'
 })

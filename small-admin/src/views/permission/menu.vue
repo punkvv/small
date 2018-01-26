@@ -14,6 +14,7 @@
       <el-button @click="handleCreate" class="operate-item" type="primary" icon="el-icon-edit">新增
       </el-button>
       <el-tag type="success">支持无限级</el-tag>
+      <el-tag type="danger">注意：只是为了方便权限控制，在后端提供了一份路由表，路由配置还是在前端实现</el-tag>
     </div>
 
     <div class="table-container">
@@ -31,7 +32,7 @@
 
     <div class="editor-container">
       <el-dialog
-        :title="editorTitle[editorStatus]"
+        :title="this.editorStatus == 1 ? '新增' : '编辑'"
         :visible.sync="editorVisible">
         <el-form :model="editor" :rules="editorRules" ref="editor" label-width="120px">
 
@@ -51,7 +52,8 @@
             <el-input placeholder="请输入内容" v-model.tirm="editor.menu_name" clearable></el-input>
           </el-form-item>
           <el-form-item label="路由名称" prop="name">
-            <el-input placeholder="请输入内容" v-model.tirm="editor.name" clearable></el-input>
+            <el-input placeholder="请输入内容" v-model.tirm="editor.name" :disabled="this.editorStatus != 1"
+                      :clearable="this.editorStatus == 1"></el-input>
           </el-form-item>
           <el-form-item label="其他可访问路由" prop="router">
             <el-input type="textarea" placeholder="请输入内容(英文逗号隔开)" v-model.tirm="editor.router"></el-input>
@@ -78,15 +80,12 @@
     data() {
       return {
         loading: false,
-        editorTitle: {
-          1: '新增',
-          2: '编辑'
-        },
         editorStatus: 1,
         editorVisible: false,
         editor: {
           id: null,
           parent_id: null,
+          parent_name: '',
           menu_name: '',
           name: '',
           router: ''
@@ -141,12 +140,12 @@
           name: '',
           router: ''
         }
+        this.menuParent = []
       },
       handleCreate() {
         this.resetEditor()
         this.editorVisible = true
         this.editorStatus = 1
-        this.menuParent = []
         this.$nextTick(() => {
           this.$refs['editor'].clearValidate()
         })
@@ -181,7 +180,7 @@
         this.$refs['editor'].validate((valid) => {
           if (valid) {
             this.editorLoading = true
-            this.editor.parent_id = this.menuParent.length === 0 ? null : this.menuParent[this.menuParent.length - 1]
+            this.generateData()
             createMenu(this.editor).then((data) => {
               this.editorLoading = false
               this.editorVisible = false
@@ -197,7 +196,7 @@
         this.$refs['editor'].validate((valid) => {
           if (valid) {
             this.editorLoading = true
-            this.editor.parent_id = this.menuParent.length === 0 ? null : this.menuParent[this.menuParent.length - 1]
+            this.generateData()
             updateMenu(this.editor).then((data) => {
               this.editorLoading = false
               this.editorVisible = false
@@ -208,6 +207,30 @@
             })
           }
         })
+      },
+      generateData() {
+        const parentNameList = this.searchParentName(0, this.list)
+        const parentName = parentNameList.join(',')
+        this.editor.parent_id = this.menuParent.length === 0 ? null : this.menuParent[this.menuParent.length - 1]
+        this.editor.parent_name = parentName
+      },
+      searchParentName(i, list, nameList = []) {
+        if (i === this.menuParent.length) {
+          return nameList
+        }
+        const id = this.menuParent[i]
+        let items = []
+        for (let j = 0, len = list.length; j < len; j++) {
+          const item = list[j]
+          if (item.id === id) {
+            nameList.push(item.name)
+            if (item.children !== undefined && item.children.length > 0) {
+              items = item.children
+            }
+            break
+          }
+        }
+        return this.searchParentName(++i, items, nameList)
       }
     }
   }

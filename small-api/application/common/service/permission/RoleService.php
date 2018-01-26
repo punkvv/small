@@ -68,11 +68,14 @@ class RoleService extends VService
         $items = $param['items'];
         $list = [];
         foreach ($items as $item) {
-            $list['menu_id'] = $item;
-            $list['role_id'] = $roleId;
+            $list[] = [
+                'menu_id' => $item,
+                'role_id' => $roleId,
+            ];
         }
         AdminRoleMenu::where('role_id', $roleId)->delete();
-        AdminRoleMenu::saveAll($list);
+        $adminRoleMenu = new AdminRoleMenu;
+        $adminRoleMenu->saveAll($list);
 
         return $this->result();
     }
