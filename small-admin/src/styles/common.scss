@@ -197,11 +197,17 @@ code {
   }
 }
 
-//refine vue-multiselect plugin
+// refine vue-multiselect plugin
 .multiselect {
   line-height: 16px;
 }
 
 .multiselect--active {
   z-index: 1000 !important;
+}
+
+// 自定义样式
+.v-image {
+  width: 100%;
+  height: 100%;
 }

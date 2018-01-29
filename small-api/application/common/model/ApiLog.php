@@ -15,16 +15,13 @@ class ApiLog extends VModel
         unset($params['v_log']);
         unset($params['v_name']);
         unset($params['v_check']);
-
-        $data = [
+        $data = $this->create([
             'create_time' => time(),
             'router' => $router,
             'admin_id' => $adminId,
             'router_name' => $routerName,
             'params' => json_encode($params),
-        ];
-        $this->save($data);
-        $data['id'] = $this->getLastInsID();
+        ]);
 
         return $data;
     }

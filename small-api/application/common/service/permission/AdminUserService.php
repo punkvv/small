@@ -13,11 +13,18 @@ use app\common\VService;
 class AdminUserService extends VService
 {
 
+    public function getList($param)
+    {
+        $this->data = AdminUser::getList($param);
+
+        return $this->result();
+    }
+
     public function getUserInfo($adminId)
     {
         $info = AdminUser::getInfoById($adminId);
         $router = [];
-        if (1 !== $adminId) {
+        if (1 != $adminId) {
             $menus = AdminMenu::getListByAdminId($adminId);
             $router = [];
             foreach ($menus as $menu) {

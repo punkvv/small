@@ -9,3 +9,5 @@ export {default as ThemePicker} from './theme-picker'         // 主题色选择
 export {default as ScrollPane} from './scroll-pane'           // 横向滚动面板
 export {default as BackToTop} from './back-to-top'            // 返回顶部
 export {default as TreeTable} from './tree-table'             // 树形表格
+export {default as Thumb} from './thumb'                       // 圆形图片
+export {default as ImgUpload} from './img-upload'                       // 图片上传

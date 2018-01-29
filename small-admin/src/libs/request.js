@@ -4,8 +4,8 @@ import {getToken} from '@/libs/cookie'
 import store from '@/store'
 
 const service = axios.create({
-  baseURL: process.env.BASE_URL,
-  timeout: 5000 // request timeout
+  baseURL: process.env.BASE_URL
+  // timeout: 5000 // request timeout
 })
 
 // request interceptor

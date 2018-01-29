@@ -1,7 +1,4 @@
 <style lang="scss">
-  .role {
-
-  }
 </style>
 
 <template>
@@ -73,7 +70,7 @@
 
     <div class="editor-container">
       <el-dialog
-        :title="editorTitle[editorStatus]"
+        :title="this.editorStatus == 1 ? '新增' : '编辑'"
         :visible.sync="editorVisible">
         <el-form :model="editor" :rules="editorRules" ref="editor" label-width="120px">
           <el-form-item label="角色名称" prop="role_name">
@@ -132,10 +129,6 @@
           role_name: null,
           page: 1,
           per_page: 20
-        },
-        editorTitle: {
-          1: '新增',
-          2: '编辑'
         },
         editorStatus: 1,
         editorVisible: false,

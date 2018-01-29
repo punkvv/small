@@ -6,13 +6,17 @@
 
 namespace app\admin\controller\permission;
 
+use app\common\service\permission\AdminUserService;
 use app\common\VController;
 
 class AdminUserController extends VController
 {
     public function index()
     {
+        $service = new AdminUserService();
+        $data = $service->getList($this->param);
 
+        return $data;
     }
 
     public function create()

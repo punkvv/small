@@ -32,6 +32,15 @@ use think\facade\Route;
  */
 
 Route::group('admin', function () {
+    // 上传相关
+    Route::group('uploads', function () {
+        VRoute::rule(
+            'image',
+            'admin/upload/image',
+            ['v_name' => '上传图片', 'v_check' => false],
+            'post');
+    });
+
     // 错误日志相关
     Route::group('error_logs', function () {
         VRoute::rule(
