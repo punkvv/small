@@ -11,7 +11,7 @@ const tagsView = {
         path: view.path,
         title: view.meta.title || 'no-name'
       })
-      if (!view.meta.noCache) {
+      if (view.meta.cache) {
         state.cachedViews.push(view.name)
       }
     },

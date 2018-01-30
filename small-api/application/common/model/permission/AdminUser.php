@@ -29,7 +29,7 @@ class AdminUser extends VModel
 
     public function getList($param)
     {
-        $query = $this->field('id,username,avatar,status,real_name,phone')
+        $query = $this->field('id,username,avatar,status,real_name,phone,email')
             ->where('is_del', 1)
             ->where('id', '<>', 1)
             ->order('id', 'desc');

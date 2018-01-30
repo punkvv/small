@@ -36,7 +36,7 @@ class CheckAuth
                 $controller->restful($data);
             } elseif (!isset($param['v_log']) || $param['v_log']) {
                 // 记录 API 日志
-                ApiLog::addData($controller->adminId(), $rule, $param['v_name'], $param);
+                ApiLog::addData($controller->adminId(), $rule, $param['v_name'], $param, $methods);
             }
         }
     }

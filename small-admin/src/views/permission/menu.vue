@@ -32,7 +32,7 @@
 
     <div class="editor-container">
       <el-dialog
-        :title="this.editorStatus == 1 ? '新增' : '编辑'"
+        :title="editorStatus == 1 ? '新增' : '编辑'"
         :visible.sync="editorVisible">
         <el-form :model="editor" :rules="editorRules" ref="editor" label-width="120px">
 

@@ -10,7 +10,7 @@ use app\common\VModel;
 
 class ApiLog extends VModel
 {
-    public function addData($adminId, $router, $routerName, $params)
+    public function addData($adminId, $router, $routerName, $params, $methods)
     {
         unset($params['v_log']);
         unset($params['v_name']);
@@ -21,6 +21,7 @@ class ApiLog extends VModel
             'admin_id' => $adminId,
             'router_name' => $routerName,
             'params' => json_encode($params),
+            'method' => $methods,
         ]);
 
         return $data;

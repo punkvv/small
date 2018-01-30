@@ -6,15 +6,16 @@
 
 namespace app\admin\controller;
 
+use app\common\service\UploadService;
 use app\common\VController;
 
 class UploadController extends VController
 {
     public function image()
     {
-        $request = request();
-        $file = $request->file('file');
-        dump($file);
-        die;
+        $service = new UploadService();
+        $data = $service->imageLocal();
+
+        return $data;
     }
 }

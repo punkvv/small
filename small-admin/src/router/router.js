@@ -5,13 +5,13 @@ const _import = file => () => import('@/views/' + file + '.vue')
 /**
  * 配置项详情
  * children: []            大于1时才会出现子菜单
- * hidden: true            是否在菜单栏中显示（默认为false）
+ * hidden: true            是否在菜单栏中显示（默认为 false）
  * redirect: 'noredirect'  如果 redirect: 'noredirect' 则不会出现在面包屑
  * name: 'router-name'     必须设置值
  * meta: {
  *    title: 'title'       菜单和面包屑的名称
  *    icon: 'svg-name'     图标
- *    noCache: true        页面是否缓存（默认为false）
+ *    cache: false         页面是否缓存（默认为 false）
  * }
  */
 export const constantRouter = [

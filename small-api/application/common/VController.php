@@ -61,33 +61,44 @@ class VController extends Controller
         $this->token = $token;
     }
 
-    public function adminId()
+    /**
+     * 获取后台用户id
+     * @param bool $isCheck 是否验证
+     * @return mixed
+     */
+    public function adminId($isCheck = false)
     {
-        $adminId = $this->param['user_id'];
-        $info = $this->getTokenInfo();
-        if (!isset($info['admin_id']) || $adminId != $info['admin_id']) {
-            $data['code'] = HttpCode::$unauthorized;
-            $data['name'] = 'AUTH_FAILED';
-            $data['message'] = 'Not Authored';
-            $this->restful($data);
+        if ($isCheck) {
+            $adminId = $this->param['user_id'];
+            $info = $this->getTokenInfo();
+            if (!isset($info['admin_id']) || $adminId != $info['admin_id']) {
+                $data['code'] = HttpCode::$unauthorized;
+                $data['name'] = 'AUTH_FAILED';
+                $data['message'] = 'Not Authored';
+                $this->restful($data);
+            }
+        } else {
+            $info = $this->getTokenInfo();
+            $adminId = $info['admin_id'];
         }
 
         return $adminId;
     }
 
-    public function userId($userId)
+    public function userId($isCheck = false)
     {
-        $info = $this->getTokenInfo();
-        if (!isset($info['user_id'])) {
-            $data['code'] = HttpCode::$unauthorized;
-            $data['name'] = 'TOKEN_FAIL';
-            $data['message'] = 'Token 异常';
-            $this->restful($data);
-        } elseif ($info['user_id'] != $userId) {
-            $data['code'] = HttpCode::$unauthorized;
-            $data['name'] = 'UNAUTHORIZED';
-            $data['message'] = '未登录';
-            $this->restful($data);
+        if ($isCheck) {
+            $userId = $this->param['user_id'];
+            $info = $this->getTokenInfo();
+            if (!isset($info['user_id']) || $userId != $info['user_id']) {
+                $data['code'] = HttpCode::$unauthorized;
+                $data['name'] = 'AUTH_FAILED';
+                $data['message'] = 'Not Authored';
+                $this->restful($data);
+            }
+        } else {
+            $info = $this->getTokenInfo();
+            $userId = $info['user_id'];
         }
 
         return $userId;

@@ -70,10 +70,14 @@
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="220">
+          <el-table-column label="操作" width="360">
             <template slot-scope="scope">
               <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
               <el-button type="success" size="mini" @click="handleRole(scope.row.id)">角色</el-button>
+              <el-button type="warning" size="mini" @click="handlePass(scope.row.id)">密码</el-button>
+              <el-button type="danger" size="mini" @click="handleStatus(scope.row, 2)" v-if="scope.row.status==1">禁用
+              </el-button>
+              <el-button type="success" size="mini" @click="handleStatus(scope.row, 1)" v-else>启用</el-button>
               <el-button type="danger" size="mini" @click="handleDelete(scope.row.id)">删除</el-button>
             </template>
           </el-table-column>
@@ -93,20 +97,24 @@
 
     <div class="editor-container">
       <el-dialog
-        :title="this.editorStatus == 1 ? '新增' : '编辑'"
+        :title="editorStatus == 1 ? '新增' : '编辑'"
         :visible.sync="editorVisible">
         <el-form :model="editor" :rules="editorRules" ref="editor" label-width="120px">
           <el-form-item label="用户名" prop="username">
             <el-input placeholder="请输入内容" v-model.tirm="editor.username" clearable></el-input>
           </el-form-item>
-          <el-form-item label="密码" prop="pass">
-            <el-input type="password" v-model.tirm="editor.pass" placeholder="请输入内容" auto-complete="off"
-                      clearable></el-input>
-          </el-form-item>
-          <el-form-item label="确认密码" prop="checkPass">
-            <el-input type="password" v-model.tirm="editor.checkPass" placeholder="请输入内容" auto-complete="off"
-                      clearable></el-input>
-          </el-form-item>
+
+          <template v-if="editorStatus == 1">
+            <el-form-item label="密码" prop="pass">
+              <el-input type="password" v-model.tirm="editor.pass" placeholder="请输入内容" auto-complete="off"
+                        clearable></el-input>
+            </el-form-item>
+            <el-form-item label="确认密码" prop="check_pass">
+              <el-input type="password" v-model.tirm="editor.check_pass" placeholder="请输入内容" auto-complete="off"
+                        clearable></el-input>
+            </el-form-item>
+          </template>
+
           <el-form-item label="姓名" prop="real_name">
             <el-input placeholder="请输入内容" v-model.tirm="editor.real_name" clearable></el-input>
           </el-form-item>
@@ -118,9 +126,14 @@
           </el-form-item>
 
           <el-form-item label="头像">
-            <img-upload></img-upload>
+            <thumb v-show="editor.avatar" :image="editor.avatar"></thumb>
+            <el-button type="primary" size="mini" @click="show=true">点击上传</el-button>
+            <image-cropper
+              v-model="show"
+              :key="key"
+              @crop-upload-success="cropSuccess">
+            </image-cropper>
           </el-form-item>
-
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="editorVisible = false">取消</el-button>
@@ -129,24 +142,52 @@
        </span>
       </el-dialog>
 
+      <el-dialog
+        title="修改密码"
+        :visible.sync="passVisible">
+        <el-form :model="editor" :rules="editorRules" ref="pass" label-width="120px">
+          <el-form-item label="密码" prop="pass">
+            <el-input type="password" v-model.tirm="editor.pass" placeholder="请输入内容" auto-complete="off"
+                      clearable></el-input>
+          </el-form-item>
+          <el-form-item label="确认密码" prop="check_pass">
+            <el-input type="password" v-model.tirm="editor.check_pass" placeholder="请输入内容" auto-complete="off"
+                      clearable></el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="passVisible = false">取消</el-button>
+          <el-button type="primary" :loading="passLoading" @click="changePass">提交</el-button>
+       </span>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
-  import {adminUserList, deleteAdminUser, createAdminUser, updateAdminUser} from '@/api/permission/adminUser'
-  import {ImgUpload} from '@/components'
+  import {
+    adminUserList,
+    deleteAdminUser,
+    createAdminUser,
+    updateAdminUser,
+    changePassword,
+    changeStatus
+  } from '@/api/permission/adminUser'
+  import {roleList} from '@/api/permission/role'
+  import {ImageCropper, Thumb} from '@/components'
 
   export default {
     name: 'user',
-    components: {ImgUpload},
+    components: {ImageCropper, Thumb},
     data() {
       const validatePass = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请输入密码'))
         } else {
-          if (this.editor.checkPass !== '') {
-            this.$refs.editor.validateField('checkPass')
+          if (this.editor.check_pass !== '' && this.passVisible !== true) {
+            this.$refs.editor.validateField('check_pass')
+          } else {
+            this.$refs.pass.validateField('check_pass')
           }
           callback()
         }
@@ -161,6 +202,8 @@
         }
       }
       return {
+        show: false,
+        key: 0,
         options: [{
           value: 1,
           label: '正常'
@@ -183,7 +226,7 @@
           real_name: '',
           username: '',
           pass: '',
-          checkPass: '',
+          check_pass: '',
           phone: '',
           email: '',
           avatar: ''
@@ -191,20 +234,33 @@
         editorRules: {
           username: [
             {required: true, message: '不能为空', trigger: 'blur'},
-            {max: 20, message: '长度不能超过 20 个字符', trigger: 'blur'}
+            {max: 10, message: '长度不能超过 10 个字符', trigger: 'blur'}
           ],
           pass: [
             {required: true, validator: validatePass, trigger: 'blur'}
           ],
-          checkPass: [
+          check_pass: [
             {required: true, validator: validatePass2, trigger: 'blur'}
+          ],
+          real_name: [
+            {max: 20, message: '长度不能超过 20 个字符', trigger: 'blur'}
+          ],
+          phone: [
+            {max: 20, message: '长度不能超过 20 个字符', trigger: 'blur'}
+          ],
+          email: [
+            {max: 20, message: '长度不能超过 20 个字符', trigger: 'blur'}
           ]
         },
         editorLoading: false,
+        passVisible: false,
+        passLoading: false,
+        roleList: [],
         list: []
       }
     },
     created() {
+      this.getRoleList()
       this.getList()
     },
     filters: {
@@ -219,6 +275,10 @@
         this.list = data.items
         this.total = data.total
         this.loading = false
+      },
+      async getRoleList() {
+        const data = await roleList()
+        this.roleList = data.items
       },
       handleSizeChange(val) {
         this.filters.per_page = val
@@ -238,7 +298,7 @@
           real_name: '',
           username: '',
           pass: '',
-          checkPass: '',
+          check_pass: '',
           phone: '',
           email: '',
           avatar: ''
@@ -277,6 +337,39 @@
           })
         }).catch(() => {
         })
+      },
+      handlePass(id) {
+        this.resetEditor()
+        this.editor.id = id
+        this.passVisible = true
+        this.$nextTick(() => {
+          this.$refs['pass'].clearValidate()
+        })
+      },
+      changePass() {
+        this.$refs['pass'].validate((valid) => {
+          if (valid) {
+            this.passLoading = true
+            const params = {
+              pass: this.editor.pass,
+              check_pass: this.editor.check_pass
+            }
+            changePassword(this.editor.id, params).then((data) => {
+              this.passLoading = false
+              this.passVisible = false
+              this.$message({type: 'success', message: '修改成功!'})
+            })
+          }
+        })
+      },
+      handleStatus(item, type) {
+        changeStatus(item.id, type)
+        item.status = Math.abs(item.status - 1)
+      },
+      cropSuccess(res) {
+        this.show = false
+        this.key = this.key + 1
+        this.editor.avatar = res.url
       },
       createData() {
         this.$refs['editor'].validate((valid) => {

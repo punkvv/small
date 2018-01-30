@@ -55,10 +55,10 @@ export const changeStatus = (id, type) => request({
  * @param id
  * @param password
  */
-export const changePassword = (id, password) => request({
+export const changePassword = (id, data) => request({
   url: 'admin/admin_users/' + id + '/change_password',
   method: 'post',
-  data: {password: password}
+  data: data
 })
 
 /**

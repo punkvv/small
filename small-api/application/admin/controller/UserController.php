@@ -14,7 +14,7 @@ class UserController extends VController
     public function info()
     {
         $service = new AdminUserService();
-        $data = $service->getUserInfo($this->adminId());
+        $data = $service->getUserInfo($this->adminId(true));
 
         return $data;
     }

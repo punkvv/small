@@ -35,16 +35,7 @@ class ErrorLogService extends VService
 
     public function changeStatus($id, $type)
     {
-        $data = ErrorLog::getDataById($id);
-        if (empty($data)) {
-            $this->code = HttpCode::$notFound;
-            $this->message = '错误日志不存在';
-            $this->name = 'ERROR_LOG_NOT_FOUND';
-        } else {
-            $data->status = $type == 1 ? 1 : 0;
-            $data->save();
-            $this->data = $data;
-        }
+        ErrorLog::changeStatus($id, $type);
 
         return $this->result();
     }

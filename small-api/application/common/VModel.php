@@ -115,18 +115,20 @@ class VModel extends Model
         return $str;
     }
 
-    protected function falseDelete($id)
+    public function falseDelete($id)
     {
-        $this->changeFiledByPk($id, 'is_del', 0);
+        return $this->changeFiledByPk($id, 'is_del', 0);
     }
 
-    protected function changeStatus($id, $status)
+    public function changeStatus($id, $status)
     {
-        $this->changeFiledByPk($id, 'status', $status);
+        $status = $status == 1 ? 1 : 2;
+
+        return $this->changeFiledByPk($id, 'status', $status);
     }
 
-    private function changeFiledByPk($id, $filed, $value)
+    protected function changeFiledByPk($id, $filed, $value)
     {
-        $this->where($this->getPk(), $id)->setField($filed, $value);
+        return $this->where($this->getPk(), $id)->setField($filed, $value);
     }
 }
