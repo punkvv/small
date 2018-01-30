@@ -4,11 +4,11 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-namespace app\common\model\permission;
+namespace app\common\model\system;
 
 use app\common\VModel;
 
-class AdminRoleMenu extends VModel
+class RoleMenu extends VModel
 {
 
 }

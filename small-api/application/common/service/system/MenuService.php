@@ -4,9 +4,9 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-namespace app\common\service\permission;
+namespace app\common\service\system;
 
-use app\common\model\permission\facade\AdminMenu;
+use app\common\model\system\facade\Menu;
 use app\common\util\Tree;
 use app\common\VService;
 
@@ -14,8 +14,7 @@ class MenuService extends VService
 {
     public function getList()
     {
-        $items = AdminMenu::getList();
-
+        $items = Menu::getList();
         // 组合成树结构
         $this->data = Tree::listToTree($items->toArray(), 'id', 'parent_id');
 
@@ -25,7 +24,7 @@ class MenuService extends VService
     public function createData($param)
     {
         if ($this->validate($param, 'menu', 'create')) {
-            $data = AdminMenu::create([
+            $data = Menu::create([
                 'name' => $param['name'],
                 'menu_name' => $param['menu_name'],
                 'parent_id' => empty($param['parent_id']) ? null : $param['parent_id'],
@@ -41,7 +40,7 @@ class MenuService extends VService
     public function updateData($param)
     {
         if ($this->validate($param, 'menu', 'update')) {
-            $data = AdminMenu::update([
+            $data = Menu::update([
                 'id' => $param['id'],
                 'name' => $param['name'],
                 'menu_name' => $param['menu_name'],
@@ -57,7 +56,7 @@ class MenuService extends VService
 
     public function deleteData($id)
     {
-        AdminMenu::get($id)->delete();
+        Menu::get($id)->delete();
 
         return $this->result();
     }
@@ -67,7 +66,7 @@ class MenuService extends VService
         $filed = $param['filed'];
         $val = $param['value'];
         $id = $param['id'];
-        $query = AdminMenu::where($filed, $val);
+        $query = Menu::where($filed, $val);
         if ($id) {
             $query->where('id', '<>', $id);
         }

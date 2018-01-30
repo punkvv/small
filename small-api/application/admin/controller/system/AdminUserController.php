@@ -4,9 +4,9 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-namespace app\admin\controller\permission;
+namespace app\admin\controller\system;
 
-use app\common\service\permission\AdminUserService;
+use app\common\service\system\AdminUserService;
 use app\common\VController;
 
 class AdminUserController extends VController

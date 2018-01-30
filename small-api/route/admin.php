@@ -45,32 +45,32 @@ Route::group('admin', function () {
     Route::group('error_logs', function () {
         VRoute::rule(
             '',
-            'admin/ErrorLog/index',
+            'admin/errorLog/index',
             ['v_name' => '错误日志列表', 'v_log' => false],
             'get');
         VRoute::rule(
             'dynamic_count',
-            'admin/ErrorLog/dynamicCount',
+            'admin/errorLog/dynamicCount',
             ['v_name' => '获取未处理错误日志数量', 'v_log' => false],
             'get');
         VRoute::rule(
             '',
-            'admin/ErrorLog/save',
+            'admin/errorLog/save',
             ['v_name' => '记录错误日志', 'v_check' => false],
             'post');
         VRoute::rule(
             ':id/change_status',
-            'admin/ErrorLog/changeStatus',
+            'admin/errorLog/changeStatus',
             ['v_name' => '错误日志打开或处理'],
             'post');
         VRoute::rule(
             'change_status',
-            'admin/ErrorLog/changeStatusAll',
+            'admin/errorLog/changeStatusAll',
             ['v_name' => '错误日志全部处理'],
             'post');
         VRoute::rule(
             'delete_all',
-            'admin/ErrorLog/delete',
+            'admin/errorLog/delete',
             ['v_name' => '错误日志全部删除'],
             'post');
     });
@@ -79,7 +79,7 @@ Route::group('admin', function () {
     Route::group('api_logs', function () {
         VRoute::rule(
             '',
-            'admin/ApiLog/index',
+            'admin/apiLog/index',
             ['v_name' => '操作日志列表', 'v_log' => false],
             'get');
     });
@@ -106,42 +106,42 @@ Route::group('admin', function () {
     Route::group('admin_users', function () {
         VRoute::rule(
             '',
-            'admin/permission.AdminUser/index',
+            'admin/system.adminUser/index',
             ['v_name' => '用户列表', 'v_log' => false],
             'get');
         VRoute::rule(
             '',
-            'admin/permission.AdminUser/create',
+            'admin/system.adminUser/create',
             ['v_name' => '创建用户'],
             'post');
         VRoute::rule(
             ':id',
-            'admin/permission.AdminUser/update',
+            'admin/system.adminUser/update',
             ['v_name' => '更新用户'],
             'put');
         VRoute::rule(
             ':id',
-            'admin/permission.AdminUser/delete',
+            'admin/system.adminUser/delete',
             ['v_name' => '删除用户'],
             'delete');
         VRoute::rule(
             ':id/change_status',
-            'admin/permission.AdminUser/changeStatus',
+            'admin/system.adminUser/changeStatus',
             ['v_name' => '用户禁用启用'],
             'post');
         VRoute::rule(
             ':id/change_password',
-            'admin/permission.AdminUser/changePassword',
+            'admin/system.adminUser/changePassword',
             ['v_name' => '修改用户密码'],
             'post');
         VRoute::rule(
             ':id/roles',
-            'admin/permission.AdminUser/roles',
+            'admin/system.adminUser/roles',
             ['v_name' => '获取用户角色', 'v_log' => false],
             'get');
         VRoute::rule(
             ':id/roles',
-            'admin/permission.AdminUser/createRole',
+            'admin/system.adminUser/createRole',
             ['v_name' => '设置用户角色'],
             'post');
     });
@@ -150,22 +150,22 @@ Route::group('admin', function () {
     Route::group('menus', function () {
         VRoute::rule(
             '',
-            'admin/permission.menu/index',
+            'admin/system.menu/index',
             ['v_name' => '菜单列表', 'v_log' => false],
             'get');
         VRoute::rule(
             '',
-            'admin/permission.menu/create',
+            'admin/system.menu/create',
             ['v_name' => '创建菜单'],
             'post');
         VRoute::rule(
             ':id',
-            'admin/permission.menu/update',
+            'admin/system.menu/update',
             ['v_name' => '更新菜单'],
             'put');
         VRoute::rule(
             ':id',
-            'admin/permission.menu/delete',
+            'admin/system.menu/delete',
             ['v_name' => '删除菜单'],
             'delete');
     });
@@ -174,32 +174,32 @@ Route::group('admin', function () {
     Route::group('roles', function () {
         VRoute::rule(
             '',
-            'admin/permission.role/index',
+            'admin/system.role/index',
             ['v_name' => '角色列表', 'v_log' => false],
             'get');
         VRoute::rule(
             '',
-            'admin/permission.role/create',
+            'admin/system.role/create',
             ['v_name' => '创建角色'],
             'post');
         VRoute::rule(
             ':id',
-            'admin/permission.role/update',
+            'admin/system.role/update',
             ['v_name' => '更新角色'],
             'put');
         VRoute::rule(
             ':id',
-            'admin/permission.role/delete',
+            'admin/system.role/delete',
             ['v_name' => '删除角色'],
             'delete');
         VRoute::rule(
             ':id/menus',
-            'admin/permission.role/menus',
+            'admin/system.role/menus',
             ['v_name' => '获取角色权限', 'v_log' => false],
             'get');
         VRoute::rule(
             ':id/menus',
-            'admin/permission.role/createMenu',
+            'admin/system.role/createMenu',
             ['v_name' => '设置角色权限'],
             'post');
     });

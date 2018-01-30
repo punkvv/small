@@ -7,7 +7,7 @@
 namespace app\common\service;
 
 use app\common\HttpCode;
-use app\common\model\permission\facade\AdminUser;
+use app\common\model\system\facade\AdminUser;
 use app\common\util\Encrypt;
 use app\common\util\token\Token;
 use app\common\VService;

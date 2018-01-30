@@ -4,11 +4,11 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-namespace app\common\service\permission;
+namespace app\common\service\system;
 
-use app\common\model\permission\AdminRoleMenu;
-use app\common\model\permission\facade\AdminMenu;
-use app\common\model\permission\facade\AdminRole;
+use app\common\model\system\RoleMenu;
+use app\common\model\system\facade\Menu;
+use app\common\model\system\facade\Role;
 use app\common\VService;
 
 class RoleService extends VService
@@ -16,7 +16,7 @@ class RoleService extends VService
 
     public function getList($param)
     {
-        $this->data = AdminRole::getList($param);
+        $this->data = Role::getList($param);
 
         return $this->result();
     }
@@ -24,7 +24,7 @@ class RoleService extends VService
     public function createData($param)
     {
         if ($this->validate($param, 'role', 'create')) {
-            $data = AdminRole::create([
+            $data = Role::create([
                 'role_name' => $param['role_name'],
                 'remark' => $param['remark'],
             ]);
@@ -37,7 +37,7 @@ class RoleService extends VService
     public function updateData($param)
     {
         if ($this->validate($param, 'role', 'update')) {
-            $data = AdminRole::update([
+            $data = Role::update([
                 'id' => $param['id'],
                 'role_name' => $param['role_name'],
                 'remark' => $param['remark'],
@@ -50,14 +50,14 @@ class RoleService extends VService
 
     public function deleteData($id)
     {
-        AdminRole::get($id)->delete();
+        Role::get($id)->delete();
 
         return $this->result();
     }
 
     public function getMenuList($id)
     {
-        $this->data = AdminMenu::getListByRole($id);
+        $this->data = Menu::getListByRole($id);
 
         return $this->result();
     }
@@ -73,8 +73,8 @@ class RoleService extends VService
                 'role_id' => $roleId,
             ];
         }
-        AdminRoleMenu::where('role_id', $roleId)->delete();
-        $adminRoleMenu = new AdminRoleMenu;
+        RoleMenu::where('role_id', $roleId)->delete();
+        $adminRoleMenu = new RoleMenu;
         $adminRoleMenu->saveAll($list);
 
         return $this->result();

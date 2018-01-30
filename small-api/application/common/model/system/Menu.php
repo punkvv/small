@@ -4,28 +4,28 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-namespace app\common\model\permission;
+namespace app\common\model\system;
 
 use app\common\VModel;
 use think\Db;
 
-class AdminMenu extends VModel
+class Menu extends VModel
 {
     protected static function init()
     {
         // 删除后置操作
         self::afterDelete(function ($data) {
             // 把中间表数据清空
-            AdminRoleMenu::where('menu_id', $data->id)->delete();
+            RoleMenu::where('menu_id', $data->id)->delete();
             // 把子类清空
-            AdminMenu::where('parent_id', $data->id)->delete();
+            Menu::where('parent_id', $data->id)->delete();
         });
     }
 
     public function getList()
     {
         $items = $this->field('id,name,menu_name,parent_id,router')
-            ->order('sort', 'desc')->select();
+            ->order('id')->select();
 
         return $items;
     }

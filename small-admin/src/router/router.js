@@ -18,15 +18,6 @@ export const constantRouter = [
   {path: '/login', name: 'login', component: _import('home/login'), hidden: true, meta: {title: '登录'}},
   {path: '/404', name: '404', component: _import('home/404'), hidden: true, meta: {title: '404-页面不存在'}},
   {
-    path: '/error-log',
-    redirect: 'errorLog',
-    hidden: true,
-    component: Layout,
-    children: [
-      {path: '/error-log', name: 'errorLog', component: _import('home/error-log'), meta: {title: '错误日志'}}
-    ]
-  },
-  {
     path: '',
     component: Layout,
     redirect: 'home',
@@ -39,15 +30,17 @@ export const constantRouter = [
 
 export const asyncRouter = [
   {
-    path: '/permission',
-    name: 'permission',
+    path: '/system',
+    name: 'system',
     component: Layout,
     redirect: 'noredirect',
-    meta: {title: '权限', icon: 'permission'},
+    meta: {title: '系统', icon: 'system'},
     children: [
-      {path: 'menu', name: 'menu', component: _import('permission/menu'), meta: {title: '菜单', icon: 'menu'}},
-      {path: 'role', name: 'role', component: _import('permission/role'), meta: {title: '角色', icon: 'role'}},
-      {path: 'user', name: 'user', component: _import('permission/user'), meta: {title: '用户', icon: 'user'}}
+      {path: 'menu', name: 'menu', component: _import('system/menu'), meta: {title: '菜单', icon: 'menu'}},
+      {path: 'role', name: 'role', component: _import('system/role'), meta: {title: '角色', icon: 'role'}},
+      {path: 'user', name: 'user', component: _import('system/user'), meta: {title: '用户', icon: 'user'}},
+      {path: 'error-log', name: 'errorLog', component: _import('system/error-log'), meta: {title: '错误日志', icon: 'error'}},
+      {path: 'api-log', name: 'apiLog', component: _import('system/api-log'), meta: {title: 'API日志', icon: 'apilog'}}
     ]
   },
   {path: '*', redirect: '/404', hidden: true}

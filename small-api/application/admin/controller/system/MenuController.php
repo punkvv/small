@@ -4,9 +4,9 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-namespace app\admin\controller\permission;
+namespace app\admin\controller\system;
 
-use app\common\service\permission\MenuService;
+use app\common\service\system\MenuService;
 use app\common\VController;
 
 class MenuController extends VController

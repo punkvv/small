@@ -4,18 +4,18 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-namespace app\common\model\permission;
+namespace app\common\model\system;
 
 use app\common\VModel;
 
-class AdminRole extends VModel
+class Role extends VModel
 {
     protected static function init()
     {
         // 删除后置操作
         self::afterDelete(function ($data) {
             AdminUserRole::where('role_id', $data->id)->delete();
-            AdminRoleMenu::where('role_id', $data->id)->delete();
+            RoleMenu::where('role_id', $data->id)->delete();
         });
     }
 

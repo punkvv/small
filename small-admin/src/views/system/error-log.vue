@@ -8,10 +8,11 @@
   <div class="error-log-page">
     <div class="operate-container">
       <el-button @click="changeStatusAll" class="operate-item" type="primary" icon="el-icon-circle-check">
-        全部处理完成
+        全部处理
       </el-button>
       <el-button @click="deleteAll" class="operate-item" type="danger" icon="el-icon-delete">全部删除
       </el-button>
+      <el-tag type="success">开发模式下不记录日志</el-tag>
     </div>
 
     <div class="search-container">
