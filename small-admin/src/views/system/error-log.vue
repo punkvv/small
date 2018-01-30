@@ -133,7 +133,7 @@
 </template>
 
 <script>
-  import {errorLogList, changeStatus, changeStatusAll, deleteAll} from '@/api/errorLog'
+  import {errorLogList, changeStatus, changeStatusAll, deleteAll} from '@/api/system/errorLog'
 
   export default {
     name: 'errorLogPage',

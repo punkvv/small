@@ -172,8 +172,8 @@
     updateAdminUser,
     changePassword,
     changeStatus
-  } from '@/api/permission/adminUser'
-  import {roleList} from '@/api/permission/role'
+  } from '@/api/system/adminUser'
+  import {roleList} from '@/api/system/role'
   import {ImageCropper, Thumb} from '@/components'
 
   export default {

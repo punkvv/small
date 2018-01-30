@@ -71,7 +71,7 @@
 
 <script>
   import {TreeTable} from '@/components'
-  import {menuList, createMenu, updateMenu, deleteMenu} from '@/api/permission/menu'
+  import {menuList, createMenu, updateMenu, deleteMenu} from '@/api/system/menu'
   import Util from '@/libs/util'
 
   export default {
