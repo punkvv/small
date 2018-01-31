@@ -158,7 +158,31 @@
         <span slot="footer" class="dialog-footer">
           <el-button @click="passVisible = false">取消</el-button>
           <el-button type="primary" :loading="passLoading" @click="changePass">提交</el-button>
-       </span>
+        </span>
+      </el-dialog>
+
+      <el-dialog
+        title="角色"
+        :visible.sync="roleVisible">
+        <el-form label-width="190px">
+          <el-form-item>
+            <el-transfer
+              filterable
+              filter-placeholder="请输入角色名称"
+              :props="{
+                key: 'id',
+                label: 'role_name'
+              }"
+              :titles="['未包含角色', '已包含角色']"
+              v-model="selectRole"
+              :data="roleList">
+            </el-transfer>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="roleVisible = false">取消</el-button>
+          <el-button type="primary" :loading="roleLoading" @click="changeRole">提交</el-button>
+        </span>
       </el-dialog>
     </div>
   </div>
@@ -171,6 +195,8 @@
     createAdminUser,
     updateAdminUser,
     changePassword,
+    roleListByAdmin,
+    createRoleByAdmin,
     changeStatus
   } from '@/api/system/adminUser'
   import {roleList} from '@/api/system/role'
@@ -255,6 +281,9 @@
         editorLoading: false,
         passVisible: false,
         passLoading: false,
+        roleVisible: false,
+        roleLoading: false,
+        selectRole: [],
         roleList: [],
         list: []
       }
@@ -320,7 +349,19 @@
           this.$refs['editor'].clearValidate()
         })
       },
-      handleRole(id) {
+      async handleRole(id) {
+        this.editor.id = id
+        this.roleVisible = true
+        const data = await roleListByAdmin(id)
+        let defaultChecked = []
+        if (data.length !== 0) {
+          data.forEach(item => {
+            defaultChecked.push(item.id)
+          })
+        }
+        this.$nextTick(() => {
+          this.selectRole = defaultChecked
+        })
       },
       handleDelete(id) {
         this.$confirm('是否确定删除?', '提示', {
@@ -361,6 +402,13 @@
             })
           }
         })
+      },
+      async changeRole() {
+        this.roleLoading = true
+        await createRoleByAdmin(this.editor.id, this.selectRole)
+        this.roleLoading = false
+        this.roleVisible = false
+        this.$message({type: 'success', message: '保存成功!'})
       },
       handleStatus(item, type) {
         changeStatus(item.id, type)

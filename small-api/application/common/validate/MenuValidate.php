@@ -12,8 +12,8 @@ class MenuValidate extends Validate
 {
     protected $rule = [
         'id' => ['require'],
-        'menu_name' => ['require', 'max' => 20, 'unique:admin_menu'],
-        'name' => ['require', 'max' => 20, 'unique:admin_menu'],
+        'menu_name' => ['require', 'max' => 20, 'unique:menu'],
+        'name' => ['require', 'max' => 20, 'unique:menu'],
         // parent_id 不为空时候为 integer 类型
         'parent_id' => ['requireCallback:app\common\VValidate::requireEmpty', 'integer',],
     ];

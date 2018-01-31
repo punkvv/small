@@ -1,5 +1,5 @@
 'use strict'
 module.exports = {
   NODE_ENV: '"production"',
-  BASE_URL: '"//small.com"'
+  BASE_URL: '"//api.zhiyoute.com"'
 }

@@ -7,6 +7,7 @@
 namespace app\common\model\system;
 
 use app\common\VModel;
+use think\Db;
 
 class Role extends VModel
 {
@@ -30,5 +31,15 @@ class Role extends VModel
         $data = $this->queryPaginate($query, $param);
 
         return $data;
+    }
+
+    public function getMenuList($roleId)
+    {
+        $list = Db::view('RoleMenu', 'menu_id')
+            ->view('Menu', 'menu_name', 'RoleMenu.menu_id=Menu.id')
+            ->where('RoleMenu.role_id', $roleId)
+            ->select();
+
+        return $list;
     }
 }

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import {createErrorLog} from '@/api/errorLog'
+import {createErrorLog} from '@/api/system/errorLog'
 
 // you can set only in production env show the error-log
 if (process.env.NODE_ENV === 'production') {

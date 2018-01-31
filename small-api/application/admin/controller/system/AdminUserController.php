@@ -61,11 +61,17 @@ class AdminUserController extends VController
 
     public function roles()
     {
+        $service = new AdminUserService();
+        $data = $service->getRoleList($this->param['id']);
 
+        return $data;
     }
 
     public function createRole()
     {
+        $service = new AdminUserService();
+        $data = $service->createRole($this->param);
 
+        return $data;
     }
 }

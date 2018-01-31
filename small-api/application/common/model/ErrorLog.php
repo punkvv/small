@@ -13,7 +13,8 @@ class ErrorLog extends VModel
     public function getList($param)
     {
         $query = $this->field('id,create_time,router,message,type,status')
-            ->where('is_del', 1);
+            ->where('is_del', 1)
+            ->order('id', 'desc');
         if (!empty($param['type'])) {
             $query->where('type', $param['type']);
         }
@@ -24,7 +25,6 @@ class ErrorLog extends VModel
             $query->whereBetween('create_time',
                 [strtotime($param['create_time'][0]), strtotime($param['create_time'][1])]);
         }
-        $query->order('id', 'desc');
 
         return $this->queryPaginate($query, $param);
     }

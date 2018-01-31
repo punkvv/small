@@ -6,9 +6,8 @@
 
 namespace app\common\service\system;
 
-use app\common\model\system\RoleMenu;
-use app\common\model\system\facade\Menu;
 use app\common\model\system\facade\Role;
+use app\common\model\system\RoleMenu;
 use app\common\VService;
 
 class RoleService extends VService
@@ -57,7 +56,7 @@ class RoleService extends VService
 
     public function getMenuList($id)
     {
-        $this->data = Menu::getListByRole($id);
+        $this->data = Role::getMenuList($id);
 
         return $this->result();
     }

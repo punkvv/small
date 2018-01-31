@@ -12,7 +12,7 @@ class RoleValidate extends Validate
 {
     protected $rule = [
         'id' => ['require'],
-        'role_name' => ['require', 'max' => 20, 'unique:admin_role'],
+        'role_name' => ['require', 'max' => 20, 'unique:role'],
         'remark' => ['max' => 255],
     ];
 

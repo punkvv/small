@@ -29,25 +29,4 @@ class Menu extends VModel
 
         return $items;
     }
-
-    public function getListByAdminId($adminId)
-    {
-        $list = Db::view('AdminMenu', 'id,name,menu_name,parent_id,parent_name,router')
-            ->view('AdminRoleMenu', 'menu_id', 'AdminMenu.id=AdminRoleMenu.menu_id')
-            ->view('AdminUserRole', 'role_id', 'AdminRoleMenu.role_id=AdminUserRole.role_id')
-            ->where('AdminUserRole.admin_id', $adminId)
-            ->select();
-
-        return $list;
-    }
-
-    public function getListByRole($roleId)
-    {
-        $list = Db::view('AdminRoleMenu', 'menu_id')
-            ->view('AdminMenu', 'menu_name', 'AdminRoleMenu.menu_id=AdminMenu.id')
-            ->where('AdminRoleMenu.role_id', $roleId)
-            ->select();
-
-        return $list;
-    }
 }

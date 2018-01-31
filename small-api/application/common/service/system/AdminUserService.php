@@ -6,7 +6,7 @@
 
 namespace app\common\service\system;
 
-use app\common\model\system\facade\Menu;
+use app\common\model\system\AdminUserRole;
 use app\common\model\system\facade\AdminUser;
 use app\common\util\Encrypt;
 use app\common\VService;
@@ -67,7 +67,7 @@ class AdminUserService extends VService
         $info = AdminUser::getInfoById($adminId);
         $router = [];
         if (1 != $adminId) {
-            $menus = Menu::getListByAdminId($adminId);
+            $menus = AdminUser::getMenuList($adminId);
             $router = [];
             foreach ($menus as $menu) {
                 $router = array_merge($router, array_filter(explode(',',
@@ -97,6 +97,31 @@ class AdminUserService extends VService
             ]);
             $this->data = $data;
         }
+
+        return $this->result();
+    }
+
+    public function getRoleList($adminId)
+    {
+        $this->data = AdminUser::getRoleList($adminId);
+
+        return $this->result();
+    }
+
+    public function createRole($param)
+    {
+        $adminId = $param['id'];
+        $items = $param['items'];
+        $list = [];
+        foreach ($items as $item) {
+            $list[] = [
+                'role_id' => $item,
+                'admin_id' => $adminId,
+            ];
+        }
+        AdminUserRole::where('admin_id', $adminId)->delete();
+        $adminRoleMenu = new AdminUserRole;
+        $adminRoleMenu->saveAll($list);
 
         return $this->result();
     }

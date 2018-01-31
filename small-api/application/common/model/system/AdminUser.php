@@ -7,6 +7,7 @@
 namespace app\common\model\system;
 
 use app\common\VModel;
+use think\Db;
 
 class AdminUser extends VModel
 {
@@ -42,5 +43,26 @@ class AdminUser extends VModel
         $data = $this->queryPaginate($query, $param);
 
         return $data;
+    }
+
+    public function getMenuList($adminId)
+    {
+        $list = Db::view('Menu', 'id,name,menu_name,parent_id,parent_name,router')
+            ->view('RoleMenu', 'menu_id', 'Menu.id=RoleMenu.menu_id')
+            ->view('AdminUserRole', 'role_id', 'RoleMenu.role_id=AdminUserRole.role_id')
+            ->where('AdminUserRole.admin_id', $adminId)
+            ->select();
+
+        return $list;
+    }
+
+    public function getRoleList($id)
+    {
+        $list = Db::view('Role', 'role_name,remark')
+            ->view('AdminUserRole', ['role_id' => 'id'], 'Role.id=AdminUserRole.role_id')
+            ->where('AdminUserRole.admin_id', $id)
+            ->select();
+
+        return $list;
     }
 }
