@@ -6,9 +6,9 @@
 
 namespace app\common\provider\sms;
 
-class Sms
+class SmsBao
 {
-    public function __construct($config)
+    public function __construct()
     {
 
     }

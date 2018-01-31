@@ -74,6 +74,13 @@
             prop="method"
             label="请求类型"
             width="100">
+            <template slot-scope="scope">
+              <el-tag type="primary" v-if="scope.row.method=='POST'">{{scope.row.method}}</el-tag>
+              <el-tag type="success" v-else-if="scope.row.method=='PUT'">{{scope.row.method}}</el-tag>
+              <el-tag type="danger" v-else-if="scope.row.method=='DELETE'">{{scope.row.method}}</el-tag>
+              <el-tag type="warning" v-else-if="scope.row.method=='GET'">{{scope.row.method}}</el-tag>
+              <el-tag type="info" v-else>{{scope.row.method}}</el-tag>
+            </template>
           </el-table-column>
           <el-table-column
             prop="params"
@@ -116,7 +123,6 @@
     created() {
       this.getList()
     },
-    filters: {},
     methods: {
       async getList() {
         this.loading = true

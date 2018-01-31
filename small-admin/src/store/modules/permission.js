@@ -1,7 +1,7 @@
 import {constantRouter, asyncRouter} from '@/router/router'
 
 function hasPermission(router, route) {
-  return router.indexOf(route.name) >= 0
+  return router.indexOf(route.name) >= 0 || route.name === undefined
 }
 
 function filterAsyncRouter(asyncRouter, router) {
@@ -37,7 +37,7 @@ const permission = {
         if (userId === 1) {
           accessedRouters = asyncRouter
         } else {
-          accessedRouters = filterAsyncRouter(asyncRouter, router)
+          accessedRouters = filterAsyncRouter(asyncRouter, router.split(','))
         }
         commit('SET_ROUTERS', accessedRouters)
         resolve()

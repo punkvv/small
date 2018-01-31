@@ -76,7 +76,7 @@ class AdminUserService extends VService
             $router = array_unique($router);
         }
         $this->data['user_info'] = $info;
-        $this->data['router'] = $router;
+        $this->data['router'] = implode(',', $router);
 
         return $this->result();
     }

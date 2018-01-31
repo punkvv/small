@@ -23,7 +23,7 @@ class ApiLog extends VModel
         }
         if (!empty($param['create_time']) && count($param['create_time']) == 2) {
             $query->whereBetween('ApiLog.create_time',
-                [strtotime($param['create_time'][0]), strtotime($param['create_time'][1])]);
+                [strtotime($param['create_time'][0]), strtotime($param['create_time'][1]) + 86400]);
         }
 
         return $this->queryPaginate($query, $param);
