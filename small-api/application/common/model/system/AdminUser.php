@@ -23,7 +23,7 @@ class AdminUser extends VModel
 
     public function getInfoById($userId)
     {
-        $data = $this->field('id,username,avatar')->where('id', $userId)->find();
+        $data = $this->field('id,username,avatar,real_name,phone,email')->where('id', $userId)->find();
 
         return $data;
     }

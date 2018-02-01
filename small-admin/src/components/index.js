@@ -10,6 +10,11 @@ export {default as ScrollPane} from './scroll-pane'           // 横向滚动面
 export {default as BackToTop} from './back-to-top'            // 返回顶部
 export {default as TreeTable} from './tree-table'             // 树形表格
 export {default as Thumb} from './thumb'                       // 圆形图片
-export {default as ImgUpload} from './img-upload'              // 图片上传
+export {default as ImageUpload} from './image-upload'          // 图片上传
+export {default as ImageMultiple} from './image-multiple'      // 多图上传
 export {default as ImageCropper} from './image-cropper'        // 图片剪裁
 export {default as Sticky} from './sticky'                      // 吸附在顶部
+export {default as Tinymce} from './tinymce'                    // 编辑器
+export {default as TableExcel} from './table-excel'             // 表格导出Excel
+export {default as PrintPdf} from './print-pdf'                 // 打印PDF
+export {default as MobilePhone} from './mobile-phone'           // 手机预览

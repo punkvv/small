@@ -6,6 +6,8 @@
 
 namespace app\common\validate;
 
+use app\common\model\system\facade\AdminUser;
+use app\common\util\Encrypt;
 use think\Validate;
 
 class AdminUserValidate extends Validate
@@ -19,6 +21,7 @@ class AdminUserValidate extends Validate
         'real_name' => ['max' => 20],
         'phone' => ['max' => 20],
         'email' => ['max' => 20],
+        'old_pass' => ['require', 'checkPassword'],
     ];
 
     protected $message = [
@@ -34,11 +37,24 @@ class AdminUserValidate extends Validate
         'real_name.max' => '姓名不能超过20个字符',
         'phone.max' => '手机号码不能超过20个字符',
         'email.max' => '邮箱地址不能超过20个字符',
+        'old_pass.require' => '原密码不能为空',
     ];
 
     protected $scene = [
         'create' => ['username', 'pass', 'check_pass', 'avatar', 'real_name', 'phone', 'email'],
         'update' => ['id', 'username', 'avatar', 'real_name', 'phone', 'email'],
         'changePass' => ['id', 'pass', 'check_pass'],
+        'updatePass' => ['id', 'old_pass', 'pass', 'check_pass'],
     ];
+
+    /**
+     * 验证原密码
+     */
+    public static function checkPassword($value, $rule, $data = [])
+    {
+        $adminId = $data['id'];
+        $info = AdminUser::get($adminId);
+
+        return Encrypt::validate($value, $info->password) ? true : '原密码不正确';
+    }
 }

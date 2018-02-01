@@ -24,8 +24,8 @@
           <img class="user-avatar" :src="userAvatar">
         </div>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>
-            <span>欢迎：{{username}}</span>
+          <el-dropdown-item @click.native="toPersonal">
+            <span>个人中心</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -63,6 +63,9 @@
         this.$store.dispatch('logOut').then(() => {
           location.reload()
         })
+      },
+      toPersonal() {
+        this.$router.push({name: 'personal'})
       }
     }
   }

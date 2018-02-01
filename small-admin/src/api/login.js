@@ -10,11 +10,3 @@ export const loginByPassword = (username, password) => request({
   method: 'post',
   data: {username: username, password: password}
 })
-
-/**
- * 获取登录用户信息
- */
-export const getUserInfo = (token) => request({
-  url: 'admin/users/' + token,
-  method: 'get'
-})

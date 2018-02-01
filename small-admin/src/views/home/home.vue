@@ -2,7 +2,8 @@
 </style>
 
 <template>
-  <div class=""></div>
+  <div class="home">
+  </div>
 </template>
 
 <script>
@@ -10,7 +11,8 @@
     name: 'home',
     components: {},
     data() {
-      return {}
+      return {
+      }
     },
     mounted() {
     },

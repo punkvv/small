@@ -125,4 +125,34 @@ class AdminUserService extends VService
 
         return $this->result();
     }
+
+    public function updateUser($adminId, $param)
+    {
+        if ($this->validate($param, 'adminUser', 'update')) {
+            $data = AdminUser::update([
+                'id' => $adminId,
+                'username' => $param['username'],
+                'avatar' => $param['avatar'],
+                'real_name' => $param['real_name'],
+                'phone' => $param['phone'],
+                'email' => $param['email'],
+            ]);
+            $this->data = $data;
+        }
+
+        return $this->result();
+    }
+
+    public function updatePassword($adminId, $param)
+    {
+        if ($this->validate($param, 'adminUser', 'updatePass')) {
+            $data = AdminUser::update([
+                'id' => $adminId,
+                'password' => Encrypt::generate($param['pass']),
+            ]);
+            $this->data = $data;
+        }
+
+        return $this->result();
+    }
 }

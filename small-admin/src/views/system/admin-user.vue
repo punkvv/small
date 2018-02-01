@@ -127,12 +127,7 @@
 
           <el-form-item label="头像">
             <thumb v-show="editor.avatar" :image="editor.avatar"></thumb>
-            <el-button type="primary" size="mini" @click="show=true">点击上传</el-button>
-            <image-cropper
-              v-model="show"
-              :key="key"
-              @crop-upload-success="cropSuccess">
-            </image-cropper>
+            <image-cropper @upload-success="cropSuccess"></image-cropper>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
@@ -162,23 +157,20 @@
       </el-dialog>
 
       <el-dialog
+        width="540px"
         title="角色"
         :visible.sync="roleVisible">
-        <el-form label-width="190px">
-          <el-form-item>
-            <el-transfer
-              filterable
-              filter-placeholder="请输入角色名称"
-              :props="{
+        <el-transfer
+          filterable
+          filter-placeholder="请输入角色名称"
+          :props="{
                 key: 'id',
                 label: 'role_name'
               }"
-              :titles="['未包含角色', '已包含角色']"
-              v-model="selectRole"
-              :data="roleList">
-            </el-transfer>
-          </el-form-item>
-        </el-form>
+          :titles="['未包含角色', '已包含角色']"
+          v-model="selectRole"
+          :data="roleList">
+        </el-transfer>
         <span slot="footer" class="dialog-footer">
           <el-button @click="roleVisible = false">取消</el-button>
           <el-button type="primary" :loading="roleLoading" @click="changeRole">提交</el-button>
@@ -203,7 +195,7 @@
   import {ImageCropper, Thumb} from '@/components'
 
   export default {
-    name: 'user',
+    name: 'adminUser',
     components: {ImageCropper, Thumb},
     data() {
       const validatePass = (rule, value, callback) => {
@@ -228,8 +220,6 @@
         }
       }
       return {
-        show: false,
-        key: 0,
         options: [{
           value: 1,
           label: '正常'
@@ -300,7 +290,8 @@
     methods: {
       async getList() {
         this.loading = true
-        const data = await adminUserList(this.filters)
+        const data = await
+          adminUserList(this.filters)
         this.list = data.items
         this.total = data.total
         this.loading = false
@@ -415,8 +406,6 @@
         item.status = Math.abs(item.status - 1)
       },
       cropSuccess(res) {
-        this.show = false
-        this.key = this.key + 1
         this.editor.avatar = res.url
       },
       createData() {

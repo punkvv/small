@@ -153,7 +153,13 @@
       handleUpdate(item) {
         this.editorVisible = true
         this.editorStatus = 2
-        this.editor = Object.assign({}, item)
+        this.editor = {
+          id: item.id,
+          parent_id: item.parent_id,
+          menu_name: item.menu_name,
+          name: item.name,
+          router: item.router
+        }
         const parentList = Util.searchParent(item)
         this.menuParent = parentList
         this.$nextTick(() => {

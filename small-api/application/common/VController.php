@@ -63,43 +63,33 @@ class VController extends Controller
 
     /**
      * 获取后台用户id
-     * @param bool $isCheck 是否验证
+     * @param int $adminId
      * @return mixed
      */
-    public function adminId($isCheck = false)
+    public function adminId($adminId = 0)
     {
-        if ($isCheck) {
-            $adminId = $this->param['user_id'];
-            $info = $this->getTokenInfo();
-            if (!isset($info['admin_id']) || $adminId != $info['admin_id']) {
-                $data['code'] = HttpCode::$unauthorized;
-                $data['name'] = 'AUTH_FAILED';
-                $data['message'] = 'Not Authored';
-                $this->restful($data);
-            }
-        } else {
-            $info = $this->getTokenInfo();
-            $adminId = $info['admin_id'];
+        $info = $this->getTokenInfo();
+        if (!isset($info['admin_id']) || $adminId && $adminId != $info['admin_id']) {
+            $data['code'] = HttpCode::$unauthorized;
+            $data['name'] = 'TOKEN_FAIL';
+            $data['message'] = 'Not Authored';
+            $this->restful($data);
         }
+        $adminId = $info['admin_id'];
 
         return $adminId;
     }
 
-    public function userId($isCheck = false)
+    public function userId($userId = 0)
     {
-        if ($isCheck) {
-            $userId = $this->param['user_id'];
-            $info = $this->getTokenInfo();
-            if (!isset($info['user_id']) || $userId != $info['user_id']) {
-                $data['code'] = HttpCode::$unauthorized;
-                $data['name'] = 'AUTH_FAILED';
-                $data['message'] = 'Not Authored';
-                $this->restful($data);
-            }
-        } else {
-            $info = $this->getTokenInfo();
-            $userId = $info['user_id'];
+        $info = $this->getTokenInfo();
+        if (!isset($info['user_id']) || $userId && $userId != $info['user_id']) {
+            $data['code'] = HttpCode::$unauthorized;
+            $data['name'] = 'TOKEN_FAIL';
+            $data['message'] = 'Not Authored';
+            $this->restful($data);
         }
+        $userId = $info['user_id'];
 
         return $userId;
     }

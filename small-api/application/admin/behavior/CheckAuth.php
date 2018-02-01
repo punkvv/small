@@ -8,6 +8,7 @@ namespace app\admin\behavior;
 
 use app\common\HttpCode;
 use app\common\model\facade\ApiLog;
+use think\facade\Config;
 
 /**
  * 权限检查
@@ -34,7 +35,7 @@ class CheckAuth
                     'code' => HttpCode::$unauthorized,
                 ];
                 $controller->restful($data);
-            } elseif (!isset($param['v_log']) || $param['v_log']) {
+            } elseif ((!isset($param['v_log']) || $param['v_log']) && !Config::get('app_debug')) {
                 // 记录 API 日志
                 ApiLog::addData($controller->adminId(), $rule, $param['v_name'], $param, $methods);
             }

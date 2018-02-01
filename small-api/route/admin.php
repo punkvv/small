@@ -28,7 +28,6 @@ use think\facade\Route;
  * v_check:  是否进行权限检测（默认 true）  只对后台路由有效
  * v_log:    是否记录操作日志（默认 true） v_check = true 时才有效
  *
- * 显示传递登录用户id 采用变量名 :user_id
  */
 
 Route::group('admin', function () {
@@ -96,10 +95,20 @@ Route::group('admin', function () {
     // 个人相关
     Route::group('users', function () {
         VRoute::rule(
-            ':user_id',
+            ':id',
             'admin/user/info',
-            ['v_name' => '获取登录信息', 'v_log' => false],
+            ['v_name' => '获取个人信息', 'v_log' => false],
             'get');
+        VRoute::rule(
+            ':id',
+            'admin/user/update',
+            ['v_name' => '更新个人信息'],
+            'put');
+        VRoute::rule(
+            ':id/update_password',
+            'admin/user/updatePassword',
+            ['v_name' => '更新个人密码'],
+            'post');
     });
 
     // 用户相关

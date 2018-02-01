@@ -1,4 +1,5 @@
-import {loginByPassword, getUserInfo} from '@/api/login'
+import {loginByPassword} from '@/api/login'
+import {getUserInfo} from '@/api/user'
 import {getToken, setToken, removeToken, getUserId, setUserId} from '@/libs/cookie'
 
 const user = {

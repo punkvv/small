@@ -23,7 +23,8 @@ export const constantRouter = [
     redirect: 'home',
     hidden: true,
     children: [
-      {path: 'home', name: 'home', component: _import('home/home'), meta: {title: '首页', icon: 'home'}}
+      {path: 'home', name: 'home', component: _import('home/home'), meta: {title: '首页'}},
+      {path: 'personal', name: 'personal', component: _import('home/personal'), meta: {title: '个人中心'}}
     ]
   }
 ]
@@ -38,8 +39,13 @@ export const asyncRouter = [
     children: [
       {path: 'menu', name: 'menu', component: _import('system/menu'), meta: {title: '菜单', icon: 'menu'}},
       {path: 'role', name: 'role', component: _import('system/role'), meta: {title: '角色', icon: 'role'}},
-      {path: 'user', name: 'user', component: _import('system/user'), meta: {title: '用户', icon: 'user'}},
-      {path: 'error-log', name: 'errorLog', component: _import('system/error-log'), meta: {title: '错误日志', icon: 'error'}},
+      {path: 'user', name: 'user', component: _import('system/admin-user'), meta: {title: '用户', icon: 'user'}},
+      {
+        path: 'error-log',
+        name: 'errorLog',
+        component: _import('system/error-log'),
+        meta: {title: '错误日志', icon: 'error'}
+      },
       {path: 'api-log', name: 'apiLog', component: _import('system/api-log'), meta: {title: 'API日志', icon: 'apilog'}}
     ]
   },

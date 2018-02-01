@@ -15,7 +15,7 @@ class MenuValidate extends Validate
         'menu_name' => ['require', 'max' => 20, 'unique:menu'],
         'name' => ['require', 'max' => 20, 'unique:menu'],
         // parent_id 不为空时候为 integer 类型
-        'parent_id' => ['requireCallback:app\common\VValidate::requireEmpty', 'integer',],
+        'parent_id' => ['checkParentId'],
     ];
 
     protected $message = [
@@ -26,11 +26,19 @@ class MenuValidate extends Validate
         'menu_name.require' => '菜单名称不能为空',
         'menu_name.max' => '菜单名称不能超过20个字符',
         'menu_name.unique' => '菜单名称已存在',
-        'parent_id.integer' => 'parent_id 类型错误',
     ];
 
     protected $scene = [
         'create' => ['name', 'menu_name', 'parent_id'],
         'update' => ['id', 'name', 'menu_name', 'parent_id'],
     ];
+
+    protected function checkParentId($value, $rule, $data = [])
+    {
+        if (!empty($value)) {
+            return intval($value) ? true : 'parent_id 类型错误';
+        }
+
+        return true;
+    }
 }
