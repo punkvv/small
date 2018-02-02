@@ -30,7 +30,7 @@
     methods: {
       exportExcel() {
         this.loading = true
-        import('@/libs/export2Excel').then(excel => {
+        import('@/vendor/export2Excel').then(excel => {
           excel.export_table_to_excel(this.tableId)
           this.loading = false
         })

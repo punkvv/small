@@ -14,7 +14,6 @@ class MenuValidate extends Validate
         'id' => ['require'],
         'menu_name' => ['require', 'max' => 20, 'unique:menu'],
         'name' => ['require', 'max' => 20, 'unique:menu'],
-        // parent_id 不为空时候为 integer 类型
         'parent_id' => ['checkParentId'],
     ];
 

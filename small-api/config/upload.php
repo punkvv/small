@@ -8,4 +8,7 @@
 return [
     // 本地上传目录 根目录为 web 根目录
     'image_local' => '/upload/image',
+
+    // excel 下载目录
+    'excel_download' => '/download/excel',
 ];

@@ -30,7 +30,7 @@
     methods: {
       printPdf() {
         this.loading = true
-        import('@/libs/printPDF').then(pdf => {
+        import('@/vendor/printPDF').then(pdf => {
           pdf.printPdf(this.selectorId)
           this.loading = false
         })

@@ -4,13 +4,13 @@
  * Author: PunkVv <punkv@qq.com>
  */
 
-namespace app\index\controller;
+namespace app\v1\controller;
 
 use app\common\HttpCode;
 
-class IndexController
+class MissController
 {
-    public function miss()
+    public function index()
     {
         $data['message'] = 'Not Found';
         $data['name'] = 'HTTP_NOT_FOUND';

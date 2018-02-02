@@ -11,3 +11,5 @@ use think\facade\Route;
 Route::group('v1', function () {
 
 })->allowCrossDomain();
+
+Route::miss('v1/miss/index');
