@@ -1,1 +1,2 @@
-# small 一个简单商城
+# small vue + thinkphp  
+[线上地址](http://admin.zhiyoute.com) admin 123456
