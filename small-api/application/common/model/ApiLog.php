@@ -12,7 +12,7 @@ use think\Db;
 class ApiLog extends VModel
 {
 
-    public function getList($param)
+    public static function getList($param)
     {
         $query = Db::view('ApiLog', 'id,create_time,router,router_name,params,method')
             ->view('AdminUser', 'username', 'ApiLog.admin_id=AdminUser.id')
@@ -26,15 +26,15 @@ class ApiLog extends VModel
                 [strtotime($param['create_time'][0]), strtotime($param['create_time'][1]) + 86400]);
         }
 
-        return $this->queryPaginate($query, $param);
+        return static::queryPaginate($query, $param);
     }
 
-    public function addData($adminId, $router, $routerName, $params, $methods)
+    public static function addData($adminId, $router, $routerName, $params, $methods)
     {
         unset($params['v_log']);
         unset($params['v_name']);
         unset($params['v_check']);
-        $data = $this->create([
+        $data = static::create([
             'create_time' => time(),
             'router' => $router,
             'admin_id' => $adminId,

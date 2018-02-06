@@ -43,7 +43,7 @@ class VService
      */
     public function __construct()
     {
-        $this->code = HttpCode::$ok;
+        $this->code = VCode::$ok;
     }
 
     /**
@@ -64,7 +64,7 @@ class VService
         if (!$isCheck) {
             $this->message = $validate->getError();
             $this->name = 'FIELD_VALIDATION_ERROR';
-            $this->code = HttpCode::$notAcceptable;
+            $this->code = VCode::$notAcceptable;
         }
 
         return $isCheck;

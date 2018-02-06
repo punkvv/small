@@ -6,8 +6,8 @@
 
 namespace app\common\service;
 
-use app\common\HttpCode;
-use app\common\model\system\facade\AdminUser;
+use app\common\VCode;
+use app\common\model\AdminUser;
 use app\common\util\Encrypt;
 use app\common\util\token\Token;
 use app\common\VService;
@@ -27,11 +27,11 @@ class LoginService extends VService
         if (!$info || !Encrypt::validate($password, $info->password)) {
             $this->message = '用户名或者密码错误';
             $this->name = 'USER_AUTH_FAIL';
-            $this->code = HttpCode::$invalidRequest;
+            $this->code = VCode::$invalidRequest;
         } elseif ($info->status !== 1) {
             $this->message = '用户已被禁用';
             $this->name = 'USER_AUTH_FAIL';
-            $this->code = HttpCode::$invalidRequest;
+            $this->code = VCode::$invalidRequest;
         } else {
             // 登录成功生成 token
             $userId = $info->id;

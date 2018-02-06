@@ -190,8 +190,8 @@
     roleListByAdmin,
     createRoleByAdmin,
     changeStatus
-  } from '@/api/system/adminUser'
-  import {roleList} from '@/api/system/role'
+  } from '@/api/adminUser'
+  import {roleList} from '@/api/role'
   import {ImageCropper, Thumb} from '@/components'
 
   export default {

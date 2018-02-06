@@ -6,7 +6,7 @@
 
 namespace app\common\service;
 
-use app\common\HttpCode;
+use app\common\VCode;
 use app\common\VService;
 use think\facade\Env;
 
@@ -27,7 +27,7 @@ class UploadService extends VService
         } else {
             $this->message = $file->getError();
             $this->name = 'UPLOAD_FAILED';
-            $this->code = HttpCode::$invalidRequest;
+            $this->code = VCode::$invalidRequest;
         }
 
         return $this->result();

@@ -22,7 +22,7 @@
 </template>
 
 <script>
-  import {errorLogDynamicCount} from '@/api/system/errorLog'
+  import {errorLogDynamicCount} from '@/api/errorLog'
 
   export default {
     name: 'errorLog',

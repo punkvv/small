@@ -115,8 +115,8 @@
     deleteRole,
     menuListByRole,
     createMenuByRole
-  } from '@/api/system/role'
-  import {menuList} from '@/api/system/menu'
+  } from '@/api/role'
+  import {menuList} from '@/api/menu'
 
   export default {
     name: 'role',

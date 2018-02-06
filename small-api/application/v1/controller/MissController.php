@@ -6,7 +6,7 @@
 
 namespace app\v1\controller;
 
-use app\common\HttpCode;
+use app\common\VCode;
 
 class MissController
 {
@@ -14,7 +14,7 @@ class MissController
     {
         $data['message'] = 'Not Found';
         $data['name'] = 'HTTP_NOT_FOUND';
-        $data['code'] = HttpCode::$notFound;
+        $data['code'] = VCode::$notFound;
 
         return $data;
     }

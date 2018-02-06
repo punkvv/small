@@ -6,7 +6,7 @@
 
 namespace app\admin\controller;
 
-use app\common\service\system\AdminUserService;
+use app\common\service\AdminUserService;
 use app\common\VController;
 
 class UserController extends VController

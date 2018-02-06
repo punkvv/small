@@ -103,7 +103,7 @@
 </template>
 
 <script>
-  import {apiLogList} from '@/api/system/apiLog'
+  import {apiLogList} from '@/api/apiLog'
 
   export default {
     name: 'apiLog',

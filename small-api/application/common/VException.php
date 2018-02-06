@@ -6,7 +6,7 @@
 
 namespace app\common;
 
-use app\common\model\facade\ErrorLog;
+use app\common\model\ErrorLog;
 use Exception;
 use think\exception\Handle;
 use think\facade\Config;
@@ -26,7 +26,7 @@ class VException extends Handle
                 sprintf("%s:%d %s (%d) [%s]\n", $e->getFile(), $e->getLine(),
                     $e->getMessage(), $e->getCode(), get_class($e)));
             // 返回异常
-            $data['code'] = HttpCode::$internalServerError;
+            $data['code'] = VCode::$internalServerError;
             $data['name'] = 'INTERNAL_SERVER_ERROR';
             $data['message'] = '服务器异常';
             $response = Response::create($data, 'json')->header([]);

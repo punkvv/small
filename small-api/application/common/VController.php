@@ -70,7 +70,7 @@ class VController extends Controller
     {
         $info = $this->getTokenInfo();
         if (!isset($info['admin_id']) || $adminId && $adminId != $info['admin_id']) {
-            $data['code'] = HttpCode::$unauthorized;
+            $data['code'] = VCode::$unauthorized;
             $data['name'] = 'TOKEN_FAIL';
             $data['message'] = 'Not Authored';
             $this->restful($data);
@@ -84,7 +84,7 @@ class VController extends Controller
     {
         $info = $this->getTokenInfo();
         if (!isset($info['user_id']) || $userId && $userId != $info['user_id']) {
-            $data['code'] = HttpCode::$unauthorized;
+            $data['code'] = VCode::$unauthorized;
             $data['name'] = 'TOKEN_FAIL';
             $data['message'] = 'Not Authored';
             $this->restful($data);
@@ -117,7 +117,7 @@ class VController extends Controller
             }
         }
         if (!empty($message)) {
-            $data['code'] = HttpCode::$unauthorized;
+            $data['code'] = VCode::$unauthorized;
             $data['name'] = 'TOKEN_FAIL';
             $data['message'] = $message;
             $this->restful($data);

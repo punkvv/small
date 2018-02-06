@@ -10,9 +10,9 @@ use app\common\VModel;
 
 class ErrorLog extends VModel
 {
-    public function getList($param)
+    public static function getList($param)
     {
-        $query = $this->field('id,create_time,router,message,type,status')
+        $query = static::field('id,create_time,router,message,type,status')
             ->where('is_del', 1)
             ->order('id', 'desc');
         if (!empty($param['type'])) {
@@ -26,12 +26,12 @@ class ErrorLog extends VModel
                 [strtotime($param['create_time'][0]), strtotime($param['create_time'][1])]);
         }
 
-        return $this->queryPaginate($query, $param);
+        return static::queryPaginate($query, $param);
     }
 
-    public function addData(string $router, string $message, int $type = 1)
+    public static function addData(string $router, string $message, int $type = 1)
     {
-        $data = $this->create([
+        $data = static::create([
             'create_time' => time(),
             'router' => $router,
             'message' => $message,
@@ -41,9 +41,9 @@ class ErrorLog extends VModel
         return $data;
     }
 
-    public function getDataById($id)
+    public static function getDataById($id)
     {
-        $data = $this->field('id,create_time,router,message,type,status')->where('id', $id)->find();
+        $data = static::field('id,create_time,router,message,type,status')->where('id', $id)->find();
 
         return $data;
     }

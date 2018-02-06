@@ -6,8 +6,8 @@
 
 namespace app\admin\behavior;
 
-use app\common\HttpCode;
-use app\common\model\facade\ApiLog;
+use app\common\VCode;
+use app\common\model\ApiLog;
 use think\facade\Config;
 
 /**
@@ -32,7 +32,7 @@ class CheckAuth
                 $data = [
                     'message' => '没有权限',
                     'name' => 'NO_AUTHORITY',
-                    'code' => HttpCode::$unauthorized,
+                    'code' => VCode::$unauthorized,
                 ];
                 $controller->restful($data);
             } elseif ((!isset($param['v_log']) || $param['v_log']) && !Config::get('app_debug')) {

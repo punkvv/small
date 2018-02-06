@@ -6,7 +6,7 @@
 
 namespace app\common\service;
 
-use app\common\model\facade\ApiLog;
+use app\common\model\ApiLog;
 use app\common\VService;
 
 class ApiLogService extends VService

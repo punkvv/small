@@ -6,8 +6,7 @@
 
 namespace app\common\service;
 
-use app\common\HttpCode;
-use app\common\model\facade\ErrorLog;
+use app\common\model\ErrorLog;
 use app\common\VService;
 
 class ErrorLogService extends VService
