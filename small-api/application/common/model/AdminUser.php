@@ -45,7 +45,7 @@ class AdminUser extends VModel
         return $data;
     }
 
-    public function getMenuList($adminId)
+    public static function getMenuList($adminId)
     {
         $list = Db::view('Menu', 'id,name,menu_name,parent_id,parent_name,router')
             ->view('RoleMenu', 'menu_id', 'Menu.id=RoleMenu.menu_id')
@@ -56,7 +56,7 @@ class AdminUser extends VModel
         return $list;
     }
 
-    public function getRoleList($id)
+    public static function getRoleList($id)
     {
         $list = Db::view('Role', 'role_name,remark')
             ->view('AdminUserRole', ['role_id' => 'id'], 'Role.id=AdminUserRole.role_id')
