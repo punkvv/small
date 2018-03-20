@@ -69,7 +69,7 @@ Route::group('admin', function () {
             'post');
         VRoute::rule(
             'delete_all',
-            'admin/errorLog/delete',
+            'admin/errorLog/deleteAll',
             ['v_name' => '错误日志全部删除'],
             'post');
     });

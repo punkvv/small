@@ -52,6 +52,6 @@ export const changeStatusAll = () => request({
  * 删除全部
  */
 export const deleteAll = () => request({
-  url: 'admin/error_logs/delete',
+  url: 'admin/error_logs/delete_all',
   method: 'post'
 })
