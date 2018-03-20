@@ -205,7 +205,7 @@
           if (this.editor.check_pass !== '' && this.passVisible !== true) {
             this.$refs.editor.validateField('check_pass')
           } else {
-            this.$refs.pass.validateField('check_pass')
+            this.$refs.editor.validateField('check_pass')
           }
           callback()
         }

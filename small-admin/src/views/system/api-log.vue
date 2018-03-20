@@ -61,6 +61,11 @@
             width="100">
           </el-table-column>
           <el-table-column
+            prop="ip"
+            label="IP"
+            width="100">
+          </el-table-column>
+          <el-table-column
             prop="router"
             label="接口地址"
             width="150">

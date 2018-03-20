@@ -128,8 +128,8 @@ class VModel extends Model
         return static::changeFiledByPk($id, 'status', $status);
     }
 
-    protected static function changeFiledByPk($id, $filed, $value)
+    protected static function changeFiledByPk($id, $filed, $value, $pk = 'id')
     {
-        return static::where(static::getPk(), $id)->setField($filed, $value);
+        return static::where($pk, $id)->setField($filed, $value);
     }
 }

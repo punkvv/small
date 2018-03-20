@@ -14,7 +14,7 @@ class ApiLog extends VModel
 
     public static function getList($param)
     {
-        $query = Db::view('ApiLog', 'id,create_time,router,router_name,params,method')
+        $query = Db::view('ApiLog', 'id,create_time,router,router_name,params,method,ip')
             ->view('AdminUser', 'username', 'ApiLog.admin_id=AdminUser.id')
             ->where('ApiLog.is_del', 1)
             ->order('ApiLog.id', 'desc');
@@ -34,6 +34,7 @@ class ApiLog extends VModel
         unset($params['v_log']);
         unset($params['v_name']);
         unset($params['v_check']);
+        $ip = request()->ip();
         $data = static::create([
             'create_time' => time(),
             'router' => $router,
@@ -41,6 +42,7 @@ class ApiLog extends VModel
             'router_name' => $routerName,
             'params' => json_encode($params, JSON_UNESCAPED_UNICODE),
             'method' => $methods,
+            'ip' => $ip,
         ]);
 
         return $data;
