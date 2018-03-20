@@ -22,27 +22,23 @@ class RoleService extends VService
 
     public function createData($param)
     {
-        if ($this->validate($param, 'role', 'create')) {
-            $data = Role::create([
-                'role_name' => $param['role_name'],
-                'remark' => $param['remark'],
-            ]);
-            $this->data = $data;
-        }
+        $data = Role::create([
+            'role_name' => $param['role_name'],
+            'remark' => $param['remark'],
+        ]);
+        $this->data = $data;
 
         return $this->result();
     }
 
     public function updateData($param)
     {
-        if ($this->validate($param, 'role', 'update')) {
-            $data = Role::update([
-                'id' => $param['id'],
-                'role_name' => $param['role_name'],
-                'remark' => $param['remark'],
-            ]);
-            $this->data = $data;
-        }
+        $data = Role::update([
+            'id' => $param['id'],
+            'role_name' => $param['role_name'],
+            'remark' => $param['remark'],
+        ]);
+        $this->data = $data;
 
         return $this->result();
     }

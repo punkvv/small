@@ -34,6 +34,8 @@ class ApiLog extends VModel
         unset($params['v_log']);
         unset($params['v_name']);
         unset($params['v_check']);
+        unset($params['v_validate_class']);
+        unset($params['v_validate_scene']);
         $ip = request()->ip();
         $data = static::create([
             'create_time' => time(),

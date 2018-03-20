@@ -202,10 +202,12 @@
         if (value === '') {
           callback(new Error('请输入密码'))
         } else {
-          if (this.editor.check_pass !== '' && this.passVisible !== true) {
-            this.$refs.editor.validateField('check_pass')
-          } else {
-            this.$refs.editor.validateField('check_pass')
+          if (this.editor.check_pass !== '') {
+            if (this.passVisible !== true) {
+              this.$refs.editor.validateField('check_pass')
+            } else {
+              this.$refs.pass.validateField('check_pass')
+            }
           }
           callback()
         }

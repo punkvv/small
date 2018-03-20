@@ -46,30 +46,6 @@ class VService
         $this->code = VCode::$ok;
     }
 
-    /**
-     * 数据验证
-     * @param array $param
-     * @param string $className
-     * @param string $scene 验证场景
-     * @return bool
-     */
-    protected function validate(array $param, $className, $scene)
-    {
-        $class = '\\app\\common\\validate\\'.ucwords($className).'Validate';
-        $validate = new $class;
-        if ($scene) {
-            $validate->scene($scene);
-        }
-        $isCheck = $validate->check($param);
-        if (!$isCheck) {
-            $this->message = $validate->getError();
-            $this->name = 'FIELD_VALIDATION_ERROR';
-            $this->code = VCode::$notAcceptable;
-        }
-
-        return $isCheck;
-    }
-
     protected function result()
     {
         if (isset($this->message)) {

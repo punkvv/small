@@ -23,34 +23,30 @@ class AdminUserService extends VService
 
     public function createData($param)
     {
-        if ($this->validate($param, 'adminUser', 'create')) {
-            $data = AdminUser::create([
-                'username' => $param['username'],
-                'password' => Encrypt::generate($param['pass']),
-                'avatar' => $param['avatar'],
-                'real_name' => $param['real_name'],
-                'phone' => $param['phone'],
-                'email' => $param['email'],
-            ]);
-            $this->data = $data;
-        }
+        $data = AdminUser::create([
+            'username' => $param['username'],
+            'password' => Encrypt::generate($param['pass']),
+            'avatar' => $param['avatar'],
+            'real_name' => $param['real_name'],
+            'phone' => $param['phone'],
+            'email' => $param['email'],
+        ]);
+        $this->data = $data;
 
         return $this->result();
     }
 
     public function updateData($param)
     {
-        if ($this->validate($param, 'adminUser', 'update')) {
-            $data = AdminUser::update([
-                'id' => $param['id'],
-                'username' => $param['username'],
-                'avatar' => $param['avatar'],
-                'real_name' => $param['real_name'],
-                'phone' => $param['phone'],
-                'email' => $param['email'],
-            ]);
-            $this->data = $data;
-        }
+        $data = AdminUser::update([
+            'id' => $param['id'],
+            'username' => $param['username'],
+            'avatar' => $param['avatar'],
+            'real_name' => $param['real_name'],
+            'phone' => $param['phone'],
+            'email' => $param['email'],
+        ]);
+        $this->data = $data;
 
         return $this->result();
     }
@@ -71,7 +67,7 @@ class AdminUserService extends VService
             $router = [];
             foreach ($menus as $menu) {
                 $router = array_merge($router, array_filter(explode(',',
-                    $menu['name'].','.$menu['parent_name'].','.$menu['router'])));
+                    $menu['name'] . ',' . $menu['parent_name'] . ',' . $menu['router'])));
             }
             $router = array_unique($router);
         }
@@ -90,13 +86,11 @@ class AdminUserService extends VService
 
     public function changePassword($param)
     {
-        if ($this->validate($param, 'adminUser', 'changePass')) {
-            $data = AdminUser::update([
-                'id' => $param['id'],
-                'password' => Encrypt::generate($param['pass']),
-            ]);
-            $this->data = $data;
-        }
+        $data = AdminUser::update([
+            'id' => $param['id'],
+            'password' => Encrypt::generate($param['pass']),
+        ]);
+        $this->data = $data;
 
         return $this->result();
     }
@@ -128,30 +122,26 @@ class AdminUserService extends VService
 
     public function updateUser($adminId, $param)
     {
-        if ($this->validate($param, 'adminUser', 'update')) {
-            $data = AdminUser::update([
-                'id' => $adminId,
-                'username' => $param['username'],
-                'avatar' => $param['avatar'],
-                'real_name' => $param['real_name'],
-                'phone' => $param['phone'],
-                'email' => $param['email'],
-            ]);
-            $this->data = $data;
-        }
+        $data = AdminUser::update([
+            'id' => $adminId,
+            'username' => $param['username'],
+            'avatar' => $param['avatar'],
+            'real_name' => $param['real_name'],
+            'phone' => $param['phone'],
+            'email' => $param['email'],
+        ]);
+        $this->data = $data;
 
         return $this->result();
     }
 
     public function updatePassword($adminId, $param)
     {
-        if ($this->validate($param, 'adminUser', 'updatePass')) {
-            $data = AdminUser::update([
-                'id' => $adminId,
-                'password' => Encrypt::generate($param['pass']),
-            ]);
-            $this->data = $data;
-        }
+        $data = AdminUser::update([
+            'id' => $adminId,
+            'password' => Encrypt::generate($param['pass']),
+        ]);
+        $this->data = $data;
 
         return $this->result();
     }

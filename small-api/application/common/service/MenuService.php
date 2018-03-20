@@ -23,33 +23,29 @@ class MenuService extends VService
 
     public function createData($param)
     {
-        if ($this->validate($param, 'menu', 'create')) {
-            $data = Menu::create([
-                'name' => $param['name'],
-                'menu_name' => $param['menu_name'],
-                'parent_id' => empty($param['parent_id']) ? null : $param['parent_id'],
-                'parent_name' => $param['parent_name'],
-                'router' => $param['router'],
-            ]);
-            $this->data = $data;
-        }
+        $data = Menu::create([
+            'name' => $param['name'],
+            'menu_name' => $param['menu_name'],
+            'parent_id' => empty($param['parent_id']) ? null : $param['parent_id'],
+            'parent_name' => $param['parent_name'],
+            'router' => $param['router'],
+        ]);
+        $this->data = $data;
 
         return $this->result();
     }
 
     public function updateData($param)
     {
-        if ($this->validate($param, 'menu', 'update')) {
-            $data = Menu::update([
-                'id' => $param['id'],
-                'name' => $param['name'],
-                'menu_name' => $param['menu_name'],
-                'parent_id' => empty($param['parent_id']) ? null : $param['parent_id'],
-                'parent_name' => $param['parent_name'],
-                'router' => $param['router'],
-            ]);
-            $this->data = $data;
-        }
+        $data = Menu::update([
+            'id' => $param['id'],
+            'name' => $param['name'],
+            'menu_name' => $param['menu_name'],
+            'parent_id' => empty($param['parent_id']) ? null : $param['parent_id'],
+            'parent_name' => $param['parent_name'],
+            'router' => $param['router'],
+        ]);
+        $this->data = $data;
 
         return $this->result();
     }

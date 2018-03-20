@@ -27,6 +27,8 @@ use think\facade\Route;
  * v_name:   路由名称
  * v_check:  是否进行权限检测（默认 true）  只对后台路由有效
  * v_log:    是否记录操作日志（默认 true） v_check = true 时才有效
+ * v_validate_class: 参数验证器
+ * v_validate_scene: 验证场景
  *
  */
 
@@ -102,12 +104,12 @@ Route::group('admin', function () {
         VRoute::rule(
             ':id',
             'admin/user/update',
-            ['v_name' => '更新个人信息'],
+            ['v_name' => '更新个人信息', 'v_validate_class' => 'adminUser', 'v_validate_scene' => 'update'],
             'put');
         VRoute::rule(
             ':id/update_password',
             'admin/user/updatePassword',
-            ['v_name' => '更新个人密码'],
+            ['v_name' => '更新个人密码', 'v_validate_class' => 'adminUser', 'v_validate_scene' => 'updatePass'],
             'post');
     });
 
@@ -121,12 +123,12 @@ Route::group('admin', function () {
         VRoute::rule(
             '',
             'admin/adminUser/create',
-            ['v_name' => '创建用户'],
+            ['v_name' => '创建用户', 'v_validate_class' => 'adminUser', 'v_validate_scene' => 'create'],
             'post');
         VRoute::rule(
             ':id',
             'admin/adminUser/update',
-            ['v_name' => '更新用户'],
+            ['v_name' => '更新用户', 'v_validate_class' => 'adminUser', 'v_validate_scene' => 'update'],
             'put');
         VRoute::rule(
             ':id',
@@ -141,7 +143,7 @@ Route::group('admin', function () {
         VRoute::rule(
             ':id/change_password',
             'admin/adminUser/changePassword',
-            ['v_name' => '修改用户密码'],
+            ['v_name' => '修改用户密码', 'v_validate_class' => 'adminUser', 'v_validate_scene' => 'changePass'],
             'post');
         VRoute::rule(
             ':id/roles',
@@ -165,12 +167,12 @@ Route::group('admin', function () {
         VRoute::rule(
             '',
             'admin/menu/create',
-            ['v_name' => '创建菜单'],
+            ['v_name' => '创建菜单', 'v_validate_class' => 'menu', 'v_validate_scene' => 'create'],
             'post');
         VRoute::rule(
             ':id',
             'admin/menu/update',
-            ['v_name' => '更新菜单'],
+            ['v_name' => '更新菜单','v_validate_class' => 'menu', 'v_validate_scene' => 'update'],
             'put');
         VRoute::rule(
             ':id',
@@ -189,12 +191,12 @@ Route::group('admin', function () {
         VRoute::rule(
             '',
             'admin/role/create',
-            ['v_name' => '创建角色'],
+            ['v_name' => '创建角色','v_validate_class' => 'role', 'v_validate_scene' => 'create'],
             'post');
         VRoute::rule(
             ':id',
             'admin/role/update',
-            ['v_name' => '更新角色'],
+            ['v_name' => '更新角色','v_validate_class' => 'role', 'v_validate_scene' => 'update'],
             'put');
         VRoute::rule(
             ':id',
